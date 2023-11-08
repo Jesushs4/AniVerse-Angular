@@ -1,0 +1,21 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <div id="search-bar">
+    <app-search-bar (searchUpdate)="searchResult($event)"></app-search-bar>
+  </div>
+  <div id="anime-card">
+      <app-anime-card *ngFor="let anime of searchResults$ | async" [anime]="anime"></app-anime-card>
+  </div>
+</ion-content>

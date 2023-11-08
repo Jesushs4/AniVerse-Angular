@@ -1,0 +1,41 @@
+ion-card {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 1rem; /* Añade un margen alrededor de la tarjeta */
+  transition: transform 0.3s ease-in-out;
+  padding: 0.5rem; /* Añade padding dentro de la tarjeta */
+  width:200px;
+}
+
+ion-card:hover {
+  transform: scale(1.03);
+}
+
+.anime-card img {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+}
+
+ion-card-header {
+  background-color: #1e1e1e;
+  color: white;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+ion-card-title {
+  font-size: 1.2rem;
+}
+
+ion-card-subtitle {
+  font-size: 1rem;
+}
+
+ion-card-content {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  color: #333;
+  background-color: #f8f8f8;
+}
