@@ -17,8 +17,19 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'main',
-    loadChildren: () => import('./pages/main/main.module').then(m => m.MainPageModule)
+    path: '',
+    component: MainPage, // Este componente tiene <router-outlet>
+    children: [
+      {
+        path: 'main',
+        loadChildren: () => import('./pages/main/main.module').then(m => m.MainPageModule)
+      },
+      {
+        path: 'library',
+        loadChildren: () => import('./pages/library/library.module').then(m => m.LibraryPageModule),
+      },
+      // ... otras rutas
+    ]
   },
 ];
 

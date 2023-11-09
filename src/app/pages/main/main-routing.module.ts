@@ -7,13 +7,6 @@ const routes: Routes = [
   {
     path: '',
     component: MainPage,
-    children: [
-      {
-        path: 'library',
-        loadChildren: () => import('../library/library.module').then(m => m.LibraryPageModule)
-      },
-      // ... otras rutas hijas
-    ]
   }
 ];
 
