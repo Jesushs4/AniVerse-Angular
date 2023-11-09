@@ -16,8 +16,9 @@ export class HomePage {
   ) {}
 
   searchResult(event:Anime[]) {
-    let filteredAnimes = this.filterContent(event)
-    filteredAnimes = this.filterByPopularity(filteredAnimes)
+    let filteredAnimes = this.filterContent(event);
+    filteredAnimes = this.filterIrrelevant(filteredAnimes);
+    filteredAnimes = this.filterByPopularity(filteredAnimes);
     this._searchResults.next(filteredAnimes);
   }
 
@@ -27,8 +28,12 @@ export class HomePage {
 
   filterContent(animes:Anime[]):Anime[] {
     return animes.filter(anime => 
-      !anime.genres.some(genre => genre.name === 'Ecchi' || genre.name === 'Hentai')
+      !anime.genres.some(genre => genre.name === 'Hentai')
     );  }
+  
+  filterIrrelevant(animes:Anime[]):Anime[] {
+    return animes.filter(anime => anime.favorites>10);
+  }
 
 
 }
