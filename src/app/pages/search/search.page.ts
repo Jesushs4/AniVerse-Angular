@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject, Observable, filter } from 'rxjs';
 import { Anime } from 'src/app/core/interfaces/anime';
-
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  selector: 'app-search',
+  templateUrl: './search.page.html',
+  styleUrls: ['./search.page.scss'],
 })
-export class HomePage {
+
+export class SearchPage {
 
   _searchResults:BehaviorSubject<Anime[]> = new BehaviorSubject<Anime[]>([]);
   searchResults$:Observable<Anime[]> = this._searchResults.asObservable();
@@ -37,3 +37,4 @@ export class HomePage {
 
 
 }
+
