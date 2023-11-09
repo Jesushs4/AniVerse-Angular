@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: MainPage, // Este componente tiene <router-outlet>
+    component: MainPage,
     children: [
       {
         path: 'main',

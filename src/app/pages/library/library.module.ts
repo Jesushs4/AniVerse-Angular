@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { LibraryPageRoutingModule } from './library-routing.module';
 
 import { LibraryPage } from './library.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    LibraryPageRoutingModule
+    LibraryPageRoutingModule,
+    SharedModule
   ],
   declarations: [LibraryPage]
 })

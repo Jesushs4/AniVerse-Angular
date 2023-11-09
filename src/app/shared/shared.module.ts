@@ -4,6 +4,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { AnimeCardComponent } from './components/anime-card/anime-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 
 
@@ -11,6 +12,7 @@ import { IonicModule } from '@ionic/angular';
   declarations: [
     SearchBarComponent,
     AnimeCardComponent,
+    NavbarComponent,
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { IonicModule } from '@ionic/angular';
   ],
   exports: [
     SearchBarComponent,
-    AnimeCardComponent
+    AnimeCardComponent,
+    NavbarComponent,
   ]
 })
 export class SharedModule { }

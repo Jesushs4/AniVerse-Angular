@@ -1,0 +1,14 @@
+<nav class="navbar">
+  <div class="nav-brand">
+    <!-- Tu logo o nombre de la app aquí -->
+  </div>
+  <ul class="nav-links" [class.active]="navActive">
+    <li><button button (click)="goSearch()">Search</button></li>
+    <li><button button (click)="goLibrary()">Library</button></li>
+  </ul>
+  <button class="burger" (click)="toggleNav()">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+</nav>

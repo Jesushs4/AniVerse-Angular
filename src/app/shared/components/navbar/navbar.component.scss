@@ -1,0 +1,78 @@
+/* Estilo de la barra de navegación */
+.navbar {
+    background-color: #333;
+    color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Agregamos una sombra sutil */
+  }
+  
+  /* Estilo del logotipo */
+  .nav-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none; /* Quitamos la subraya de los enlaces */
+    color: white;
+  }
+  
+  /* Estilo de los enlaces de navegación */
+  .nav-links {
+    list-style: none;
+    display: flex;
+  }
+  
+  .nav-links li {
+    margin-right: 1rem;
+  }
+  
+  .nav-links li button {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px; /* Añadimos esquinas redondeadas */
+  }
+  
+  .nav-links li button:hover {
+    background-color: #555;
+  }
+  
+  /* Estilo del menú de hamburguesa */
+  .burger {
+    display: none;
+    cursor: pointer;
+  }
+  
+  .burger .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: white;
+  }
+  
+  /* Estilo para pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      text-align: center;
+      background-color: #333; /* Fondo para el menú desplegable */
+      position: absolute; /* Posicionamos de manera absoluta */
+      top: 30px; /* Alineamos debajo de la barra de navegación */
+      left: 0;
+      z-index: 1; /* Aseguramos que esté en la parte superior */
+      padding: 1rem 0; /* Espacio interior */
+
+      li{
+        margin:1.5rem;
+      }
+    }
+  
+    .nav-links.active {
+      display: flex;
+    }
+  
+    .burger {
+      display: block;
+    }
+  }
