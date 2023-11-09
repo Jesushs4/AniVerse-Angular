@@ -6,7 +6,14 @@ import { MainPage } from './main.page';
 const routes: Routes = [
   {
     path: '',
-    component: MainPage
+    component: MainPage,
+    children: [
+      {
+        path: 'library',
+        loadChildren: () => import('../library/library.module').then(m => m.LibraryPageModule)
+      },
+      // ... otras rutas hijas
+    ]
   }
 ];
 
