@@ -1,7 +1,7 @@
 export interface UserRegisterInfo {
+    data: any;
     email:string,
-    name:string,
-    surname:string,
+    username:string,
     password:string,
-    nickname:string
+    nickname:string,
 }

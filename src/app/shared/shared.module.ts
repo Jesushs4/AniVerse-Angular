@@ -5,6 +5,8 @@ import { AnimeCardComponent } from './components/anime-card/anime-card.component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
 
 
 
@@ -13,6 +15,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     SearchBarComponent,
     AnimeCardComponent,
     NavbarComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
   ],
   imports: [
     CommonModule,
@@ -25,6 +29,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     SearchBarComponent,
     AnimeCardComponent,
     NavbarComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
   ]
 })
 export class SharedModule { }
