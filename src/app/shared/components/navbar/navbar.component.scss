@@ -1,12 +1,9 @@
-/* Estilo de la barra de navegación */
 .navbar {
     background-color: #333;
     color: white;
     padding: 1rem 2rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Agregamos una sombra sutil */
   }
-  
-  /* Estilo del logotipo */
+
   .nav-brand {
     font-size: 1.5rem;
     font-weight: bold;
@@ -28,7 +25,7 @@
     color: white;
     text-decoration: none;
     padding: 0.5rem 1rem;
-    border-radius: 5px; /* Añadimos esquinas redondeadas */
+    border-radius: 5px;
   }
   
   .nav-links li button:hover {
