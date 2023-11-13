@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,8 @@ import { Router, RouterLink } from '@angular/router';
 export class NavbarComponent  implements OnInit {
 
   constructor(
-    public router:Router
+    private router:Router,
+    private auth:AuthService
   ) { }
 
   ngOnInit() {}
@@ -27,6 +29,12 @@ export class NavbarComponent  implements OnInit {
 
   goLibrary() {
     this.router.navigate(['/library'])
+  }
+
+  logout() {
+    this.auth.logout();
+    this.router.navigate(['/login'])
+    console.log(this.auth.isLogged$);
   }
 
 }

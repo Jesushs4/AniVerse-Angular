@@ -50,8 +50,8 @@ export class JwtService {
   }
 
   destroyToken(): Observable<JwtToken> {
-    //this.token = null;
     this.token = "";
+    localStorage.removeItem('CapacitorStorage.jwtToken');
     return this.saveToken(this.token);
   }
 }
