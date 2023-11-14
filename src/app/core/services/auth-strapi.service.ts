@@ -66,14 +66,16 @@ export class AuthStrapiService extends AuthService{
           let connected = data && data.jwt!='';
           this._logged.next(connected);
           await lastValueFrom(this.jwtSvc.saveToken(data.jwt));
+          console.log(data.user.id);
           const _extended_user:StrapiExtendedUser= {
             data: {
-              nickname:info.nickname,
-              user_id:data.user.id
+              user_id:data.user.id,
+              nickname:info.nickname
             }
             
           }
-          await lastValueFrom(this.apiSvc.post("/extended-users", _extended_user));
+          console.log(_extended_user.data.user_id);
+          console.log(await lastValueFrom(this.apiSvc.post("/extended-users", _extended_user)));
           obs.next();
           obs.complete();
         },
@@ -91,8 +93,8 @@ export class AuthStrapiService extends AuthService{
           let extended_user = await lastValueFrom(this.apiSvc.get(`/extended-users?filters[user_id]=${user.id}`));
           let ret:User = {
             id: user.id,
-            name: extended_user.name,
-            nickname: extended_user.nickname,
+            name: user.username,
+            nickname: extended_user.data.nickname,
             email: user.email
           }
           obs.next(ret);
