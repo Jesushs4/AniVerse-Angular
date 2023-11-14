@@ -13,7 +13,6 @@ export interface StrapiRegisterPayload{
     email:string,
     password:string,
     username:string,
-    nickname: string,
 }
 
 export interface StrapiLoginResponse{

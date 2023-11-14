@@ -3,13 +3,13 @@
     <!-- Tu logo o nombre de la app aquí -->
   </div>
   <ul class="nav-links" [class.active]="navActive">
-    <li><button button (click)="goSearch()">Search</button></li>
-    <li><button button (click)="goLibrary()">Library</button></li>
+    <li><ion-button button (click)="goSearch()">Search</ion-button></li>
+    <li><ion-button button (click)="goLibrary()">Library</ion-button></li>
   </ul>
   <button class="burger" (click)="toggleNav()">
     <span class="bar"></span>
     <span class="bar"></span>
     <span class="bar"></span>
   </button>
-  <button class="logout-button" (click)="logout()">Logout</button>
+  <ion-button class="logout-button" (click)="logout()">Logout</ion-button>
 </nav>

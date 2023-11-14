@@ -59,7 +59,6 @@ export class AuthStrapiService extends AuthService{
         email:info.email,
         username:info.username,
         password:info.password,
-        nickname:info.nickname
       }
       this.apiSvc.post("/auth/local/register", info).subscribe({
         next:async (data:StrapiRegisterResponse)=>{
@@ -94,7 +93,7 @@ export class AuthStrapiService extends AuthService{
           let ret:User = {
             id: user.id,
             name: user.username,
-            nickname: extended_user.data.nickname,
+            nickname: extended_user.data[0].attributes.nickname,
             email: user.email
           }
           obs.next(ret);

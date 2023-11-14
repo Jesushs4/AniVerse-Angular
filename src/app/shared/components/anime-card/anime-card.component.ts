@@ -21,10 +21,8 @@ export class AnimeCardComponent  implements OnInit {
   addToLibrary() {
     this.auth.me().subscribe({
       next: (user: User) => {
-        // Aquí puedes acceder al objeto 'user' que devuelve 'me()'
         console.log(user);
         
-        // Continúa con el resto de la lógica de 'addToLibrary()'
       },
       error: (err) => {
         console.error(err);

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject, Observable, filter } from 'rxjs';
 import { Anime } from 'src/app/core/interfaces/anime';
+import { AnimeService } from 'src/app/core/services/anime.service';
 @Component({
   selector: 'app-search',
   templateUrl: './search.page.html',
@@ -9,31 +10,18 @@ import { Anime } from 'src/app/core/interfaces/anime';
 
 export class SearchPage {
 
-  _searchResults:BehaviorSubject<Anime[]> = new BehaviorSubject<Anime[]>([]);
-  searchResults$:Observable<Anime[]> = this._searchResults.asObservable();
+
   constructor(
-    
+    public animes:AnimeService
   ) {}
 
-  searchResult(event:Anime[]) {
-    let filteredAnimes = this.filterContent(event);
-    filteredAnimes = this.filterIrrelevant(filteredAnimes);
-    filteredAnimes = this.filterByPopularity(filteredAnimes);
-    this._searchResults.next(filteredAnimes);
+  searchResult(event:any) {
+    this.animes.searchResult(event);
   }
 
-  filterByPopularity(animes:Anime[]):Anime[] {
-    return [...animes].sort((a, b) =>  b.favorites - a.favorites);
-  }
-
-  filterContent(animes:Anime[]):Anime[] {
-    return animes.filter(anime => 
-      !anime.genres.some(genre => genre.name === 'Hentai')
-    );  }
   
-  filterIrrelevant(animes:Anime[]):Anime[] {
-    return animes.filter(anime => anime.favorites>10);
-  }
+
+
 
 
 }

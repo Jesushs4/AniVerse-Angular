@@ -41,7 +41,6 @@ export class LoginPage implements OnInit {
       componentProps:{
         user:data
       },
-      cssClass:"modal-full-right-side"
     });
     modal.present();
     modal.onDidDismiss().then(result=>{
