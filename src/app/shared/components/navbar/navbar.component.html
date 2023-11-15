@@ -2,14 +2,9 @@
   <div class="nav-brand">
     <!-- Tu logo o nombre de la app aquí -->
   </div>
-  <ul class="nav-links" [class.active]="navActive">
+  <ul class="nav-links">
     <li><ion-button button (click)="goSearch()">Search</ion-button></li>
     <li><ion-button button (click)="goLibrary()">Library</ion-button></li>
   </ul>
-  <button class="burger" (click)="toggleNav()">
-    <span class="bar"></span>
-    <span class="bar"></span>
-    <span class="bar"></span>
-  </button>
   <ion-button class="logout-button" (click)="logout()">Logout</ion-button>
 </nav>

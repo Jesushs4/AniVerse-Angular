@@ -16,11 +16,6 @@ export class NavbarComponent  implements OnInit {
 
   ngOnInit() {}
 
-  navActive = false;
-
-  toggleNav() {
-    this.navActive = !this.navActive;
-  }
 
   goSearch() {
     this.router.navigate(['/search'])

@@ -13,15 +13,15 @@ import { User } from '../interfaces/user';
 export class AuthStrapiService extends AuthService{
 
   constructor(
-    private jwtSvc:JwtService,
-    private apiSvc:ApiService
+    private jwtService:JwtService,
+    private apiService:ApiService
   ) { 
     super();
     this.init();
   }
 
   private init(){
-    this.jwtSvc.loadToken().subscribe(_=>{
+    this.jwtService.loadToken().subscribe(_=>{
       this._logged.next(true);
     });
   }
@@ -32,9 +32,9 @@ export class AuthStrapiService extends AuthService{
         identifier:credentials.username,
         password:credentials.password
       };
-      this.apiSvc.post("/auth/local", _credentials).subscribe({
+      this.apiService.post("/auth/local", _credentials).subscribe({
         next:async (data:StrapiLoginResponse)=>{
-          await lastValueFrom(this.jwtSvc.saveToken(data.jwt));
+          await lastValueFrom(this.jwtService.saveToken(data.jwt));
           let connected = data && data.jwt!='';
           this._logged.next(connected);
           obs.next();
@@ -48,7 +48,7 @@ export class AuthStrapiService extends AuthService{
   }
 
   logout():Observable<void>{
-    return this.jwtSvc.destroyToken().pipe(map(_=>{
+    return this.jwtService.destroyToken().pipe(map(_=>{
       return;
     }));
   }
@@ -60,11 +60,11 @@ export class AuthStrapiService extends AuthService{
         username:info.username,
         password:info.password,
       }
-      this.apiSvc.post("/auth/local/register", info).subscribe({
+      this.apiService.post("/auth/local/register", info).subscribe({
         next:async (data:StrapiRegisterResponse)=>{
           let connected = data && data.jwt!='';
           this._logged.next(connected);
-          await lastValueFrom(this.jwtSvc.saveToken(data.jwt));
+          await lastValueFrom(this.jwtService.saveToken(data.jwt));
           console.log(data.user.id);
           const _extended_user:StrapiExtendedUser= {
             data: {
@@ -74,7 +74,7 @@ export class AuthStrapiService extends AuthService{
             
           }
           console.log(_extended_user.data.user_id);
-          console.log(await lastValueFrom(this.apiSvc.post("/extended-users", _extended_user)));
+          console.log(await lastValueFrom(this.apiService.post("/extended-users", _extended_user)));
           obs.next();
           obs.complete();
         },
@@ -87,9 +87,9 @@ export class AuthStrapiService extends AuthService{
 
   public me():Observable<User>{
     return new Observable<User>(obs=>{
-      this.apiSvc.get('/users/me').subscribe({
+      this.apiService.get('/users/me').subscribe({
         next:async (user:StrapiUser)=>{
-          let extended_user = await lastValueFrom(this.apiSvc.get(`/extended-users?filters[user_id]=${user.id}`));
+          let extended_user = await lastValueFrom(this.apiService.get(`/extended-users?filters[user_id]=${user.id}`));
           let ret:User = {
             id: user.id,
             name: user.username,

@@ -13,5 +13,6 @@ export interface Anime {
     }
     genres:any[],
     favorites: number,
+    mal_id:number
 
 }
