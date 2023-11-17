@@ -18,13 +18,12 @@ export class SearchBarComponent  implements OnInit {
   ngOnInit() {
     this.searchControl.valueChanges
       .pipe(
-        debounceTime(300), // Espera 300ms después de cada pulsación de tecla antes de considerar el término de búsqueda
-        distinctUntilChanged(), // Solo emite cuando el valor actual es diferente al último
+        debounceTime(300), 
+        distinctUntilChanged(),
         switchMap(term => this.apiService.searchAnime(term))
       )
       .subscribe({
         next: (results) => {
-          // Asegúrate de que la API devuelve los resultados en una propiedad llamada 'data'
           this.searchUpdate.emit(results.data);
         },
         error: (error) => {

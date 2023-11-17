@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { AnimeFormComponent } from './components/anime-form/anime-form.component';
 
 
 
@@ -17,6 +18,7 @@ import { RegisterFormComponent } from './components/register-form/register-form.
     NavbarComponent,
     LoginFormComponent,
     RegisterFormComponent,
+    AnimeFormComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +33,7 @@ import { RegisterFormComponent } from './components/register-form/register-form.
     NavbarComponent,
     LoginFormComponent,
     RegisterFormComponent,
+    AnimeFormComponent
   ]
 })
 export class SharedModule { }
