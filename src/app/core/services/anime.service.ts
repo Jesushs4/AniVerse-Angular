@@ -16,7 +16,7 @@ export class AnimeService {
     private auth: AuthService
   ) { }
 
-  async createAnime(anime:Anime, info:any) {
+  async createAnime(anime:Anime, form:any) {
     try {
           let animeToCreate = {
       data: {
@@ -34,7 +34,7 @@ export class AnimeService {
     await lastValueFrom(this.apiService.post("/animes", animeToCreate));
     this.createGenre(anime);
     this.animeGenreRelation(anime);
-    this.addLibrary(anime, info);
+    this.addLibrary(anime, form);
     } catch (error) {
       console.log(`El objeto ya se encuentra creado`);
     }
@@ -75,22 +75,22 @@ export class AnimeService {
     }
   }
 
-  async addLibrary(anime:Anime, info:any) {
+  async addLibrary(anime:Anime, form:any) {
     let animeId = await lastValueFrom(this.apiService.get(`/animes?filters[idApi]=${anime.mal_id}`));
     let user = this.auth.me();
-    console.log(info);
-    console.log(info.status);
-    user.subscribe(user => {
+    user.subscribe(async user => {
       let relation = {
               data: {
         user: user.id,
         anime: animeId.data[0].id,
-        episodes_watched: info.episode,
-        status: info.status,
-        score: info.score
+        episodes_watched: form.episode,
+        watch_status: form.status,
+        score: form.score
+        
       }
       }
-      lastValueFrom(this.apiService.post("/libraries", relation));
+
+      await lastValueFrom(this.apiService.post("/libraries", relation));
     }
       )
   }

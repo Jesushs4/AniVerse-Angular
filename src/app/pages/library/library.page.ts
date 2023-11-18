@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
+import { Anime } from 'src/app/core/interfaces/anime';
+import { LibraryService } from 'src/app/core/services/library.service';
 
 @Component({
   selector: 'app-library',
@@ -7,9 +10,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LibraryPage implements OnInit {
 
-  constructor() { }
+
+
+  constructor(
+    public libraryService: LibraryService,
+    private router:Router,
+  ) { }
 
   ngOnInit() {
+    this.libraryService.getLibrary();
   }
+
+  onCardClicked(anime:Anime) {
+    var animeToSend:NavigationExtras = {
+      state: {
+        anime: anime
+      }
+    };
+    this.router.navigate(['/anime'], animeToSend);
+  }
+
 
 }

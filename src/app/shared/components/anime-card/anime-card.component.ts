@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { LibraryService } from 'src/app/core/services/library.service';
 import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import { ModalController, ToastController, ToastOptions } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-anime-card',
@@ -15,23 +16,22 @@ import { ModalController, ToastController, ToastOptions } from '@ionic/angular';
 })
 export class AnimeCardComponent  implements OnInit {
 @Input() anime: Anime | null = null;
-@Output() animeSent: Anime | null = null;
 
   constructor(
     private auth:AuthService,
     private animeService:AnimeService,
     private modal: ModalController,
-    private toast:ToastController
+    private toast:ToastController,
+    private router:Router
   ) { }
 
   ngOnInit() {}
 
-  /*addToLibrary() {
-    if (this.anime) {
-        this.libraryService.createAnime(this.anime);
-    }
+  isSearchPage():boolean {
+    return this.router.url.includes('search');
+  }
 
-  }*/
+  
 
   async presentForm(data:Anime|null, onDismiss:(result:any)=>void){
     

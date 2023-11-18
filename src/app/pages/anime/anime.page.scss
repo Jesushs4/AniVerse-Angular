@@ -1,0 +1,10 @@
+ion-card {
+    --background: #fff; /* Cambia el color de fondo si es necesario */
+    height: 100%; /* O establece una altura fija si es necesario */
+  }
+  
+  ion-img {
+    width: 100%; /* Asume que quieres que la imagen ocupe todo el ancho del ion-card */
+    height: 100%; /* Asume que quieres que la imagen ocupe toda la altura disponible */
+    object-fit: cover; /* Esto hará que la imagen cubra todo el espacio disponible, puedes cambiarlo a 'contain' para que se ajuste dentro del espacio disponible */
+  }
