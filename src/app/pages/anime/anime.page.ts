@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Anime } from 'src/app/core/interfaces/anime';
+import { LibraryService } from 'src/app/core/services/library.service';
 
 @Component({
   selector: 'app-anime',
@@ -9,17 +10,18 @@ import { Anime } from 'src/app/core/interfaces/anime';
 })
 export class AnimePage implements OnInit {
 
-  anime: Anime;
-
   constructor(
     private router:Router,
+    public anime:LibraryService
   ) { 
-    var libraryInfo = this.router.getCurrentNavigation();
-    this.anime = libraryInfo?.extras.state as Anime;
+
   }
 
   ngOnInit() {
-    console.log(this.anime);
+  }
+
+  backToLibrary() {
+    this.router.navigate(['/library'])
   }
 
 }

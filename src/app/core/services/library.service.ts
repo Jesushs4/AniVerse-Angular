@@ -12,11 +12,18 @@ export class LibraryService {
   private _library:BehaviorSubject<Anime[]> = new BehaviorSubject<Anime[]>([]);
   public library$:Observable<Anime[]> = this._library.asObservable();
 
+  private _anime:BehaviorSubject<Anime | null> = new BehaviorSubject<Anime | null>(null);
+  public anime$:Observable<Anime | null> = this._anime.asObservable();
+
   constructor(
     private auth: AuthService,
     private apiService : ApiService,
   ) {
 
+  }
+
+  setAnime(anime:Anime) {
+    this._anime.next(anime);
   }
 
   async getLibrary() {

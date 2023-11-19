@@ -22,12 +22,8 @@ export class LibraryPage implements OnInit {
   }
 
   onCardClicked(anime:Anime) {
-    var animeToSend:NavigationExtras = {
-      state: {
-        anime: anime
-      }
-    };
-    this.router.navigate(['/anime'], animeToSend);
+    this.libraryService.setAnime(anime);
+    this.router.navigate(['/anime']);
   }
 
 

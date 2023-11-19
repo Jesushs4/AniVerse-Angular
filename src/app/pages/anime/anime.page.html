@@ -1,25 +1,34 @@
-<ion-header translucent>
-  <ion-toolbar>
-    <ion-title>{{anime.title}}</ion-title>
-  </ion-toolbar>
-</ion-header>
 
 <ion-content fullscreen>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+    <ion-button (click)="backToLibrary()">VOLVER</ion-button>
+  </ion-buttons>
+  </ion-toolbar>
+
   <ion-grid>
     <ion-row>
-      <ion-col size="6">
+      <ion-col size="3">
         <ion-card>
-          <img src="{{anime?.images?.jpg?.image_url}}" alt="{{ anime?.title }}">
+          <img src="{{ (anime.anime$ | async)?.images?.jpg?.image_url }}" alt="">
         </ion-card>
       </ion-col>
-      <ion-col size="6">
+      <ion-col size="9">
         <ion-card>
           <ion-card-header>
-            <ion-card-title>Anime Title</ion-card-title>
+            <ion-card-title>{{ (anime.anime$ | async)?.title }}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <!-- Insert anime information here -->
-            Anime information goes here...
+            <ion-text>{{ (anime.anime$ | async)?.synopsis }}</ion-text>
+            <ion-text>{{ (anime.anime$ | async)?.episodes }}</ion-text>
+            <ion-text>{{ (anime.anime$ | async)?.year }}</ion-text>
+            <ion-text>{{ (anime.anime$ | async)?.status }}</ion-text>
+            <ion-text>{{ (anime.anime$ | async)?.score }}</ion-text>
+            <ion-text>{{ (anime.anime$ | async)?.watch_status }}</ion-text>
+            <ion-text>{{ (anime.anime$ | async)?.episodes_watched }}</ion-text>
+
+
+
           </ion-card-content>
         </ion-card>
       </ion-col>
