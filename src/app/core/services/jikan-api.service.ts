@@ -13,7 +13,7 @@ export class JikanApiService {
   ) { }
 
   searchAnime(search: string): Observable<any> {
-    const url = `${environment.jikanURL}/anime?q=${encodeURIComponent(search)}`;
+    const url = `${environment.jikanURL}/anime?q=${search}`;
     return this.http.get(url);
   }
 }

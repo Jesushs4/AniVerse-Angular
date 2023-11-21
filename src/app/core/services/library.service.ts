@@ -22,8 +22,12 @@ export class LibraryService {
 
   }
 
-  setAnime(anime:Anime) {
-    this._anime.next(anime);
+  setAnime(anime:Anime):Observable<Anime> {
+    return new Observable(observer => {
+      this._anime.next(anime);
+      observer.next(anime);
+      observer.complete();
+    })
   }
 
   async getLibrary() {
@@ -33,7 +37,6 @@ export class LibraryService {
       let animes = response.data.map((anime:Library) => {
         console.log(anime);
         return {
-          
           id: anime.id,
           title: anime.attributes.anime.data[0].attributes.title,
           title_english: anime.attributes.anime.data[0].attributes.title_english,
@@ -54,13 +57,19 @@ export class LibraryService {
           score: anime.attributes.score
         }
       })
-      console.log(animes);
       this._library.next(animes);
     },
-    error => {
-      console.error("Error");
-    }
     )
+  }
+
+  deleteAnime(anime:Anime) {
+    let user = this.auth.me();
+    user.subscribe(async user => {
+      let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&filters[anime][mal_id][$eq]=${anime.mal_id}`));
+      console.log(response)
+        await lastValueFrom(this.apiService.delete(`/libraries/${response.data[0].id}`));
+    })
+
   }
 
 }

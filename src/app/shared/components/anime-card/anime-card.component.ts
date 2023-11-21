@@ -19,11 +19,16 @@ export class AnimeCardComponent  implements OnInit {
     private router:Router
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    }
+    
+  
 
   isSearchPage():boolean {
     return this.router.url.includes('search');
   }
+
+
 
     
 
@@ -49,7 +54,7 @@ export class AnimeCardComponent  implements OnInit {
         case 'submit':{
           console.log(info.data)
           if (this.anime) {
-              this.animeService.createAnime(this.anime, info.data)
+              this.animeService.addAnime(this.anime, info.data)
         }
           }
         break;

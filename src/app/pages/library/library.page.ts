@@ -20,7 +20,7 @@ export class LibraryPage implements OnInit {
   }
 
   onCardClicked(anime:Anime) {
-    this.libraryService.setAnime(anime);
+    this.libraryService.setAnime(anime).subscribe();
     this.router.navigate(['/anime']);
   }
 

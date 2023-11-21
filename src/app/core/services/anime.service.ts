@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Anime } from '../interfaces/anime';
-import { lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom, map, switchMap } from 'rxjs';
 import { ApiService } from './strapi/api.service';
 import { AuthService } from './auth.service';
 
@@ -14,7 +14,7 @@ export class AnimeService {
     private auth: AuthService
   ) { }
 
-  async createAnime(anime:Anime, form:any) {
+  async createAnime(anime:Anime) {
     try {
           let animeToCreate = {
       data: {
@@ -31,19 +31,27 @@ export class AnimeService {
     await lastValueFrom(this.apiService.post("/animes", animeToCreate));
     this.createGenre(anime);
     this.animeGenreRelation(anime);
-    this.addLibrary(anime, form);
     } catch (error) {
       console.log(`El objeto ya se encuentra creado`);
     }
   }
 
-  async checkAnime(anime:Anime) {
-    let user = this.auth.me();
-    user.subscribe(async user => {
-
-    })
-    let check = await lastValueFrom(this.apiService.get(`https://aniverse-service.onrender.com/api/libraries?filters[user][id][$eq]=${anime.mal_id}&filters[anime][id][$eq]=${anime.mal_id}`))
+  async addAnime(anime:Anime, form:any) {
+    try {
+      this.createAnime(anime)
+    } catch (error) {
+      console.log("El anime ya esta creado");
+    }
+    this.addAnimeUser(anime, form);
   }
+
+
+
+
+//`libraries?filters[user][id][$eq]=${userId}&filters[anime][id][$eq]=${anime.mal_id}`)
+
+
+
 
   private async createGenre(anime:Anime) {
       let genres = anime.genres;
@@ -61,8 +69,11 @@ export class AnimeService {
       }
   }
 
+
+
+
   private async animeGenreRelation(anime:Anime) {
-    let animeRelation = await lastValueFrom(this.apiService.get(`/animes?filters[idApi]=${anime.mal_id}`));
+    let animeRelation = await lastValueFrom(this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`));
     let genres = anime.genres;
     for (let genre of genres) {
       let genreRelation = await lastValueFrom(this.apiService.get(`/genres?filters[name]=${genre.name}`));
@@ -76,8 +87,11 @@ export class AnimeService {
     }
   }
 
-  private async addLibrary(anime:Anime, form:any) {
-    let animeId = await lastValueFrom(this.apiService.get(`/animes?filters[idApi]=${anime.mal_id}`));
+
+
+
+  private async addAnimeUser(anime:Anime, form:any) {
+    let animeId = await lastValueFrom(this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`));
     let user = this.auth.me();
     user.subscribe(async user => {
       let relation = {

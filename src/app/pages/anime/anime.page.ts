@@ -19,8 +19,17 @@ export class AnimePage implements OnInit {
   ngOnInit() {
   }
 
-  backToLibrary() {
-    this.router.navigate(['/library'])
+  public backToLibrary() {
+    this.router.navigate(['/library']);
+  }
+
+  public deleteAnime() {
+    this.anime.anime$.subscribe(anime => {
+      if (anime) {
+        this.anime.deleteAnime(anime);
+        this.router.navigate(['/library']);
+      }
+    })
   }
 
 }

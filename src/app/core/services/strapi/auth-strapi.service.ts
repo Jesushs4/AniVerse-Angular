@@ -1,5 +1,5 @@
-import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, lastValueFrom, map, tap } from 'rxjs';
+
+import { Observable, lastValueFrom, map} from 'rxjs';
 import { UserCredentials } from '../../interfaces/user-credentials';
 import { UserRegisterInfo } from '../../interfaces/user-register-info';
 import { JwtService } from '../http/jwt.service';

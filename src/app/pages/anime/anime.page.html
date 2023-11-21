@@ -18,17 +18,29 @@
             <ion-card-title>{{ (anime.anime$ | async)?.title }}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <ion-text>{{ (anime.anime$ | async)?.synopsis }}</ion-text>
-            <ion-text>{{ (anime.anime$ | async)?.episodes }}</ion-text>
-            <ion-text>{{ (anime.anime$ | async)?.year }}</ion-text>
-            <ion-text>{{ (anime.anime$ | async)?.status }}</ion-text>
-            <ion-text>{{ (anime.anime$ | async)?.score }}</ion-text>
-            <ion-text>{{ (anime.anime$ | async)?.watch_status }}</ion-text>
-            <ion-text>{{ (anime.anime$ | async)?.episodes_watched }}</ion-text>
-
-
-
+            <div>
+              <ion-text>Synopsis: {{ (anime.anime$ | async)?.synopsis }}</ion-text>
+            </div>
+            <div>
+              <ion-text>Episodes: {{ (anime.anime$ | async)?.episodes }}</ion-text>
+            </div>
+            <div>
+              <ion-text>Year published: {{ (anime.anime$ | async)?.year }}</ion-text>
+            </div>
+            <div>
+              <ion-text>Status of the anime: {{ (anime.anime$ | async)?.status }}</ion-text>
+            </div>
+            <div>
+              <ion-text>Score: {{ (anime.anime$ | async)?.score }}</ion-text>
+            </div>
+            <div>
+              <ion-text>User status: {{ (anime.anime$ | async)?.watch_status | titlecase}}</ion-text>
+            </div>
+            <div>
+              <ion-text>Episodes watched: {{ (anime.anime$ | async)?.episodes_watched }}</ion-text>
+            </div>
           </ion-card-content>
+          <ion-button (click)="deleteAnime()">BORRAR</ion-button>
         </ion-card>
       </ion-col>
     </ion-row>
