@@ -40,6 +40,7 @@
               <ion-text>Episodes watched: {{ (anime.anime$ | async)?.episodes_watched }}</ion-text>
             </div>
           </ion-card-content>
+          <ion-button (click)="editAnime()">EDITAR</ion-button>
           <ion-button (click)="deleteAnime()">BORRAR</ion-button>
         </ion-card>
       </ion-col>

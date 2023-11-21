@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, Observable, lastValueFrom, tap } from 'rxjs';
 import { Anime, Library } from '../interfaces/anime';
 import { ApiService } from './strapi/api.service';
 import { AuthService } from './auth.service';
@@ -15,6 +15,8 @@ export class LibraryService {
   private _anime:BehaviorSubject<Anime | null> = new BehaviorSubject<Anime | null>(null);
   public anime$:Observable<Anime | null> = this._anime.asObservable();
 
+  public anime:Anime|null = null
+
   constructor(
     private auth: AuthService,
     private apiService : ApiService,
@@ -23,6 +25,7 @@ export class LibraryService {
   }
 
   setAnime(anime:Anime):Observable<Anime> {
+    this.anime = anime;
     return new Observable(observer => {
       this._anime.next(anime);
       observer.next(anime);
@@ -35,7 +38,6 @@ export class LibraryService {
     user.subscribe(async user => {
       let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&populate=anime`));
       let animes = response.data.map((anime:Library) => {
-        console.log(anime);
         return {
           id: anime.id,
           title: anime.attributes.anime.data[0].attributes.title,
@@ -62,13 +64,18 @@ export class LibraryService {
     )
   }
 
+
   deleteAnime(anime:Anime) {
     let user = this.auth.me();
     user.subscribe(async user => {
       let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&filters[anime][mal_id][$eq]=${anime.mal_id}`));
       console.log(response)
         await lastValueFrom(this.apiService.delete(`/libraries/${response.data[0].id}`));
+        this.getLibrary();
     })
+  }
+
+  editAnime(anime:Anime, form:any) {
 
   }
 
