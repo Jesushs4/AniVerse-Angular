@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Anime } from '../interfaces/anime';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ApiService } from './api.service';
+import { ApiService } from './strapi/api.service';
 
 @Injectable({
   providedIn: 'root'

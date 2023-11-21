@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Anime } from 'src/app/core/interfaces/anime';
 import { LibraryService } from 'src/app/core/services/library.service';
 
@@ -9,8 +9,6 @@ import { LibraryService } from 'src/app/core/services/library.service';
   styleUrls: ['./library.page.scss'],
 })
 export class LibraryPage implements OnInit {
-
-
 
   constructor(
     public libraryService: LibraryService,

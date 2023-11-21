@@ -1,6 +1,5 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Anime } from 'src/app/core/interfaces/anime';
 import { LibraryService } from 'src/app/core/services/library.service';
 
 @Component({
