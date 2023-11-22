@@ -86,9 +86,9 @@ export class AnimeService {
               data: {
         user: user.id,
         anime: animeId.data[0].id,
-        episodes_watched: form.episode,
-        watch_status: form.status,
-        score: form.score
+        episodes_watched: form.episodes_watched,
+        watch_status: form.watch_status,
+        user_score: form.user_score
         
       }
       }

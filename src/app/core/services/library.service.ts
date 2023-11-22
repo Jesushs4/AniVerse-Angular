@@ -58,7 +58,7 @@ export class LibraryService {
             mal_id: anime.attributes.anime.data[0].attributes.mal_id,
             episodes_watched: anime.attributes.episodes_watched, 
             watch_status: anime.attributes.watch_status,
-            score: anime.attributes.score
+            user_score: anime.attributes.user_score
           }
         })
         this._library.next(animes);
@@ -78,14 +78,31 @@ export class LibraryService {
         await lastValueFrom(this.apiService.delete(`/libraries/${response.data[0].id}`));
         this._anime.next(anime);
         obs.next(anime);
-        this.getLibrary();
+        this.getLibrary().subscribe();
         }
       })
     })
   }
 
-  editAnime(anime:Anime, form:any) {
-
+  editAnime(anime:Anime, form:any):Observable<Anime> {
+    return new Observable<Anime>(obs => {
+      this.auth.me().subscribe({
+        next: async (user:User) => {
+        let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&filters[anime][mal_id][$eq]=${anime.mal_id}`));
+        let info = {
+          data: {
+            episodes_watched: form.episodes_watched,
+            watch_status: form.watch_status,
+            user_score: form.user_score
+          }
+        }
+        await lastValueFrom(this.apiService.put(`/libraries/${response.data[0].id}`, info));
+        this._anime.next(anime);
+        obs.next(anime);
+        this.getLibrary().subscribe();
+        }
+      })
+    })
   }
 
 }

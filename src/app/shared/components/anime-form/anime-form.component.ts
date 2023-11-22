@@ -11,7 +11,16 @@ import { Anime } from 'src/app/core/interfaces/anime';
 export class AnimeFormComponent  implements OnInit {
 
   form:FormGroup;
-  @Input() anime: Anime | null = null;
+  mode:'New'|'Edit' = 'New';
+  @Input() set anime(_anime:Anime|null) {
+    if (_anime) {
+      this.mode = 'Edit'
+      console.log(_anime);
+      this.form.controls['user_score'].setValue(_anime.user_score);
+      this.form.controls['watch_status'].setValue(_anime.watch_status);
+      this.form.controls['episodes_watched'].setValue(_anime.episodes_watched);
+    }
+  }
 
   constructor(
     private newModal:ModalController,
@@ -19,9 +28,9 @@ export class AnimeFormComponent  implements OnInit {
   ) {
     console.log(this.anime);
     this.form = this.formBuilder.group({
-      score:['', ],
-      status:['', ],
-      episode: ['0',]
+      user_score:['', ],
+      watch_status:['', ],
+      episodes_watched: ['',]
     })
    }
   ngOnInit() {

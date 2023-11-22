@@ -16,7 +16,7 @@ export interface Anime {
     mal_id: number,
     episodes_watched: number,
     watch_status: string,
-    score: number
+    user_score: number
 
 }
 
@@ -44,6 +44,6 @@ export interface Library {
             }
             episodes_watched: number,
             watch_status: string,
-            score: number
+            user_score: number
         }
 }

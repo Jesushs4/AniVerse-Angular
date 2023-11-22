@@ -31,7 +31,7 @@
               <ion-text>Status of the anime: {{ (anime.anime$ | async)?.status }}</ion-text>
             </div>
             <div>
-              <ion-text>Score: {{ (anime.anime$ | async)?.score }}</ion-text>
+              <ion-text>Score: {{ (anime.anime$ | async)?.user_score }}</ion-text>
             </div>
             <div>
               <ion-text>User status: {{ (anime.anime$ | async)?.watch_status | titlecase}}</ion-text>

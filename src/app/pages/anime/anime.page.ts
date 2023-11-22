@@ -53,13 +53,12 @@ export class AnimePage implements OnInit {
   }
 
   editAnime(){
-
     var onDismiss = (info:any)=>{
       switch(info.role){
-        case 'edit':{
+        case 'submit':{
           console.log(info.data)
           if (this.anime.anime) {
-              this.anime.editAnime(this.anime.anime, info.data)
+              this.anime.editAnime(this.anime.anime, info.data).subscribe();
         }
           }
         break;
