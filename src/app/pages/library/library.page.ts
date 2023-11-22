@@ -16,7 +16,7 @@ export class LibraryPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.libraryService.getLibrary();
+    this.libraryService.getLibrary().subscribe();
   }
 
   onCardClicked(anime:Anime) {

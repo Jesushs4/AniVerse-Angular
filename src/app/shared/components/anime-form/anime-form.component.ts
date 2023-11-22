@@ -19,9 +19,9 @@ export class AnimeFormComponent  implements OnInit {
   ) {
     console.log(this.anime);
     this.form = this.formBuilder.group({
-      score:['', [Validators.required]],
-      status:['', [Validators.required]],
-      episode: ['', [Validators.required]]
+      score:['', ],
+      status:['', ],
+      episode: ['0',]
     })
    }
   ngOnInit() {

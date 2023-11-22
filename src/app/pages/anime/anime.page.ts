@@ -28,11 +28,9 @@ export class AnimePage implements OnInit {
   }
 
   public deleteAnime() {
-
       if (this.anime.anime) {
-        this.anime.deleteAnime(this.anime.anime);
+        this.anime.deleteAnime(this.anime.anime).subscribe();
         this.router.navigate(['/library']);
-        
       }
     }
   

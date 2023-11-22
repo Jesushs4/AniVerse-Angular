@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, lastValueFrom, tap } from 'rxjs';
 import { Anime, Library } from '../interfaces/anime';
 import { ApiService } from './strapi/api.service';
 import { AuthService } from './auth.service';
+import { User } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -33,45 +34,53 @@ export class LibraryService {
     })
   }
 
-  async getLibrary() {
-    let user = this.auth.me();
-    user.subscribe(async user => {
-      let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&populate=anime`));
-      let animes = response.data.map((anime:Library) => {
-        return {
-          id: anime.id,
-          title: anime.attributes.anime.data[0].attributes.title,
-          title_english: anime.attributes.anime.data[0].attributes.title_english,
-          episodes: anime.attributes.anime.data[0].attributes.episodes,
-          status: anime.attributes.anime.data[0].attributes.status,
-          synopsis: anime.attributes.anime.data[0].attributes.synopsis,
-          year: anime.attributes.anime.data[0].attributes.year,
-          images: {
-            jpg: {
-              image_url: anime.attributes.anime.data[0].attributes.image_url,
-            }
-          },
-          genres: anime.attributes.anime.data[0].attributes.genres, 
-          favorites: anime.attributes.anime.data[0].attributes.favorites,
-          mal_id: anime.attributes.anime.data[0].attributes.mal_id,
-          episodes_watched: anime.attributes.episodes_watched, 
-          watch_status: anime.attributes.watch_status,
-          score: anime.attributes.score
+   getLibrary():Observable<Anime[]> {
+    return new Observable<Anime[]>(obs => {
+      this.auth.me().subscribe({
+        next:async (user:User) => {
+          let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&populate=anime`));
+        let animes:Anime[] = response.data.map((anime:Library) => {
+          return {
+            id: anime.id,
+            title: anime.attributes.anime.data[0].attributes.title,
+            title_english: anime.attributes.anime.data[0].attributes.title_english,
+            episodes: anime.attributes.anime.data[0].attributes.episodes,
+            status: anime.attributes.anime.data[0].attributes.status,
+            synopsis: anime.attributes.anime.data[0].attributes.synopsis,
+            year: anime.attributes.anime.data[0].attributes.year,
+            images: {
+              jpg: {
+                image_url: anime.attributes.anime.data[0].attributes.image_url,
+              }
+            },
+            genres: anime.attributes.anime.data[0].attributes.genres, 
+            favorites: anime.attributes.anime.data[0].attributes.favorites,
+            mal_id: anime.attributes.anime.data[0].attributes.mal_id,
+            episodes_watched: anime.attributes.episodes_watched, 
+            watch_status: anime.attributes.watch_status,
+            score: anime.attributes.score
+          }
+        })
+        this._library.next(animes);
+          obs.next(animes)
         }
       })
-      this._library.next(animes);
-    },
-    )
+    })
+    
+    
   }
 
-
-  deleteAnime(anime:Anime) {
-    let user = this.auth.me();
-    user.subscribe(async user => {
-      let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&filters[anime][mal_id][$eq]=${anime.mal_id}`));
-      console.log(response)
+  deleteAnime(anime:Anime):Observable<Anime> {
+    return new Observable<Anime>(obs => {
+      this.auth.me().subscribe({
+        next: async (user:User) => {
+        let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&filters[anime][mal_id][$eq]=${anime.mal_id}`));
         await lastValueFrom(this.apiService.delete(`/libraries/${response.data[0].id}`));
+        this._anime.next(anime);
+        obs.next(anime);
         this.getLibrary();
+        }
+      })
     })
   }
 

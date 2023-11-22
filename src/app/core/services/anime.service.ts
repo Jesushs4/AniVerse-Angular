@@ -14,7 +14,7 @@ export class AnimeService {
     private auth: AuthService
   ) { }
 
-  async createAnime(anime:Anime) {
+  public async createAnime(anime:Anime) {
     try {
           let animeToCreate = {
       data: {
@@ -35,18 +35,6 @@ export class AnimeService {
       console.log(`El objeto ya se encuentra creado`);
     }
   }
-
-  async addAnime(anime:Anime, form:any) {
-    try {
-      this.createAnime(anime)
-    } catch (error) {
-      console.log("El anime ya esta creado");
-    }
-    this.addAnimeUser(anime, form);
-  }
-
-
-
 
 //`libraries?filters[user][id][$eq]=${userId}&filters[anime][id][$eq]=${anime.mal_id}`)
 
@@ -90,7 +78,7 @@ export class AnimeService {
 
 
 
-  private async addAnimeUser(anime:Anime, form:any) {
+  public async addAnimeUser(anime:Anime, form:any) {
     let animeId = await lastValueFrom(this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`));
     let user = this.auth.me();
     user.subscribe(async user => {

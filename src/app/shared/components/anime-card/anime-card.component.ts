@@ -54,7 +54,8 @@ export class AnimeCardComponent  implements OnInit {
         case 'submit':{
           console.log(info.data)
           if (this.anime) {
-              this.animeService.addAnime(this.anime, info.data)
+            this.animeService.createAnime(this.anime);
+              this.animeService.addAnimeUser(this.anime, info.data);
         }
           }
         break;
