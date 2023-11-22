@@ -96,9 +96,13 @@ export class LibraryService {
             user_score: form.user_score
           }
         }
-        await lastValueFrom(this.apiService.put(`/libraries/${response.data[0].id}`, info));
+        let newAnime = await lastValueFrom(this.apiService.put(`/libraries/${response.data[0].id}`, info));
+        anime.episodes_watched = newAnime.data.attributes.episodes_watched;
+        anime.watch_status = newAnime.data.attributes.watch_status;
+        anime.user_score = newAnime.data.attributes.user_score;
         this._anime.next(anime);
         obs.next(anime);
+        this.setAnime(anime).subscribe();
         this.getLibrary().subscribe();
         }
       })
