@@ -66,8 +66,6 @@ export class LibraryService {
         }
       })
     })
-    
-    
   }
 
   deleteAnime(anime:Anime):Observable<Anime> {

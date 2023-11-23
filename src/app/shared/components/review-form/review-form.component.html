@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" fill="clear">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>
+      Crear reseña
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-input label="Summary:" labelPlacement="start" formControlName="summary" type="string"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Review:" labelPlacement="start" formControlName="review" type="string"></ion-input>
+    </ion-item>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-button type="submit" (click)="onSubmit()">Create review</ion-button>
+</ion-footer>

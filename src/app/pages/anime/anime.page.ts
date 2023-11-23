@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
 import { Anime } from 'src/app/core/interfaces/anime';
 import { LibraryService } from 'src/app/core/services/library.service';
 import { AnimeFormComponent } from 'src/app/shared/components/anime-form/anime-form.component';
@@ -12,6 +11,7 @@ import { AnimeFormComponent } from 'src/app/shared/components/anime-form/anime-f
   styleUrls: ['./anime.page.scss'],
 })
 export class AnimePage implements OnInit {
+  
   constructor(
     private router:Router,
     public anime:LibraryService,  

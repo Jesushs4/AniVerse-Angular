@@ -11,13 +11,5 @@ export class AppComponent {
   constructor(
     private auth:AuthService,
     private router:Router
-  ) {
-    this.auth.isLogged$.subscribe(logged => {
-      if (logged) {
-        this.router.navigate(['/search']);
-      } else {
-        this.router.navigate(['/login']);
-      }
-    })
-  }
+  ) {}
 }

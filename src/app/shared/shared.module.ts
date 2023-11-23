@@ -8,6 +8,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { AnimeFormComponent } from './components/anime-form/anime-form.component';
+import { ReviewFormComponent } from './components/review-form/review-form.component';
+import { ReviewsComponent } from './components/reviews/reviews.component';
 
 
 
@@ -18,7 +20,9 @@ import { AnimeFormComponent } from './components/anime-form/anime-form.component
     NavbarComponent,
     LoginFormComponent,
     RegisterFormComponent,
-    AnimeFormComponent
+    AnimeFormComponent,
+    ReviewFormComponent,
+    ReviewsComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +37,9 @@ import { AnimeFormComponent } from './components/anime-form/anime-form.component
     NavbarComponent,
     LoginFormComponent,
     RegisterFormComponent,
-    AnimeFormComponent
+    AnimeFormComponent,
+    ReviewFormComponent,
+    ReviewsComponent
   ]
 })
 export class SharedModule { }
