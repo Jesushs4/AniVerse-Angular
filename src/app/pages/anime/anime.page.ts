@@ -11,7 +11,7 @@ import { AnimeFormComponent } from 'src/app/shared/components/anime-form/anime-f
   styleUrls: ['./anime.page.scss'],
 })
 export class AnimePage implements OnInit {
-  
+
   constructor(
     private router:Router,
     public anime:LibraryService,  
@@ -21,6 +21,10 @@ export class AnimePage implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.anime.anime$)
+    if (!this.anime.anime) {
+      this.router.navigate(['/library']);
+    }
   }
 
   public backToLibrary() {

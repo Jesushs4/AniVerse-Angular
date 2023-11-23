@@ -28,10 +28,6 @@ export class AnimeCardComponent  implements OnInit {
     return this.router.url.includes('search');
   }
 
-
-
-    
-
   async presentForm(data:Anime|null, onDismiss:(result:any)=>void){
     
     const modal = await this.modal.create({
@@ -54,7 +50,6 @@ export class AnimeCardComponent  implements OnInit {
         case 'submit':{
           console.log(info.data)
           if (this.anime) {
-            this.animeService.createAnime(this.anime);
               this.animeService.addAnimeUser(this.anime, info.data);
         }
           }

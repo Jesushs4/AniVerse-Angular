@@ -16,7 +16,7 @@ export class LibraryService {
   private _anime:BehaviorSubject<Anime | null> = new BehaviorSubject<Anime | null>(null);
   public anime$:Observable<Anime | null> = this._anime.asObservable();
 
-  public anime:Anime|null = null
+  public anime:Anime|null = null;
 
   constructor(
     private auth: AuthService,
@@ -26,7 +26,9 @@ export class LibraryService {
   }
 
   setAnime(anime:Anime):Observable<Anime> {
-    this.anime = anime;
+    if(anime!=null) {
+      this.anime = anime;
+    }
     return new Observable(observer => {
       this._anime.next(anime);
       observer.next(anime);

@@ -15,7 +15,6 @@ export class AnimeService {
   ) { }
 
   public async createAnime(anime:Anime) {
-    try {
           let animeToCreate = {
       data: {
         title: anime.title,
@@ -28,12 +27,12 @@ export class AnimeService {
         mal_id: anime.mal_id
       }
     };
-    await lastValueFrom(this.apiService.post("/animes", animeToCreate));
+    let existingAnime = await lastValueFrom(this.apiService.get(`/animes?filters[mal_id][$eq]=${animeToCreate.data.mal_id}`))
+    if (!(existingAnime.data.length>0)) {
+      await lastValueFrom(this.apiService.post("/animes", animeToCreate));
+    }
     this.createGenre(anime);
     this.animeGenreRelation(anime);
-    } catch (error) {
-      console.log(`El objeto ya se encuentra creado`);
-    }
   }
 
 //`libraries?filters[user][id][$eq]=${userId}&filters[anime][id][$eq]=${anime.mal_id}`)
@@ -44,16 +43,15 @@ export class AnimeService {
   private async createGenre(anime:Anime) {
       let genres = anime.genres;
       for (let genre of genres) {
-        try {
         let genreToCreate = {
           data: {
             name: genre.name,
           },
         };
-        await lastValueFrom(this.apiService.post("/genres", genreToCreate));
-      } catch (error) {
-        console.log(`El género ya se encuentra creado`);
-      }
+        let existingGenre = await lastValueFrom(this.apiService.get(`/genres?filters[name][$eq]=${genreToCreate.data.name}`))
+        if (!(existingGenre.data.length > 0)) {
+          await lastValueFrom(this.apiService.post("/genres", genreToCreate));
+        }
       }
   }
 
@@ -71,7 +69,10 @@ export class AnimeService {
           genre: genreRelation.data[0].id
         }
       }
-      await lastValueFrom(this.apiService.post("/animegenres", relation));
+      let existingRelationResponse = await lastValueFrom(this.apiService.get(`/animegenres?filters[anime][id][$eq]=${relation.data.anime}&filters[genre][id][$eq]=${relation.data.genre}`));
+      if (!(existingRelationResponse.data.length > 0)) {
+        await lastValueFrom(this.apiService.post("/animegenres", relation));
+      }
     }
   }
 
@@ -79,6 +80,7 @@ export class AnimeService {
 
 
   public async addAnimeUser(anime:Anime, form:any) {
+    await this.createAnime(anime);
     let animeId = await lastValueFrom(this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`));
     let user = this.auth.me();
     user.subscribe(async user => {
