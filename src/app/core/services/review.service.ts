@@ -47,7 +47,12 @@ export class ReviewService {
     return new Observable<Review[]>(obs => {
       this.libraryService.getAnimeFromLibrary(this.libraryService.anime!).subscribe({
         next: async (libraryId:number) => {
-          let response = await lastValueFrom(this.apiService.get(`/reviews?filters[library][id][$eq]=${libraryId}&populate=library`))
+          let libraryResponse = await lastValueFrom(this.apiService.get(`/reviews?filters[library][id][$eq]=${libraryId}&populate=library`));
+          let library = libraryResponse.data[0].attributes.library
+          let userResponse = await lastValueFrom(this.apiService.get(`/library?filters[id][$eq]=${library.data[0].id}&populate=user`));
+          let user = userResponse.data[0].attributes.user
+          let extendedResponse = await lastValueFrom(this.apiService.get(`/extended-users?filters[user_id][id][$eq]=${user.data[0].id}`))
+          
         }
       })
     })
