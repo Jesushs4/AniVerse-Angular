@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { LibraryService } from 'src/app/core/services/library.service';
+import { ReviewService } from 'src/app/core/services/review.service';
 
 @Component({
   selector: 'app-review-form',
@@ -22,21 +24,20 @@ export class ReviewFormComponent  implements OnInit {
   }*/
 
   constructor(
-    private formBuilder:FormBuilder
+    private formBuilder:FormBuilder,
+    private libraryService: LibraryService,
+    public reviewService: ReviewService
   ) {
     this.form = this.formBuilder.group({
       summary:['', ],
       review:['', ],
-      date_added:[''],
-      user_score:[''],
-      nickname:[''],
     })
    }
   ngOnInit() {
   }
 
   onSubmit() {
-    this.form.value
+    this.reviewService.createReview(this.form.value).subscribe()
   }
 
 

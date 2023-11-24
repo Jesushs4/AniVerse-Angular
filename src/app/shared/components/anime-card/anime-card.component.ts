@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { Anime } from 'src/app/core/interfaces/anime';
-import { AnimeService } from 'src/app/core/services/anime.service';
 import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import { ModalController, ToastController, ToastOptions } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -15,7 +14,6 @@ export class AnimeCardComponent  implements OnInit {
 @Input() anime: Anime | null = null;
 
   constructor(
-    private animeService:AnimeService,
     private modal: ModalController,
     private router:Router,
     private libraryService: LibraryService

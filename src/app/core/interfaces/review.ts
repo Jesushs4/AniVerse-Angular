@@ -5,3 +5,13 @@ export interface Review {
     user_score: number,
     nickname: string
 }
+
+export interface CreateReview {
+    data: {
+    summary: string,
+    review: string,
+    library: number,
+    date_added: string 
+    }
+
+}

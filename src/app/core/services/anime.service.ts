@@ -61,7 +61,7 @@ export class AnimeService {
           genre: genreRelation.data[0].id
         }
       }
-      let existingRelationResponse = await lastValueFrom(this.apiService.get(`/animegenres?filters[anime][id][$eq]=${relation.data.anime}&filters[genre][id][$eq]=${relation.data.genre}`));
+      let existingRelationResponse = await lastValueFrom(this.apiService.get(`/animegenres?filters[anime][mal_id][$eq]=${relation.data.anime}&filters[genre][id][$eq]=${relation.data.genre}`));
       if (!(existingRelationResponse.data.length > 0)) {
         await lastValueFrom(this.apiService.post("/animegenres", relation));
       }
@@ -81,9 +81,14 @@ export class AnimeService {
         watch_status: form.watch_status,
         user_score: form.user_score
         
+        }
       }
-      }
-      await lastValueFrom(this.apiService.post("/libraries", relation));
+      let existingAnimeUserRelation = await lastValueFrom(this.apiService.get(`/libraries?filters[anime][mal_id][$eq]=${anime.mal_id}&filters[user][id][$eq]=${user.id}`))
+      console.log(existingAnimeUserRelation.data.length);
+      if (!(existingAnimeUserRelation.data.length>0)) {
+        await lastValueFrom(this.apiService.post("/libraries", relation));
+      } 
+      
     }
       )
   }

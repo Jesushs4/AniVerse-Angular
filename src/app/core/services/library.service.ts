@@ -119,6 +119,18 @@ export class LibraryService {
     })
   }
 
+  getAnimeFromLibrary(anime:Anime):Observable<number> {
+    return new Observable<number>(obs => {
+        this.auth.me().subscribe({
+        next: async (user:User) => {
+        let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&filters[anime][mal_id][$eq]=${anime.mal_id}`));
+        obs.next(response.data[0].id)
+        }
+      })
+    })
+
+  }
+
   deleteAnime(anime:Anime):Observable<Anime> {
     return new Observable<Anime>(obs => {
       this.auth.me().subscribe({
