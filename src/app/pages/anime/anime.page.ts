@@ -21,10 +21,10 @@ export class AnimePage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.anime.anime$)
-    if (!this.anime.anime) {
-      this.router.navigate(['/library']);
-    }
+    var lastindex = this.router.url.lastIndexOf('/')
+    var id = this.router.url.substring(lastindex+1)
+    var idNumber = +id
+    this.anime.getAnimeById(idNumber).subscribe();
   }
 
   public backToLibrary() {

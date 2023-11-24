@@ -4,6 +4,7 @@ import { AnimeService } from 'src/app/core/services/anime.service';
 import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import { ModalController, ToastController, ToastOptions } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { LibraryService } from 'src/app/core/services/library.service';
 
 @Component({
   selector: 'app-anime-card',
@@ -16,7 +17,8 @@ export class AnimeCardComponent  implements OnInit {
   constructor(
     private animeService:AnimeService,
     private modal: ModalController,
-    private router:Router
+    private router:Router,
+    private libraryService: LibraryService
   ) { }
 
   ngOnInit() {
@@ -50,7 +52,7 @@ export class AnimeCardComponent  implements OnInit {
         case 'submit':{
           console.log(info.data)
           if (this.anime) {
-              this.animeService.addAnimeUser(this.anime, info.data);
+              this.libraryService.addAnime(this.anime, info.data).subscribe();
         }
           }
         break;

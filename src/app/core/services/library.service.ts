@@ -4,6 +4,7 @@ import { Anime, Library } from '../interfaces/anime';
 import { ApiService } from './strapi/api.service';
 import { AuthService } from './auth.service';
 import { User } from '../interfaces/user';
+import { AnimeService } from './anime.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,20 +22,68 @@ export class LibraryService {
   constructor(
     private auth: AuthService,
     private apiService : ApiService,
+    private animeService : AnimeService
   ) {
 
   }
 
-  setAnime(anime:Anime):Observable<Anime> {
-    if(anime!=null) {
+  /*setAnime(anime:Anime):Observable<Anime> {
       this.anime = anime;
-    }
     return new Observable(observer => {
       this._anime.next(anime);
       observer.next(anime);
       observer.complete();
+      
     })
+  }*/
+
+  public addAnime(anime:Anime, form:any): Observable<Anime> {
+    return new Observable<Anime>(observer => {
+          this.animeService.addAnimeUser(anime,form);
+      let currentAnimes = this._library.getValue();
+      currentAnimes.push(anime);
+      this._library.next(currentAnimes);
+      observer.next(anime);
+    })
+
   }
+
+  getAnimeById(mal_id:number):Observable<Anime> {
+    console.log(mal_id)
+    return new Observable(observer => {
+        this.auth.me().subscribe({
+          next:async (user:User) => {
+
+            let anime = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&filters[anime][mal_id][$eq]=${mal_id}&populate=anime`));
+            console.log(anime);
+          let newAnime = {
+            id: anime.data[0].id,
+            title: anime.data[0].attributes.anime.data[0].attributes.title, 
+            title_english: anime.data[0].attributes.anime.data[0].attributes.title_english,
+            episodes: anime.data[0].attributes.anime.data[0].attributes.episodes,
+            status: anime.data[0].attributes.anime.data[0].attributes.status,
+            synopsis: anime.data[0].attributes.anime.data[0].attributes.synopsis,
+            year: anime.data[0].attributes.anime.data[0].attributes.year,
+            images: {
+              jpg: {
+                image_url: anime.data[0].attributes.anime.data[0].attributes.image_url,
+              }
+            },
+            genres: anime.data[0].attributes.anime.data[0].attributes.genres, 
+            favorites: anime.data[0].attributes.anime.data[0].attributes.favorites,
+            mal_id: anime.data[0].attributes.anime.data[0].attributes.mal_id,
+            episodes_watched: anime.data[0].attributes.episodes_watched, 
+            watch_status: anime.data[0].attributes.watch_status,
+            user_score: anime.data[0].attributes.user_score
+          }
+          this._anime.next(newAnime);
+          observer.next(newAnime);
+          this.anime = newAnime;
+          this.getLibrary().subscribe();
+        }})
+        })
+        
+      }
 
    getLibrary():Observable<Anime[]> {
     return new Observable<Anime[]>(obs => {
@@ -102,7 +151,6 @@ export class LibraryService {
         anime.user_score = newAnime.data.attributes.user_score;
         this._anime.next(anime);
         obs.next(anime);
-        this.setAnime(anime).subscribe();
         this.getLibrary().subscribe();
         }
       })

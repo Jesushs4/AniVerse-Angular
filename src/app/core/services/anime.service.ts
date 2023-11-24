@@ -14,7 +14,7 @@ export class AnimeService {
     private auth: AuthService
   ) { }
 
-  public async createAnime(anime:Anime) {
+  private async createAnime(anime:Anime) {
           let animeToCreate = {
       data: {
         title: anime.title,
@@ -31,14 +31,9 @@ export class AnimeService {
     if (!(existingAnime.data.length>0)) {
       await lastValueFrom(this.apiService.post("/animes", animeToCreate));
     }
-    this.createGenre(anime);
-    this.animeGenreRelation(anime);
+    await this.createGenre(anime);
+    await this.animeGenreRelation(anime);
   }
-
-//`libraries?filters[user][id][$eq]=${userId}&filters[anime][id][$eq]=${anime.mal_id}`)
-
-
-
 
   private async createGenre(anime:Anime) {
       let genres = anime.genres;
@@ -54,9 +49,6 @@ export class AnimeService {
         }
       }
   }
-
-
-
 
   private async animeGenreRelation(anime:Anime) {
     let animeRelation = await lastValueFrom(this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`));
@@ -75,9 +67,6 @@ export class AnimeService {
       }
     }
   }
-
-
-
 
   public async addAnimeUser(anime:Anime, form:any) {
     await this.createAnime(anime);

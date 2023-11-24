@@ -38,7 +38,7 @@ const routes: Routes = [
 
       },
       {
-        path: 'anime',
+        path: 'anime/:id',
         loadChildren: () => import('./pages/anime/anime.module').then( m => m.AnimePageModule)
       },
     ]

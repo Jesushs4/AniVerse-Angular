@@ -24,6 +24,7 @@ export class LoginPage implements OnInit {
   }
 
   onLogin(credentials:UserCredentials){
+    console.log(credentials);
     this.auth.login(credentials).subscribe({
       next:data=>{
         this.router.navigate(['search'])

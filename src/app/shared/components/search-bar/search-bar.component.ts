@@ -25,9 +25,6 @@ export class SearchBarComponent  implements OnInit {
       .subscribe({
         next: (results) => {
           this.searchUpdate.emit(results.data);
-        },
-        error: (error) => {
-          console.error(error);
         }
       });
   }
