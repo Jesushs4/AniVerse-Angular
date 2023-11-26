@@ -4,6 +4,7 @@ import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import { ModalController, ToastController, ToastOptions } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { LibraryService } from 'src/app/core/services/library.service';
+import { finalize, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-anime-card',
@@ -48,11 +49,11 @@ export class AnimeCardComponent  implements OnInit {
     var onDismiss = (info:any)=>{
       switch(info.role){
         case 'submit':{
-          console.log(info.data)
           if (this.anime) {
-              this.libraryService.addAnime(this.anime, info.data).subscribe();
+            this.libraryService.addAnime(this.anime, info.data).subscribe();
         }
           }
+
         break;
         default:{
           console.error("No debería entrar");
