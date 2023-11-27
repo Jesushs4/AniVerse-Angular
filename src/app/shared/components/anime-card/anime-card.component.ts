@@ -50,7 +50,7 @@ export class AnimeCardComponent  implements OnInit {
       switch(info.role){
         case 'submit':{
           if (this.anime) {
-            this.libraryService.addAnime(this.anime, info.data).subscribe();
+            this.libraryService.addAnime(this.anime, info.data).subscribe({});
         }
           }
 

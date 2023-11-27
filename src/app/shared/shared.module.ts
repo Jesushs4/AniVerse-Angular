@@ -10,6 +10,7 @@ import { RegisterFormComponent } from './components/register-form/register-form.
 import { AnimeFormComponent } from './components/anime-form/anime-form.component';
 import { ReviewFormComponent } from './components/review-form/review-form.component';
 import { ReviewsComponent } from './components/reviews/reviews.component';
+import { UserReviewPipe } from './pipes/user-review.pipe';
 
 
 
@@ -22,7 +23,8 @@ import { ReviewsComponent } from './components/reviews/reviews.component';
     RegisterFormComponent,
     AnimeFormComponent,
     ReviewFormComponent,
-    ReviewsComponent
+    ReviewsComponent,
+    UserReviewPipe
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { ReviewsComponent } from './components/reviews/reviews.component';
     RegisterFormComponent,
     AnimeFormComponent,
     ReviewFormComponent,
-    ReviewsComponent
+    ReviewsComponent,
+    UserReviewPipe,
   ]
 })
 export class SharedModule { }

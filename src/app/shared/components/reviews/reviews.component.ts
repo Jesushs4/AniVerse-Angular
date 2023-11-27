@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Review } from 'src/app/core/interfaces/review';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-reviews',
@@ -7,8 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReviewsComponent  implements OnInit {
 
-  constructor() { }
+@Input() review:Review | undefined
+
+  constructor(
+    private auth: AuthService
+  ) { 
+  }
 
   ngOnInit() {}
 
-}
+
+
+  }
+

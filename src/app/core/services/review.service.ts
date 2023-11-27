@@ -4,6 +4,7 @@ import { CreateReview, Review } from '../interfaces/review';
 import { AuthService } from './auth.service';
 import { LibraryService } from './library.service';
 import { ApiService } from './strapi/api.service';
+import { Anime } from '../interfaces/anime';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class ReviewService {
 
   createReview(form: any): Observable<CreateReview> {
     return new Observable<CreateReview>(obs => {
-      this.libraryService.getAnimeFromLibrary(this.libraryService.anime!).subscribe({
+      this.libraryService.getAnimeIdFromLibrary(this.libraryService.anime!).subscribe({
         next: async (libraryId: number) => {
           let currentDate = new Date();
           let formattedDate = currentDate.toISOString().split('T')[0];
@@ -44,15 +45,37 @@ export class ReviewService {
   }
 
   getReviews(): Observable<Review[]> {
+    //console.log(this.libraryService.anime)
     return new Observable<Review[]>(obs => {
       this.libraryService.getAnimeFromLibrary(this.libraryService.anime!).subscribe({
-        next: async (libraryId: number) => {
-          let libraryResponse = await lastValueFrom(this.apiService.get(`/reviews?filters[library][id][$eq]=${libraryId}&populate=library`));
-          let library = libraryResponse.data[0].attributes.library
-          let userResponse = await lastValueFrom(this.apiService.get(`/library?filters[id][$eq]=${library.data[0].id}&populate=user`));
-          let user = userResponse.data[0].attributes.user
-          let extendedResponse = await lastValueFrom(this.apiService.get(`/extended-users?filters[user_id][id][$eq]=${user.data[0].id}`))
+        next: async (libraryId: Anime) => {
+          console.log(libraryId)
+          let libraryResponse = await lastValueFrom(this.apiService.get(`/reviews?filters[library][anime][mal_id][$eq]=${libraryId.mal_id}&populate=library`));
+          let reviews: Review[] = [];
+          console.log(libraryResponse)
+              for (let userReview of libraryResponse.data) {
+                  let library = userReview.attributes.library.data;
+                  let userResponse = await lastValueFrom(this.apiService.get(`/libraries?filters[id][$eq]=${library.id}&populate=user`));
+                  let user = userResponse.data[0].attributes.user.data[0].id;
+                  let extendedResponse = await lastValueFrom(this.apiService.get(`/extended-users?filters[user_id][id][$eq]=${user}`));
+                  let nickname = extendedResponse.data[0].attributes.nickname;
+                  this.auth.me().subscribe( ownUser => {
+                                      reviews.push({
+                      summary: userReview.attributes.summary,
+                      review: userReview.attributes.review,
+                      date_added: userReview.attributes.date_added,
+                      user_score: library.attributes.user_score,
+                      user_id: user,
+                      nickname: nickname,
+                      own_review: ownUser.id == user
+                      })
+                  })
+                  }
 
+          console.log(reviews)
+          this._reviews.next(reviews);
+          obs.next(reviews);
+          obs.complete();
 
         }
       })

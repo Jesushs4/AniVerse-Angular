@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Anime } from 'src/app/core/interfaces/anime';
 import { LibraryService } from 'src/app/core/services/library.service';
+import { ReviewService } from 'src/app/core/services/review.service';
 import { AnimeFormComponent } from 'src/app/shared/components/anime-form/anime-form.component';
 
 @Component({
@@ -13,18 +14,25 @@ import { AnimeFormComponent } from 'src/app/shared/components/anime-form/anime-f
 export class AnimePage implements OnInit {
 
   constructor(
-    private router:Router,
+    private router: Router,
+    private route:ActivatedRoute,
     public anime:LibraryService,  
-    private modal: ModalController
+    private modal: ModalController,
+    public reviewService:ReviewService
   ) { 
+    this.route.params.subscribe(params => {
+      let idNumber = +params['id'];
+      this.anime.getAnimeById(idNumber).subscribe(animeData => {
+            this.anime.setAnime(animeData);
+            this.reviewService.getReviews().subscribe();
+    });
+  });
+
 
   }
 
   ngOnInit() {
-    var lastindex = this.router.url.lastIndexOf('/')
-    var id = this.router.url.substring(lastindex+1)
-    var idNumber = +id
-    this.anime.getAnimeById(idNumber).subscribe();
+
   }
 
   public backToLibrary() {
@@ -60,7 +68,6 @@ export class AnimePage implements OnInit {
     var onDismiss = (info:any)=>{
       switch(info.role){
         case 'submit':{
-          console.log(info.data)
           if (this.anime.anime) {
               this.anime.editAnime(this.anime.anime, info.data).subscribe();
         }

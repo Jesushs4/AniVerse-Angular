@@ -47,4 +47,6 @@
     </ion-row>
   </ion-grid>
   <app-review-form></app-review-form>
+  <app-reviews *ngFor="let review of reviewService.reviews$ | async | userReview" 
+  [review]="review"></app-reviews>
 </ion-content>

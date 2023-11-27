@@ -3,7 +3,9 @@ export interface Review {
     review: string,
     date_added: Date,
     user_score: number,
+    user_id: number,
     nickname: string
+    own_review: boolean
 }
 
 export interface CreateReview {

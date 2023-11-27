@@ -1,3 +1,11 @@
-<p>
-  reviews works!
-</p>
+<ion-card>  
+  <ion-card-header>
+    <ion-card-title>{{review?.summary}}</ion-card-title>
+    <ion-card-subtitle>{{review?.nickname}} {{review?.date_added}} {{review?.user_score}}</ion-card-subtitle>
+    <div *ngIf="review?.own_review==true">HSGKFGSFKGSFK</div>
+  </ion-card-header>
+
+  <ion-card-content>
+    {{review?.review}}
+  </ion-card-content>
+</ion-card>

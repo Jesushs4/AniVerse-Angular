@@ -27,15 +27,14 @@ export class LibraryService {
 
   }
 
-  /*setAnime(anime:Anime):Observable<Anime> {
+  setAnime(anime:Anime):Observable<Anime> {
       this.anime = anime;
     return new Observable(observer => {
       this._anime.next(anime);
       observer.next(anime);
       observer.complete();
-      
     })
-  }*/
+  }
 
   public addAnime(anime: Anime, form: any): Observable<Anime> {
     return new Observable<Anime>(observer => {
@@ -47,13 +46,11 @@ export class LibraryService {
   }
 
   getAnimeById(mal_id: number): Observable<Anime> {
-    console.log(mal_id)
     return new Observable(observer => {
       this.auth.me().subscribe({
         next: async (user: User) => {
 
           let anime = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&filters[anime][mal_id][$eq]=${mal_id}&populate=anime`));
-          console.log(anime);
           let newAnime = {
             id: anime.data[0].id,
             title: anime.data[0].attributes.anime.data[0].attributes.title,
@@ -111,14 +108,13 @@ export class LibraryService {
             }
           })
           this._library.next(animes);
-          console.log("ahora")
           obs.next(animes)
         }
       })
     })
   }
 
-  getAnimeFromLibrary(anime: Anime): Observable<number> {
+  getAnimeIdFromLibrary(anime: Anime): Observable<number> {
     return new Observable<number>(obs => {
       this.auth.me().subscribe({
         next: async (user: User) => {
@@ -127,8 +123,13 @@ export class LibraryService {
         }
       })
     })
-
   }
+
+  getAnimeFromLibrary(anime: Anime): Observable<Anime> {
+    return new Observable<Anime>(obs => {
+          obs.next(anime)
+        })
+      }
 
   deleteAnime(anime: Anime): Observable<Anime> {
     return new Observable<Anime>(obs => {

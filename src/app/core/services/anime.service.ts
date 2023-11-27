@@ -39,6 +39,9 @@ export class AnimeService {
                 obs.next(newAnime);
                 obs.complete();
             });
+          } else {
+            obs.next(anime);
+            obs.complete();
           }
         }
       )
@@ -102,6 +105,7 @@ export class AnimeService {
       switchMap(() => this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`)),
       switchMap(animeResponse => {
         this.animeGenreRelation(anime).subscribe();
+        console.log(animeResponse)
         // Asumiendo que animeResponse.data contiene la información del anime
         let animeId = animeResponse.data[0].id;
         return this.auth.me().pipe(
@@ -115,6 +119,7 @@ export class AnimeService {
                 user_score: form.user_score
               }
             };
+            console.log(relation)
             return this.apiService.get(`/libraries?filters[anime][mal_id][$eq]=${anime.mal_id}&filters[user][id][$eq]=${user.id}`).pipe(
               switchMap(existingAnimeUserRelation => {
                 if (existingAnimeUserRelation.data.length === 0) {
