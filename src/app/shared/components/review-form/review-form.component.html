@@ -10,15 +10,17 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-  
+
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <ion-item>
       <ion-input label="Summary:" labelPlacement="start" formControlName="summary" type="string"></ion-input>
     </ion-item>
     <ion-item>
       <ion-input label="Review:" labelPlacement="start" formControlName="review" type="string"></ion-input>
-    </ion-item>
+    </ion-item>  
+   
   </form>
   <ion-button type="submit" (click)="onSubmit()">Create review</ion-button>
+
 
 

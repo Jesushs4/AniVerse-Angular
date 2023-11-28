@@ -16,15 +16,15 @@ export class SearchBarComponent  implements OnInit {
   @Output() searchUpdate = new EventEmitter<any[]>();
   
   ngOnInit() {
-    this.searchControl.valueChanges
+    this.searchControl.valueChanges // Controlamos los cambios
       .pipe(
-        debounceTime(300), 
+        debounceTime(300), // Esperamos a que el usuario termine de escribir
         distinctUntilChanged(),
-        switchMap(term => this.apiService.searchAnime(term))
+        switchMap(term => this.apiService.searchAnime(term)) // Realizamos la busqueda en la API
       )
       .subscribe({
         next: (results) => {
-          this.searchUpdate.emit(results.data);
+          this.searchUpdate.emit(results.data); // Enviamos la respuesta de la API como un evento
         }
       });
   }

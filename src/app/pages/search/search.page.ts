@@ -13,7 +13,7 @@ export class SearchPage {
     public search:SearchService
   ) {}
 
-  searchResult(event:any) {
+  searchResult(event:any) { // Obtiene la información enviada por el evento y actualiza el BehaviourSubject con ella
     this.search.searchResult(event);
   }
 

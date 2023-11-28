@@ -1,7 +1,8 @@
 export interface Review {
+    id: number,
     summary: string,
     review: string,
-    date_added: Date,
+    date_added: string,
     user_score: number,
     user_id: number,
     nickname: string
@@ -13,7 +14,6 @@ export interface CreateReview {
     summary: string,
     review: string,
     library: number,
-    date_added: string 
     }
 
 }

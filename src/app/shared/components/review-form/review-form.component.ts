@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { Review } from 'src/app/core/interfaces/review';
 import { LibraryService } from 'src/app/core/services/library.service';
 import { ReviewService } from 'src/app/core/services/review.service';
 
@@ -11,6 +12,7 @@ import { ReviewService } from 'src/app/core/services/review.service';
 })
 export class ReviewFormComponent  implements OnInit {
   form:FormGroup;
+
   /*
   mode:'New'|'Edit' = 'New';
   @Input() set anime(_anime:Anime|null) {

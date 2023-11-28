@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, lastValueFrom } from 'rxjs';
+import { BehaviorSubject, Observable, last, lastValueFrom } from 'rxjs';
 import { CreateReview, Review } from '../interfaces/review';
 import { AuthService } from './auth.service';
 import { LibraryService } from './library.service';
@@ -23,36 +23,36 @@ export class ReviewService {
     private apiService: ApiService
   ) { }
 
-  createReview(form: any): Observable<CreateReview> {
+  createReview(form: any): Observable<CreateReview> { // Crear reseñas
     return new Observable<CreateReview>(obs => {
       this.libraryService.getAnimeIdFromLibrary(this.libraryService.anime!).subscribe({
         next: async (libraryId: number) => {
-          let currentDate = new Date();
-          let formattedDate = currentDate.toISOString().split('T')[0];
-          let review: CreateReview = {
+          let check = await lastValueFrom(this.apiService.get(`/reviews?filters[library][id][$eq]=${libraryId}`))
+          console.log(check)
+          if (check.data.length < 1) { // Comprobar que no haya ninguna creada por ese usuario
+            let review: CreateReview = {
             data: {
               summary: form.summary,
               review: form.review,
               library: libraryId,
-              date_added: formattedDate
             }
           }
           let response = await lastValueFrom(this.apiService.post(`/reviews`, review));
+          this.getReviews().subscribe(); 
           obs.next(review);
+          }
+
         }
       })
     })
   }
 
-  getReviews(): Observable<Review[]> {
-    //console.log(this.libraryService.anime)
+  getReviews(): Observable<Review[]> { // Mostrar reseñas
     return new Observable<Review[]>(obs => {
       this.libraryService.getAnimeFromLibrary(this.libraryService.anime!).subscribe({
         next: async (libraryId: Anime) => {
-          console.log(libraryId)
           let libraryResponse = await lastValueFrom(this.apiService.get(`/reviews?filters[library][anime][mal_id][$eq]=${libraryId.mal_id}&populate=library`));
           let reviews: Review[] = [];
-          console.log(libraryResponse)
               for (let userReview of libraryResponse.data) {
                   let library = userReview.attributes.library.data;
                   let userResponse = await lastValueFrom(this.apiService.get(`/libraries?filters[id][$eq]=${library.id}&populate=user`));
@@ -61,18 +61,18 @@ export class ReviewService {
                   let nickname = extendedResponse.data[0].attributes.nickname;
                   this.auth.me().subscribe( ownUser => {
                                       reviews.push({
+                      id: userReview.id,
                       summary: userReview.attributes.summary,
                       review: userReview.attributes.review,
-                      date_added: userReview.attributes.date_added,
+                      date_added: (new Date(userReview.attributes.createdAt)).toLocaleDateString(), // Fecha de creación formateada
                       user_score: library.attributes.user_score,
                       user_id: user,
                       nickname: nickname,
-                      own_review: ownUser.id == user
+                      own_review: ownUser.id == user // Booleano para comprobar si la reseña es del usuario logueado
                       })
                   })
                   }
 
-          console.log(reviews)
           this._reviews.next(reviews);
           obs.next(reviews);
           obs.complete();
@@ -80,6 +80,11 @@ export class ReviewService {
         }
       })
     })
+  }
+
+  async deleteReview(review:Review) { // Borrar reseña
+    await lastValueFrom(this.apiService.delete(`/reviews/${review.id}`))
+    this.getReviews().subscribe();
   }
 
 

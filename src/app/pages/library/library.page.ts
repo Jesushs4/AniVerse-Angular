@@ -21,8 +21,7 @@ export class LibraryPage implements OnInit {
     
   }
 
-  onCardClicked(anime:Anime) {
-    //this.libraryService.setAnime(anime).subscribe();
+  onCardClicked(anime:Anime) { // Al clickar, te envía al anime/id
     this.router.navigate(['/anime', anime.mal_id]);
   }
 

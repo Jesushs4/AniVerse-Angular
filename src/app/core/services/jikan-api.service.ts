@@ -12,7 +12,7 @@ export class JikanApiService {
     private http: HttpClientWebProvider
   ) { }
 
-  searchAnime(search: string): Observable<any> {
+  searchAnime(search: string): Observable<any> { // Consulta la API
     const url = `${environment.jikanURL}/anime?q=${search}`;
     return this.http.get(url);
   }

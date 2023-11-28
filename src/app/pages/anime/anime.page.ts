@@ -13,27 +13,29 @@ import { AnimeFormComponent } from 'src/app/shared/components/anime-form/anime-f
 })
 export class AnimePage implements OnInit {
 
+  public reviewCreated:boolean | undefined
+
   constructor(
     private router: Router,
     private route:ActivatedRoute,
     public anime:LibraryService,  
     private modal: ModalController,
-    public reviewService:ReviewService
+    public reviewService:ReviewService,
   ) { 
-    this.route.params.subscribe(params => {
-      let idNumber = +params['id'];
+    this.route.params.subscribe(params => { // Con esto obtenemos el id del anime en base a la URL
+      let idNumber = +params['id']; // Parseamos a un number
       this.anime.getAnimeById(idNumber).subscribe(animeData => {
             this.anime.setAnime(animeData);
-            this.reviewService.getReviews().subscribe();
+            this.reviewService.getReviews().subscribe()
     });
   });
-
-
   }
 
   ngOnInit() {
 
   }
+
+  
 
   public backToLibrary() {
     this.router.navigate(['/library']);
@@ -48,7 +50,7 @@ export class AnimePage implements OnInit {
   
 
 
-  async presentForm(data:Anime|null, onDismiss:(result:any)=>void){
+  async presentAnime(data:Anime|null, onDismiss:(result:any)=>void){ // Ejecuta el modal
     
     const modal = await this.modal.create({
       component:AnimeFormComponent,
@@ -64,7 +66,7 @@ export class AnimePage implements OnInit {
     });
   }
 
-  editAnime(){
+  public editAnime(){ // Editar anime
     var onDismiss = (info:any)=>{
       switch(info.role){
         case 'submit':{
@@ -78,7 +80,7 @@ export class AnimePage implements OnInit {
         }
       }
     }
-    this.presentForm(this.anime.anime, onDismiss);
+    this.presentAnime(this.anime.anime, onDismiss);
     }
 
 

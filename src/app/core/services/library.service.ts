@@ -36,7 +36,7 @@ export class LibraryService {
     })
   }
 
-  public addAnime(anime: Anime, form: any): Observable<Anime> {
+  public addAnime(anime: Anime, form: any): Observable<Anime> { // Añadir el anime a la libreria
     return new Observable<Anime>(observer => {
       this.animeService.addAnimeUser(anime, form).pipe(
         switchMap(() => this.getLibrary())
@@ -45,7 +45,7 @@ export class LibraryService {
     })
   }
 
-  getAnimeById(mal_id: number): Observable<Anime> {
+  getAnimeById(mal_id: number): Observable<Anime> { // Obtener anime mediante id
     return new Observable(observer => {
       this.auth.me().subscribe({
         next: async (user: User) => {
@@ -80,7 +80,7 @@ export class LibraryService {
     })
   }
 
-  getLibrary(): Observable<Anime[]> {
+  getLibrary(): Observable<Anime[]> { // Mostrar libreria
     return new Observable<Anime[]>(obs => {
       this.auth.me().subscribe({
         next: async (user: User) => {
@@ -114,7 +114,7 @@ export class LibraryService {
     })
   }
 
-  getAnimeIdFromLibrary(anime: Anime): Observable<number> {
+  getAnimeIdFromLibrary(anime: Anime): Observable<number> { // Obtener id del anime de la libreria
     return new Observable<number>(obs => {
       this.auth.me().subscribe({
         next: async (user: User) => {
@@ -125,13 +125,13 @@ export class LibraryService {
     })
   }
 
-  getAnimeFromLibrary(anime: Anime): Observable<Anime> {
+  getAnimeFromLibrary(anime: Anime): Observable<Anime> { // Obtener anime de la libreria
     return new Observable<Anime>(obs => {
           obs.next(anime)
         })
       }
 
-  deleteAnime(anime: Anime): Observable<Anime> {
+  deleteAnime(anime: Anime): Observable<Anime> { // Borrar anime de la libreria
     return new Observable<Anime>(obs => {
       this.auth.me().subscribe({
         next: async (user: User) => {
@@ -145,7 +145,7 @@ export class LibraryService {
     })
   }
 
-  editAnime(anime: Anime, form: any): Observable<Anime> {
+  editAnime(anime: Anime, form: any): Observable<Anime> { // Editar anime de la libreria
     return new Observable<Anime>(obs => {
       this.auth.me().subscribe({
         next: async (user: User) => {
@@ -161,7 +161,7 @@ export class LibraryService {
           anime.episodes_watched = newAnime.data.attributes.episodes_watched;
           anime.watch_status = newAnime.data.attributes.watch_status;
           anime.user_score = newAnime.data.attributes.user_score;
-          this._anime.next(anime);
+          this._anime.next(anime); // De esta forma mostramos los nuevos datos sin necesidad de recargar
           obs.next(anime);
           this.getLibrary().subscribe();
         }

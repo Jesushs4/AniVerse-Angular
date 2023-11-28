@@ -24,17 +24,17 @@ export class SearchService {
     this._searchResults.next(filteredAnimes);
   }
 
-  filterByPopularity(animes: Anime[]): Anime[] {
+  filterByPopularity(animes: Anime[]): Anime[] { // Filtrar por relevancia
     return [...animes].sort((a, b) => b.favorites - a.favorites);
   }
 
-  filterContent(animes: Anime[]): Anime[] {
+  filterContent(animes: Anime[]): Anime[] { // Filtrar +18
     return animes.filter(anime =>
       !anime.genres?.some(genre => genre.name === 'Hentai')
     );
   }
 
-  filterIrrelevant(animes: Anime[]): Anime[] {
+  filterIrrelevant(animes: Anime[]): Anime[] { // Quitar animes irrelevantes
     return animes.filter(anime => anime.favorites > 10);
   }
 }

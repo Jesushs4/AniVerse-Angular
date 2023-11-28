@@ -28,8 +28,8 @@ export class AnimeCardComponent  implements OnInit {
   isSearchPage():boolean {
     return this.router.url.includes('search');
   }
-
-  async presentForm(data:Anime|null, onDismiss:(result:any)=>void){
+  
+  async presentAnime(data:Anime|null, onDismiss:(result:any)=>void){
     
     const modal = await this.modal.create({
       component:AnimeFormComponent,
@@ -53,14 +53,13 @@ export class AnimeCardComponent  implements OnInit {
             this.libraryService.addAnime(this.anime, info.data).subscribe({});
         }
           }
-
         break;
         default:{
           console.error("No debería entrar");
         }
       }
     }
-    this.presentForm(this.anime, onDismiss);
+    this.presentAnime(this.anime, onDismiss);
   }
 
 }

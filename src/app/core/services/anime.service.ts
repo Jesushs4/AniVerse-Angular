@@ -15,8 +15,7 @@ export class AnimeService {
     private auth: AuthService,
   ) { }
 
-  private createAnime(anime: Anime): Observable<any> {
-    console.log(anime.genres)
+  private createAnime(anime: Anime): Observable<any> { // Crea anime
     return new Observable<any>(obs => {
       let animeToCreate = {
         data: {
@@ -30,7 +29,6 @@ export class AnimeService {
           mal_id: anime.mal_id
         }
       };
-      console.log(anime.genres)
       this.apiService.get(`/animes?filters[mal_id][$eq]=${animeToCreate.data.mal_id}`).subscribe(
         async existingAnime => {
           if (!(existingAnime.data.length > 0)) {
@@ -48,9 +46,8 @@ export class AnimeService {
     })
   }
 
-  private createGenre(anime: Anime): Observable<any> {
+  private createGenre(anime: Anime): Observable<any> { // Crea genero
     return new Observable<any>(obs => {
-      console.log(anime.genres);
       let genres = anime.genres;
       for (let genre of genres) {
         let genreToCreate = {
@@ -73,7 +70,7 @@ export class AnimeService {
     })
   }
 
-  private animeGenreRelation(anime: Anime): Observable<any> {
+  private animeGenreRelation(anime: Anime): Observable<any> { // Crea relacion entre anime y genero
     return new Observable<any>(obs => {
       this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`).subscribe(
         async animeRelation => {
@@ -100,16 +97,14 @@ export class AnimeService {
 
   }
 
-  public addAnimeUser(anime: Anime, form: any): Observable<any> {
+  public addAnimeUser(anime: Anime, form: any): Observable<any> { // Ejecuta las demas funciones y crea la relacion entre anime y user (biblioteca)
     return this.createAnime(anime).pipe(
-      switchMap(() => this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`)),
+      switchMap(() => this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`)), // Nos aseguramos de que primero se crea el anime y concatenamos con switchMap
       switchMap(animeResponse => {
         this.animeGenreRelation(anime).subscribe();
-        console.log(animeResponse)
-        // Asumiendo que animeResponse.data contiene la información del anime
         let animeId = animeResponse.data[0].id;
         return this.auth.me().pipe(
-          switchMap(user => {
+          switchMap(user => { // Obtenemos el user para crear la relacion entre anime y user
             let relation = {
               data: {
                 user: user.id,
@@ -119,15 +114,12 @@ export class AnimeService {
                 user_score: form.user_score
               }
             };
-            console.log(relation)
-            return this.apiService.get(`/libraries?filters[anime][mal_id][$eq]=${anime.mal_id}&filters[user][id][$eq]=${user.id}`).pipe(
+            return this.apiService.get(`/libraries?filters[anime][mal_id][$eq]=${anime.mal_id}&filters[user][id][$eq]=${user.id}`).pipe( // Comprobamos si ya hay una relación asi para que el usuario no pueda añadir un anime que ya ha añadido
               switchMap(existingAnimeUserRelation => {
                 if (existingAnimeUserRelation.data.length === 0) {
-                  // Sólo crear la relación si no existe
-                  return this.apiService.post("/libraries", relation);
+                  return this.apiService.post("/libraries", relation); // Crea la relación si no existe
                 } else {
-                  // Si ya existe, emitir el objeto de relación existente
-                  return of(relation);
+                  return of(relation); // Si la relacion existe va a devolver la existente
                 }
               })
             );
