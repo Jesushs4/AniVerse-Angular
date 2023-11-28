@@ -61,6 +61,9 @@ export class AnimeService {
               await lastValueFrom(this.apiService.post("/genres", genreToCreate));
               obs.next(genreToCreate);
               obs.complete();
+            } else {
+              obs.next(anime);
+              obs.complete();
             }
           }
         )

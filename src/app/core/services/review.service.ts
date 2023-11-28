@@ -11,9 +11,6 @@ import { Anime } from '../interfaces/anime';
 })
 export class ReviewService {
 
-  _ownReview: BehaviorSubject<Review | null> = new BehaviorSubject<Review | null>(null);
-  ownReview$: Observable<Review | null> = this._ownReview.asObservable();
-
   _reviews: BehaviorSubject<Review[]> = new BehaviorSubject<Review[]>([]);
   reviews$: Observable<Review[]> = this._reviews.asObservable();
 
@@ -24,6 +21,7 @@ export class ReviewService {
   ) { }
 
   createReview(form: any): Observable<CreateReview> { // Crear reseñas
+    console.log(form)
     return new Observable<CreateReview>(obs => {
       this.libraryService.getAnimeIdFromLibrary(this.libraryService.anime!).subscribe({
         next: async (libraryId: number) => {
@@ -85,6 +83,18 @@ export class ReviewService {
   async deleteReview(review:Review) { // Borrar reseña
     await lastValueFrom(this.apiService.delete(`/reviews/${review.id}`))
     this.getReviews().subscribe();
+  }
+
+  async editReview(review:Review, form:any) {
+    let info = {
+      data: {
+        summary: form.summary,
+        review: form.review
+      }
+    }
+    let newAnime = await lastValueFrom(this.apiService.put(`/reviews/${review.id}`, info));
+    let response 
+    this.getReviews().subscribe
   }
 
 

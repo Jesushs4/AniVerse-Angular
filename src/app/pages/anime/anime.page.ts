@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Anime } from 'src/app/core/interfaces/anime';
+import { Review } from 'src/app/core/interfaces/review';
 import { LibraryService } from 'src/app/core/services/library.service';
 import { ReviewService } from 'src/app/core/services/review.service';
 import { AnimeFormComponent } from 'src/app/shared/components/anime-form/anime-form.component';
+import { ReviewFormComponent } from 'src/app/shared/components/review-form/review-form.component';
 
 @Component({
   selector: 'app-anime',
@@ -51,7 +53,6 @@ export class AnimePage implements OnInit {
 
 
   async presentAnime(data:Anime|null, onDismiss:(result:any)=>void){ // Ejecuta el modal
-    
     const modal = await this.modal.create({
       component:AnimeFormComponent,
       componentProps:{
@@ -82,6 +83,35 @@ export class AnimePage implements OnInit {
     }
     this.presentAnime(this.anime.anime, onDismiss);
     }
+
+    async presentReview(data:Review|null, onDismiss:(result:any)=>void){
+    
+      const modal = await this.modal.create({
+        component:ReviewFormComponent,
+        componentProps:{
+          review:data
+        },
+      });
+      modal.present();
+      modal.onDidDismiss().then(result=>{
+        if(result && result.data){
+          onDismiss(result);
+        }
+      });
+    }
+  
+    onReview(){
+      var onDismiss = async (info:any)=>{
+              await this.reviewService.createReview(info.data).subscribe()
+              this.reviewService.getReviews().subscribe();
+          }
+
+        this.presentReview(null, onDismiss);
+      
+      
+    }
+
+
 
 
 }

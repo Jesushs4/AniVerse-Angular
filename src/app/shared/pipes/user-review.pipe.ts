@@ -10,7 +10,7 @@ export class UserReviewPipe implements PipeTransform {
   constructor(private authService: AuthService) {}
 
   transform(reviews: Review[] | null): Review[] | null {
-    if (!reviews || reviews.length === 0) {
+    if (!reviews || reviews.length === 0) { // Si no hay reviews no hace nada
       return reviews;
     }
 
@@ -18,7 +18,7 @@ export class UserReviewPipe implements PipeTransform {
       next: user => {
             let userReviewIndex = reviews.findIndex(r => r.user_id === user.id);
 
-    if (userReviewIndex > -1) {
+    if (userReviewIndex > -1) { // Si se encuentra la review del usuario, se pone la primera
       let [userReview] = reviews.splice(userReviewIndex, 1);
       reviews.unshift(userReview);
     }

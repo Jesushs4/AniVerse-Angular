@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Review } from 'src/app/core/interfaces/review';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ReviewService } from 'src/app/core/services/review.service';
+import { ReviewFormComponent } from '../review-form/review-form.component';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-reviews',
@@ -14,7 +16,8 @@ export class ReviewsComponent  implements OnInit {
 
   constructor(
     private auth: AuthService,
-    private reviewService: ReviewService
+    private reviewService: ReviewService,
+    private modal: ModalController,
   ) { 
   }
 
@@ -22,6 +25,35 @@ export class ReviewsComponent  implements OnInit {
 
   public deleteReview(review:Review) {
     this.reviewService.deleteReview(review)
+  }
+
+  async presentReview(data:Review|null, onDismiss:(result:any)=>void){
+    
+    const modal = await this.modal.create({
+      component:ReviewFormComponent,
+      componentProps:{
+        review:data
+      },
+    });
+    modal.present();
+    modal.onDidDismiss().then(result=>{
+      if(result && result.data){
+        onDismiss(result);
+      }
+    });
+  }
+
+  onReview(){
+    var onDismiss = async (info:any)=>{
+      if (this.review) {
+            await this.reviewService.editReview(this.review, info.data)
+            this.reviewService.getReviews().subscribe();
+          }
+        }
+    if (this.review) {
+      this.presentReview(this.review, onDismiss);
+    }
+    
   }
 
   }

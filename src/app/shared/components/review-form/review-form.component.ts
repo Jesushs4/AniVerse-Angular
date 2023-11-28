@@ -13,20 +13,20 @@ import { ReviewService } from 'src/app/core/services/review.service';
 export class ReviewFormComponent  implements OnInit {
   form:FormGroup;
 
-  /*
+  
   mode:'New'|'Edit' = 'New';
-  @Input() set anime(_anime:Anime|null) {
-    if (_anime) {
+  @Input() set review(_review:Review|null) {
+    if (_review) {
       this.mode = 'Edit'
-      console.log(_anime);
-      this.form.controls['user_score'].setValue(_anime.user_score);
-      this.form.controls['watch_status'].setValue(_anime.watch_status);
-      this.form.controls['episodes_watched'].setValue(_anime.episodes_watched);
+      console.log(_review);
+      this.form.controls['summary'].setValue(_review.summary);
+      this.form.controls['review'].setValue(_review.review);
     }
-  }*/
+  }
 
   constructor(
     private formBuilder:FormBuilder,
+    private newModal:ModalController,
     private libraryService: LibraryService,
     public reviewService: ReviewService
   ) {
@@ -39,7 +39,11 @@ export class ReviewFormComponent  implements OnInit {
   }
 
   onSubmit() {
-    this.reviewService.createReview(this.form.value).subscribe()
+    this.newModal.dismiss(this.form.value, 'submit');
+  }
+
+  onCancel() {
+    this.newModal.dismiss(null, 'cancel');
   }
 
 
