@@ -10,6 +10,8 @@ import { LibraryService } from 'src/app/core/services/library.service';
 })
 export class LibraryPage implements OnInit {
 
+  selectedGenre: string = '';
+
   constructor(
     public libraryService: LibraryService,
     private router:Router,
@@ -25,5 +27,8 @@ export class LibraryPage implements OnInit {
     this.router.navigate(['/anime', anime.mal_id]);
   }
 
+  onGenreSelected(selectedGenre: string) {
+    this.selectedGenre = selectedGenre;
+  }
 
 }

@@ -86,9 +86,12 @@ export class AnimeService {
                 genre: genreRelation.data[0].id
               }
             }
-            let existingRelationResponse = await lastValueFrom(this.apiService.get(`/animegenres?filters[anime][mal_id][$eq]=${relation.data.anime}&filters[genre][id][$eq]=${relation.data.genre}`));
+            let existingRelationResponse = await lastValueFrom(this.apiService.get(`/animegenres?filters[anime][mal_id][$eq]=${animeRelation.data[0].attributes.mal_id}&filters[genre][id][$eq]=${relation.data.genre}`));
             if (!(existingRelationResponse.data.length > 0)) {
               await lastValueFrom(this.apiService.post("/animegenres", relation));
+              obs.next(relation)
+              obs.complete();
+            } else {
               obs.next(relation)
               obs.complete();
             }

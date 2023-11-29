@@ -11,6 +11,8 @@ import { AnimeFormComponent } from './components/anime-form/anime-form.component
 import { ReviewFormComponent } from './components/review-form/review-form.component';
 import { ReviewsComponent } from './components/reviews/reviews.component';
 import { UserReviewPipe } from './pipes/user-review.pipe';
+import { GenreSearchComponent } from './components/genre-search/genre-search.component';
+import { FilterGenrePipe } from './pipes/filter-genre.pipe';
 
 
 
@@ -24,7 +26,9 @@ import { UserReviewPipe } from './pipes/user-review.pipe';
     AnimeFormComponent,
     ReviewFormComponent,
     ReviewsComponent,
-    UserReviewPipe
+    UserReviewPipe,
+    GenreSearchComponent,
+    FilterGenrePipe
   ],
   imports: [
     CommonModule,
@@ -43,6 +47,8 @@ import { UserReviewPipe } from './pipes/user-review.pipe';
     ReviewFormComponent,
     ReviewsComponent,
     UserReviewPipe,
+    GenreSearchComponent,
+    FilterGenrePipe
   ]
 })
 export class SharedModule { }

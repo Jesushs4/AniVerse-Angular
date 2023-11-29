@@ -14,7 +14,7 @@
   <img src="{{anime?.images?.jpg?.image_url}}" alt="{{ anime?.title }}">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <ion-item>
-      <ion-select label="Status:" placeholder="Select status" interface="popover" formControlName="user_score">
+      <ion-select label="Status:" placeholder="Select score" interface="popover" formControlName="user_score">
         <ion-select-option value="0">Not scored</ion-select-option>
         <ion-select-option value="1">1</ion-select-option>
         <ion-select-option value="2">2</ion-select-option>

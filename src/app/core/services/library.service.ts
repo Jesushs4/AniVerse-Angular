@@ -85,8 +85,19 @@ export class LibraryService {
       this.auth.me().subscribe({
         next: async (user: User) => {
           let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&populate=anime`));
-          let animes: Anime[] = response.data.map((anime: Library) => {
-            return {
+          let animes: Anime[] = []
+
+          for (const anime of response.data) {
+            const animeId = anime.attributes.anime.data[0].attributes.mal_id;
+            const genreResponse = await lastValueFrom(this.apiService.get(`/animegenres?filters[anime][mal_id][$eq]=${animeId}&populate=genre`));
+            console.log(genreResponse)
+            const genres = genreResponse.data.map((genreItem: { attributes: { genre: { data: any[]; }; }; }) => {
+              // Suponiendo que cada género está dentro de un array en `genreItem.attributes.genre.data`
+              // Y cada uno de estos tiene un objeto con `attributes` que contiene el `name`
+              return genreItem.attributes.genre.data.map(g => g.attributes.name);
+            }).flat(); // Usamos flat() para aplanar el array de arrays en un solo array
+            console.log(genres)
+            animes.push( {  
               id: anime.id,
               title: anime.attributes.anime.data[0].attributes.title,
               title_english: anime.attributes.anime.data[0].attributes.title_english,
@@ -99,20 +110,22 @@ export class LibraryService {
                   image_url: anime.attributes.anime.data[0].attributes.image_url,
                 }
               },
-              genres: anime.attributes.anime.data[0].attributes.genres,
+              genres: genres,
               favorites: anime.attributes.anime.data[0].attributes.favorites,
               mal_id: anime.attributes.anime.data[0].attributes.mal_id,
               episodes_watched: anime.attributes.episodes_watched,
               watch_status: anime.attributes.watch_status,
               user_score: anime.attributes.user_score
-            }
-          })
+            });
           this._library.next(animes);
           obs.next(animes)
-        }
-      })
-    })
-  }
+        }}
+          })
+
+        })}
+      
+    
+  
 
   getAnimeIdFromLibrary(anime: Anime): Observable<number> { // Obtener id del anime de la libreria
     return new Observable<number>(obs => {

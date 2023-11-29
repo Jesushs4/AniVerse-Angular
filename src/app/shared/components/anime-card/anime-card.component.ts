@@ -21,6 +21,7 @@ export class AnimeCardComponent  implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log(this.anime)
     }
     
   
