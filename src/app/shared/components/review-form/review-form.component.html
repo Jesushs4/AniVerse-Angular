@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title>
-      Crear reseña
+      {{(mode=='New'?'Create review':'Edit review')}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -20,7 +20,7 @@
     </ion-item>  
    
   </form>
-  <ion-button type="submit" (click)="onSubmit()">Create review</ion-button>
+  <ion-button type="submit" (click)="onSubmit()">{{(mode=='New'?'Create':'Edit')}}  </ion-button>
 
 
 

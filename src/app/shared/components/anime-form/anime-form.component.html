@@ -6,15 +6,15 @@
       </ion-button>
     </ion-buttons>
     <ion-title>
-      Añadir el anime
+      {{(mode=='New'?'Add anime':'Edit anime')}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <img src="{{anime?.images?.jpg?.image_url}}" alt="{{ anime?.title }}">
+  <img src="{{animeInfo?.images?.jpg?.image_url}}" alt="{{ animeInfo?.title }}">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <ion-item>
-      <ion-select label="Status:" placeholder="Select score" interface="popover" formControlName="user_score">
+      <ion-select label="Score:" placeholder="Select score" interface="popover" formControlName="user_score">
         <ion-select-option value="0">Not scored</ion-select-option>
         <ion-select-option value="1">1</ion-select-option>
         <ion-select-option value="2">2</ion-select-option>
@@ -36,10 +36,10 @@
       </ion-select>
     </ion-item>
     <ion-item *ngIf="form.get('watch_status')?.value=='watching'">
-      <ion-input label="Current episode:" labelPlacement="start" formControlName="episodes_watched" type="number" [min]="1" [max]="anime?.episodes ?? 100"></ion-input>
+      <ion-input label="Episode: (From 1 to {{animeInfo?.episodes}})"  labelPlacement="start" formControlName="episodes_watched" type="number" [min]="1" [max]="animeInfo?.episodes ?? 100"></ion-input>
     </ion-item>
   </form>
 </ion-content>
 <ion-footer>
-  <ion-button type="submit" (click)="onSubmit()">Add to library</ion-button>
+  <ion-button type="submit" [disabled]="!form.valid || !form.dirty" (click)="onSubmit()">{{(mode=='New'?'Add to library':'Edit')}}</ion-button>
 </ion-footer>

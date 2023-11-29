@@ -17,7 +17,8 @@ export class AnimeCardComponent  implements OnInit {
   constructor(
     private modal: ModalController,
     private router:Router,
-    private libraryService: LibraryService
+    private libraryService: LibraryService,
+    private toast: ToastController
   ) { }
 
   ngOnInit() {
@@ -51,7 +52,16 @@ export class AnimeCardComponent  implements OnInit {
       switch(info.role){
         case 'submit':{
           if (this.anime) {
-            this.libraryService.addAnime(this.anime, info.data).subscribe({});
+            this.libraryService.addAnime(this.anime, info.data).subscribe(async anime => {
+              const options:ToastOptions = {
+                message:"Anime added to library",
+                duration:1000,
+                position:'bottom',
+                color:'tertiary',
+              };
+              const toast = await this.toast.create(options);
+              toast.present();
+            });
         }
           }
         break;

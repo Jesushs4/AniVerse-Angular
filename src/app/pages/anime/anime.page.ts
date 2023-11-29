@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController, ToastOptions } from '@ionic/angular';
 import { Anime } from 'src/app/core/interfaces/anime';
 import { Review } from 'src/app/core/interfaces/review';
 import { LibraryService } from 'src/app/core/services/library.service';
@@ -23,6 +23,7 @@ export class AnimePage implements OnInit {
     public anime:LibraryService,  
     private modal: ModalController,
     public reviewService:ReviewService,
+    private toast: ToastController
   ) { 
     this.route.params.subscribe(params => { // Con esto obtenemos el id del anime en base a la URL
       let idNumber = +params['id']; // Parseamos a un number
@@ -45,7 +46,16 @@ export class AnimePage implements OnInit {
 
   public deleteAnime() {
       if (this.anime.anime) {
-        this.anime.deleteAnime(this.anime.anime).subscribe();
+        this.anime.deleteAnime(this.anime.anime).subscribe(async anime => {
+          const options:ToastOptions = {
+            message:"Anime deleted",
+            duration:1000,
+            position:'bottom',
+            color:'tertiary',
+          };
+          const toast = await this.toast.create(options);
+          toast.present();
+        });
         this.router.navigate(['/library']);
       }
     }
@@ -72,7 +82,16 @@ export class AnimePage implements OnInit {
       switch(info.role){
         case 'submit':{
           if (this.anime.anime) {
-              this.anime.editAnime(this.anime.anime, info.data).subscribe();
+              this.anime.editAnime(this.anime.anime, info.data).subscribe(async anime => {
+                const options:ToastOptions = {
+                  message:"Anime edited",
+                  duration:1000,
+                  position:'bottom',
+                  color:'tertiary',
+                };
+                const toast = await this.toast.create(options);
+                toast.present();
+              });
         }
           }
         break;
@@ -102,7 +121,16 @@ export class AnimePage implements OnInit {
   
     onReview(){
       var onDismiss = async (info:any)=>{
-              await this.reviewService.createReview(info.data).subscribe()
+              await this.reviewService.createReview(info.data).subscribe(async review => {
+                const options:ToastOptions = {
+                  message:"Review created",
+                  duration:1000,
+                  position:'bottom',
+                  color:'tertiary',
+                };
+                const toast = await this.toast.create(options);
+                toast.present();
+              })
               this.reviewService.getReviews().subscribe();
           }
 

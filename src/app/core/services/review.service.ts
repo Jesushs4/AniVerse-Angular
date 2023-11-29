@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { LibraryService } from './library.service';
 import { ApiService } from './strapi/api.service';
 import { Anime } from '../interfaces/anime';
+import { ToastController, ToastOptions } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class ReviewService {
   constructor(
     private auth: AuthService,
     private libraryService: LibraryService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private toast: ToastController
   ) { }
 
   createReview(form: any): Observable<CreateReview> { // Crear reseñas
@@ -26,7 +28,6 @@ export class ReviewService {
       this.libraryService.getAnimeIdFromLibrary(this.libraryService.anime!).subscribe({
         next: async (libraryId: number) => {
           let check = await lastValueFrom(this.apiService.get(`/reviews?filters[library][id][$eq]=${libraryId}`))
-          console.log(check)
           if (check.data.length < 1) { // Comprobar que no haya ninguna creada por ese usuario
             let review: CreateReview = {
             data: {
@@ -38,6 +39,16 @@ export class ReviewService {
           let response = await lastValueFrom(this.apiService.post(`/reviews`, review));
           this.getReviews().subscribe(); 
           obs.next(review);
+          } else {
+
+              const options:ToastOptions = {
+                message:"Error: You already have one review",
+                duration:1000,
+                position:'bottom',
+                color:'tertiary',
+              };
+              const toast = await this.toast.create(options);
+              toast.present();
           }
 
         }
@@ -82,7 +93,6 @@ export class ReviewService {
 
   async deleteReview(review:Review) { // Borrar reseña
     await lastValueFrom(this.apiService.delete(`/reviews/${review.id}`))
-    this.getReviews().subscribe();
   }
 
   async editReview(review:Review, form:any) {
@@ -92,9 +102,7 @@ export class ReviewService {
         review: form.review
       }
     }
-    let newAnime = await lastValueFrom(this.apiService.put(`/reviews/${review.id}`, info));
-    let response 
-    this.getReviews().subscribe
+    await lastValueFrom(this.apiService.put(`/reviews/${review.id}`, info));
   }
 
 

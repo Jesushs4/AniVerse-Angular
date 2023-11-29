@@ -10,25 +10,28 @@ import { Anime } from 'src/app/core/interfaces/anime';
 })
 export class AnimeFormComponent  implements OnInit {
 
+  public animeInfo!: Anime | null;
+
   form:FormGroup;
   mode:'New'|'Edit' = 'New';
   @Input() set anime(_anime:Anime|null) {
-    if (_anime) {
+    this.animeInfo = _anime;
+    if (_anime?.watch_status) {
       this.mode = 'Edit'
       this.form.controls['user_score'].setValue(_anime.user_score);
       this.form.controls['watch_status'].setValue(_anime.watch_status);
       this.form.controls['episodes_watched'].setValue(_anime.episodes_watched);
     }
+    console.log(this.mode)
   }
 
   constructor(
     private newModal:ModalController,
     private formBuilder:FormBuilder
   ) {
-    console.log(this.anime);
     this.form = this.formBuilder.group({
-      user_score:['', ],
-      watch_status:['', ],
+      user_score:['', Validators.required],
+      watch_status:['', Validators.required],
       episodes_watched: ['',]
     })
    }
