@@ -88,14 +88,11 @@ export class LibraryService {
           let animes: Anime[] = []
 
           for (const anime of response.data) {
-            const animeId = anime.attributes.anime.data[0].attributes.mal_id;
-            const genreResponse = await lastValueFrom(this.apiService.get(`/animegenres?filters[anime][mal_id][$eq]=${animeId}&populate=genre`));
-            console.log(genreResponse)
-            const genres = genreResponse.data.map((genreItem: { attributes: { genre: { data: any[]; }; }; }) => {
-              // Suponiendo que cada género está dentro de un array en `genreItem.attributes.genre.data`
-              // Y cada uno de estos tiene un objeto con `attributes` que contiene el `name`
-              return genreItem.attributes.genre.data.map(g => g.attributes.name);
-            }).flat(); // Usamos flat() para aplanar el array de arrays en un solo array
+            let animeId = anime.attributes.anime.data[0].attributes.mal_id;
+            let genreResponse = await lastValueFrom(this.apiService.get(`/animegenres?filters[anime][mal_id][$eq]=${animeId}&populate=genre`));
+            let genres = genreResponse.data.map((genreItem: { attributes: { genre: { data: any[]; }; }; }) => { // El genero se encuentra en data.attributes.genre.data.attributes.name
+              return genreItem.attributes.genre.data.map(g => g.attributes.name);  // Mapeamos de forma que solo obtengamos el nombre de esta consulta
+            }).flat(); // Con flat, en vez de enviar el array con la estructura de data[0].name, aplanamos el array de forma que el array queda con los géneros directamente
             console.log(genres)
             animes.push( {  
               id: anime.id,
@@ -149,6 +146,10 @@ export class LibraryService {
       this.auth.me().subscribe({
         next: async (user: User) => {
           let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&filters[anime][mal_id][$eq]=${anime.mal_id}`));
+          let reviewResponse = await lastValueFrom(this.apiService.get(`/reviews?filters[library][id]=${response.data[0].id}`))
+          if (reviewResponse.data.length>0) {
+            await lastValueFrom(this.apiService.delete(`/reviews/${reviewResponse.data[0].id}`));
+          }
           await lastValueFrom(this.apiService.delete(`/libraries/${response.data[0].id}`));
           this._anime.next(anime);
           obs.next(anime);

@@ -12,7 +12,9 @@ import { JikanApiService } from 'src/app/core/services/jikan-api.service';
 export class SearchBarComponent  implements OnInit {
   searchControl = new FormControl();
 
-  constructor(private apiService: JikanApiService) { }
+  constructor(private apiService: JikanApiService) {
+   }
+
   @Output() searchUpdate = new EventEmitter<any[]>();
   
   ngOnInit() {
@@ -20,10 +22,12 @@ export class SearchBarComponent  implements OnInit {
       .pipe(
         debounceTime(300), // Esperamos a que el usuario termine de escribir
         distinctUntilChanged(),
-        switchMap(term => this.apiService.searchAnime(term)) // Realizamos la busqueda en la API
+        switchMap(term => 
+          this.apiService.searchAnime(term)) // Realizamos la busqueda en la API
       )
       .subscribe({
         next: (results) => {
+          
           this.searchUpdate.emit(results.data); // Enviamos la respuesta de la API como un evento
         }
       });

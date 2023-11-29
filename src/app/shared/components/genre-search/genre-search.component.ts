@@ -37,7 +37,6 @@ export class GenreSearchComponent  implements OnInit, ControlValueAccessor {
 
   writeValue(obj: any): void {
     this.selectGenre(obj);
-    console.log(obj)
   }
 
   registerOnChange(fn: any): void {
@@ -63,7 +62,6 @@ export class GenreSearchComponent  implements OnInit, ControlValueAccessor {
     if (query) {
       let response = (await lastValueFrom(this.apiService.get(`/genres?filters[name][$startsWithi]=${query}`))).data;
       this.genres = response.map((genre: { attributes: { name: any; }; }) => ({ name: genre.attributes.name }));
-      console.log(this.genres)
     } else {
       let response =  (await lastValueFrom(this.apiService.get(`/genres/`))).data;
       this.genres = response.map((genre: { attributes: { name: any; }; }) => ({ name: genre.attributes.name }));
@@ -87,5 +85,6 @@ export class GenreSearchComponent  implements OnInit, ControlValueAccessor {
   deselect(popover: IonPopover | null = null) {
     this.selectGenre(undefined, true);
     if (popover) popover.dismiss();
+    this.genreSelectedEvent.emit(this.genreSelected)
   }
 }
