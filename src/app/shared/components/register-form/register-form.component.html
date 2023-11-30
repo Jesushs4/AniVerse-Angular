@@ -1,38 +1,37 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button color="primary" fill="clear" (click)="onCancel()">
+      <ion-button class="back-button" fill="clear" (click)="onCancel()">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>
-      New user
-    </ion-title>
+    <ion-title class="title-style">New user</ion-title>
   </ion-toolbar>
-  
 </ion-header>
-<ion-content class="ion-padding">
+
+
+
+<ion-content class="form-content">
   <form [formGroup]="form" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
     
-    <ion-item>
-      <ion-input label="Username:" labelPlacement="start" formControlName="username" type="text"></ion-input>
+    <ion-item class="form-item">
+      <ion-input class="form-input" label="Username:" labelPlacement="start" formControlName="username" type="text"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-input label="Nickname:" labelPlacement="start" formControlName="nickname" type="text"></ion-input>
+    <ion-item class="form-item">
+      <ion-input class="form-input" label="Nickname:" labelPlacement="start" formControlName="nickname" type="text"></ion-input>
+    </ion-item >
+    <ion-item class="form-item">
+      <ion-input class="form-input" label="Email:" labelPlacement="start" formControlName="email" type="email"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-input label="Email:" labelPlacement="start" formControlName="email" type="email"></ion-input>
+    <ion-item class="form-item">
+      <ion-input class="form-input" label="Password:" labelPlacement="start" formControlName="password" type="password"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-input label="Password:" labelPlacement="start" formControlName="password" type="password"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input label="Confirm:" labelPlacement="start" formControlName="confirm" type="password"></ion-input>
+    <ion-item class="form-item">
+      <ion-input class="form-input" label="Confirm:" labelPlacement="start" formControlName="confirm" type="password"></ion-input>
     </ion-item>
   </form>
-
-  
 </ion-content>
+
 <ion-footer>
-  <ion-button type="submit" [disabled]="!form.dirty" class="ion-padding" expand="full" (click)="onSubmit()">Create</ion-button>
+  <ion-button class="footer-button" type="submit" [disabled]="!form.dirty" class="ion-padding" expand="full" (click)="onSubmit()">Create</ion-button>
 </ion-footer>

@@ -1,23 +1,19 @@
 <ion-content [fullscreen]="true">
-  
-  <div class="container">
-    <ion-card>
-      <ion-card-header>
-        <div class="logo">
-          <ion-thumbnail>
-            <img alt="Aniverse" src="" />
-          </ion-thumbnail>
-          <ion-text >Aniverse</ion-text>
-        </div>
-        
-      </ion-card-header>
-      <ion-card-content>
-        <div class="ion-text-end">
-          <ion-button fill="clear" style="text-transform: none;" (click)="onRegister()">Need an account?</ion-button>
-        </div>
-        <app-login-form (onsubmit)="onLogin($event)"></app-login-form>
-      </ion-card-content>
-    </ion-card>
+  <div class="login-page" [ngStyle]="{'background-image': backgroundImage}">
+
+<ion-card>
+  <ion-card-header>
+    <ion-text>Aniverse</ion-text>
+  </ion-card-header>
+  <ion-thumbnail>
+    <img src="assets/images/logo.png" alt="Aniverse" />
+  </ion-thumbnail>
+  <ion-button fill="clear" style="text-transform: none;" (click)="onRegister()">
+    Need an account?
+  </ion-button>
+  <app-login-form (onsubmit)="onLogin($event)"></app-login-form>
+</ion-card>
+
   </div>
   
   
