@@ -21,7 +21,7 @@
           </ion-card-header>
           <ion-card-content>
             <div>
-              <ion-text>Synopsis: {{ (anime.anime$ | async)?.synopsis }}</ion-text>
+                <p *ngIf="anime.anime?.synopsis" appExpandable>Synopsis: {{ anime.anime?.synopsis }}</p>
             </div>
             <div>
               <ion-text>Episodes: {{ (anime.anime$ | async)?.episodes }}</ion-text>

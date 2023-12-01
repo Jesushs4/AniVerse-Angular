@@ -13,6 +13,7 @@ import { ReviewsComponent } from './components/reviews/reviews.component';
 import { UserReviewPipe } from './pipes/user-review.pipe';
 import { GenreSearchComponent } from './components/genre-search/genre-search.component';
 import { FilterGenrePipe } from './pipes/filter-genre.pipe';
+import { ExpandableDirective } from './directives/expandable.directive';
 
 
 
@@ -28,7 +29,8 @@ import { FilterGenrePipe } from './pipes/filter-genre.pipe';
     ReviewsComponent,
     UserReviewPipe,
     GenreSearchComponent,
-    FilterGenrePipe
+    FilterGenrePipe,
+    ExpandableDirective
   ],
   imports: [
     CommonModule,
@@ -48,7 +50,8 @@ import { FilterGenrePipe } from './pipes/filter-genre.pipe';
     ReviewsComponent,
     UserReviewPipe,
     GenreSearchComponent,
-    FilterGenrePipe
+    FilterGenrePipe,
+    ExpandableDirective
   ]
 })
 export class SharedModule { }
