@@ -6,7 +6,6 @@
     <ion-text *ngIf="genreSelected">{{ genreSelected }}</ion-text>
   </ion-item>
 </div>
-
 <ion-popover *ngIf="!disabled" trigger="popover-button" #popover>
   <ng-template>
     <ion-content>
@@ -17,11 +16,9 @@
             <ion-icon slot="icon-only" name="close-outline"></ion-icon>
           </ion-button>
         </ion-item>
-
         <ion-item button (click)="deselect(popover)">
           <ion-text>Ninguno</ion-text>
         </ion-item>
-
         <ion-item button *ngFor="let genre of genres" (click)="onGenreClicked(popover, genre)">
           <ion-text>{{ genre.name }}</ion-text>
         </ion-item>

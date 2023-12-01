@@ -1,10 +1,32 @@
-<nav class="navbar">
-  <div class="nav-brand">
-    <!-- Tu logo o nombre de la app aquí -->
-  </div>
-  <ul class="nav-links">
-    <li><ion-button button (click)="goSearch()">Search</ion-button></li>
-    <li><ion-button button (click)="goLibrary()">Library</ion-button></li>
-  </ul>
-  <ion-button class="logout-button" (click)="logout()">Logout</ion-button>
-</nav>
+<ion-menu contentId="main-content" side="end">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title id="menu-title">Aniverse</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-title id="menu-subtitle">Pages</ion-title>
+    <ion-buttons id="menu-buttons">
+      <ion-button (click)="goSearch()">Search</ion-button>
+      <ion-button (click)="goLibrary()">Library</ion-button>
+      <ion-button>About</ion-button>
+    </ion-buttons>
+    <ion-title id="user-subtitle">User</ion-title>
+    <ion-buttons id="user-buttons">
+      <ion-button>Change nickname</ion-button>
+      <ion-button>Change password</ion-button>
+      <ion-button (click)="logout()">Logout</ion-button>
+      
+    </ion-buttons>
+  </ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar id="menu-toolbar">
+      <ion-buttons slot="end">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</div>

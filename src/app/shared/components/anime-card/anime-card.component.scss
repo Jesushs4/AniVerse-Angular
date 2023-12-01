@@ -2,10 +2,11 @@ ion-card {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   overflow: hidden;
-  margin: 1rem; /* Añade un margen alrededor de la tarjeta */
+  margin: 1rem;
   transition: transform 0.3s ease-in-out;
-  padding: 0.5rem; /* Añade padding dentro de la tarjeta */
-  width:200px;
+  padding: 0.5rem;
+  width: 200px;
+  text-align: center;
 }
 
 ion-card:hover {
@@ -13,29 +14,39 @@ ion-card:hover {
 }
 
 .anime-card img {
-  width: 200px;
-  height: 300px;
-  object-fit: cover;
+  width: 100%; /* Asegura que la imagen llene el ancho */
+  height: 20rem; /* Altura fija para estandarizar el tamaño de las imágenes */
+  object-fit: cover; /* Mantiene las proporciones de la imagen */
 }
 
 ion-card-header {
-  background-color: #1e1e1e;
-  color: white;
-  padding: 0.5rem;
-  font-size: 1rem;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-ion-card-title {
-  font-size: 1.2rem;
-}
-
-ion-card-subtitle {
-  font-size: 1rem;
+ion-card-title, ion-card-subtitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block; /* o 'inline-block', según tu estructura */
+  width: 100%; /* o un ancho específico según tu diseño */
+  max-width: 180px; /* Ajusta esto según el ancho de tu tarjeta */
 }
 
 ion-card-content {
-  padding: 0.5rem;
-  font-size: 0.9rem;
-  color: #333;
-  background-color: #f8f8f8;
+  min-height: 100px; /* Altura mínima ajustada */
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  gap: 8px; /* Espacio reducido entre elementos */
+}
+
+
+.libButton {
+    margin-top: 8px; /* Reduce el espacio antes del botón */
+  justify-content: center; /* Centra el botón dentro de la tarjeta */
+  align-items: center;
 }

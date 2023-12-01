@@ -1,11 +1,5 @@
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large"></ion-title>
-      
-    </ion-toolbar>
-  </ion-header>
   <app-genre-search (genreSelectedEvent)="onGenreSelected($event)"></app-genre-search>
   <div class="anime-card">
     <app-anime-card *ngFor="let anime of (libraryService.library$ | async | filterGenre:selectedGenre)" 
@@ -13,5 +7,4 @@
     (click)="onCardClicked(anime)">
   </app-anime-card>
   </div>
-  
 </ion-content>

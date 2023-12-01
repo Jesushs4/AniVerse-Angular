@@ -1,0 +1,53 @@
+.content-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+    padding: 1rem;
+  }
+  
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los elementos horizontalmente en su columna */
+    justify-content: center; /* Centra los elementos verticalmente en su columna */
+    flex: 1; /* Ocupa la mitad del espacio disponible */
+    max-width: 50%;
+  }
+
+  img {
+    border-radius: 10%;
+    border: 0.5rem solid var(--ion-card-background);
+  }
+
+  .image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los elementos horizontalmente en su columna */
+    justify-content: center; /* Centra los elementos verticalmente en su columna */
+    flex: 1; /* Ocupa la mitad del espacio disponible */
+    max-width: 50%;
+    
+}
+  
+  form {
+    width: 100%; /* El formulario ocupa todo el ancho del contenedor */
+  }
+
+  ion-content img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin-bottom: 1rem; /* Espacio debajo de la imagen */
+  }
+
+  .form-container h2 {
+    color: #333; /* Color del texto */
+    margin-bottom: 1rem; /* Espacio antes del inicio del formulario */
+    font-size: 1.5rem; /* Tamaño del texto */
+  }
+  form ion-item {
+    margin-bottom: 1rem; /* Espaciado entre elementos del formulario */
+    width: 100%; /* Cada elemento del formulario ocupa todo el ancho del formulario */
+  }

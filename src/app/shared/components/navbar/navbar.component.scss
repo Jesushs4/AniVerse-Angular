@@ -1,41 +1,37 @@
-.navbar {
+#menu-buttons {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.logout-button {
-  font-size: 1rem;
-  font-weight: bold;
-  text-decoration: none; /* Quitamos la subraya de los enlaces */
-  color: white;
-  border-radius: 5px;
-
+  flex-direction: column; /* Acomoda los elementos en una columna */
+  align-items: center; /* Centra los botones horizontalmente */
+  color: black;
+  padding-top: 1rem;
 }
 
-  .nav-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-decoration: none; /* Quitamos la subraya de los enlaces */
-    color: white;
-  }
-  
-  /* Estilo de los enlaces de navegación */
-  .nav-links {
-    list-style: none;
-    display: flex;
-  }
-  
-  .nav-links li {
-    margin-right: 1rem;
-  }
-  
-  .nav-links li button {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-  }
-  
-  .nav-links li button:hover {
-    background-color: #555;
-  }
+#menu-title {
+  text-align: center;
+  font-size: 2rem;
+}
+
+#menu-subtitle {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+#user-subtitle {
+  padding-top:100%;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+
+
+#user-buttons {
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column; /* Acomoda los elementos en una columna */
+  align-items: center; /* Centra los botones horizontalmente */
+  color: black;
+}
+
+#menu-toolbar {
+  text-align: right;
+}
