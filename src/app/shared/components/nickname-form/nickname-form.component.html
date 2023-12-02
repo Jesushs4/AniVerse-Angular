@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="primary" fill="clear" (click)="onCancel()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Change Nickname</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form " (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-input label="New Nickname" formControlName="nickname"></ion-input>
+    </ion-item>
+    <ion-button type="submit" (click)="onSubmit()" expand="full">Change</ion-button>
+  </form>
+</ion-content>

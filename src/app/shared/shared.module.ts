@@ -14,6 +14,7 @@ import { UserReviewPipe } from './pipes/user-review.pipe';
 import { GenreSearchComponent } from './components/genre-search/genre-search.component';
 import { FilterGenrePipe } from './pipes/filter-genre.pipe';
 import { ExpandableDirective } from './directives/expandable.directive';
+import { NicknameFormComponent } from './components/nickname-form/nickname-form.component';
 
 
 
@@ -30,7 +31,8 @@ import { ExpandableDirective } from './directives/expandable.directive';
     UserReviewPipe,
     GenreSearchComponent,
     FilterGenrePipe,
-    ExpandableDirective
+    ExpandableDirective,
+    NicknameFormComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +53,8 @@ import { ExpandableDirective } from './directives/expandable.directive';
     UserReviewPipe,
     GenreSearchComponent,
     FilterGenrePipe,
-    ExpandableDirective
+    ExpandableDirective,
+    NicknameFormComponent
   ]
 })
 export class SharedModule { }
