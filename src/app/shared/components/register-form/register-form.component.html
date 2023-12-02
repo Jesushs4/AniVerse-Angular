@@ -15,23 +15,27 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
     
     <ion-item class="form-item">
-      <ion-input class="form-input" label="Username:" labelPlacement="start" formControlName="username" type="text"></ion-input>
+      <ion-input class="form-input" label="Username:" labelPlacement="floating" formControlName="username" type="text"></ion-input>
     </ion-item>
     <ion-item class="form-item">
-      <ion-input class="form-input" label="Nickname:" labelPlacement="start" formControlName="nickname" type="text"></ion-input>
+      <ion-input class="form-input" label="Nickname:" labelPlacement="floating" formControlName="nickname" type="text"></ion-input>
     </ion-item >
     <ion-item class="form-item">
-      <ion-input class="form-input" label="Email:" labelPlacement="start" formControlName="email" type="email"></ion-input>
+      <ion-input class="form-input" label="Email:" labelPlacement="floating" formControlName="email" type="email"></ion-input>
     </ion-item>
-    <ion-item class="form-item">
-      <ion-input class="form-input" label="Password:" labelPlacement="start" formControlName="password" type="password"></ion-input>
-    </ion-item>
-    <ion-item class="form-item">
-      <ion-input class="form-input" label="Confirm:" labelPlacement="start" formControlName="confirm" type="password"></ion-input>
-    </ion-item>
+    <div class="password-row">
+      <ion-item class="form-item">
+        <ion-input class="form-input" label="Password:" labelPlacement="floating" formControlName="password" type="password"></ion-input>
+      </ion-item>
+      <ion-item class="form-item">
+        <ion-input class="form-input" label="Confirm:" labelPlacement="floating" formControlName="confirm" type="password"></ion-input>
+      </ion-item>
+    </div>
+    <div class="error-message" *ngIf="hasError('password', 'passwordProto')">La contraseña debe tener 1 mayúscula, 1 número y 8 caracteres.</div>
+    <div class="error-message" *ngIf="hasError('confirm', 'passwordMatch')">Las contraseñas no coinciden.</div>
   </form>
 </ion-content>
 
 <ion-footer>
-  <ion-button class="footer-button" type="submit" [disabled]="!form.dirty" class="ion-padding" expand="full" (click)="onSubmit()">Create</ion-button>
+  <ion-button class="footer-button" type="submit" shape="round" [disabled]="!form.valid || !form.dirty" class="ion-padding" expand="full" (click)="onSubmit()">Register</ion-button>
 </ion-footer>

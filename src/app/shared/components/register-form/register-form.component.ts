@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { PasswordValidation } from 'src/app/core/validators/password';
 
 @Component({
   selector: 'app-register-form',
@@ -21,9 +22,10 @@ export class RegisterFormComponent  implements OnInit {
       username:['', [Validators.required]],
       nickname:['', [Validators.required]],
       email:['', [Validators.required]],
-      password:['', [Validators.required]],
-      confirm:['', [Validators.required]]
-    })
+      password:['', [Validators.required, PasswordValidation.passwordProto()]],
+      confirm:['', [Validators.required, PasswordValidation.passwordProto()]]
+    }, {validators: PasswordValidation.passwordMatch('password', 'confirm')}
+    )
   }
 
   ngOnInit() {}
@@ -36,9 +38,8 @@ export class RegisterFormComponent  implements OnInit {
     this._modal.dismiss(this.form.value, 'ok');
   } 
 
-  hasError(control:string, error:string):boolean{
+  hasError(control: string, error: string): boolean {
     let errors = this.form.controls[control].errors;
-    return errors!=null && error in errors;
-  
+    return errors != null && error in errors;
   }
 }
