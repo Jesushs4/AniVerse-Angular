@@ -31,8 +31,13 @@ export class NavbarComponent  implements OnInit {
   }
 
   logout() {
+    this.menu.close();
     this.auth.logout();
     this.router.navigate(['/login'])
+  }
+
+  changeNickname() {
+    
   }
 
 }

@@ -1,54 +1,52 @@
 <ion-content fullscreen>
   <ion-toolbar>
-      <ion-buttons slot="start">
-    <ion-button (click)="backToLibrary()">
-      <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
-    </ion-button>
-  </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-button (click)="backToLibrary()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Volver</ion-title>
   </ion-toolbar>
-
-  <ion-grid>
-    <ion-row>
-      <ion-col size="3">
-        <ion-card>
+<div *ngIf="animeLoaded">
+  <div class="content-container" >
+    <div class="image-container">
           <img src="{{ anime.anime?.images?.jpg?.image_url }}" alt="{{ anime.anime?.title }}">
-        </ion-card>
-      </ion-col>
-      <ion-col size="9">
+        </div>
+        <div class="info-container">
         <ion-card>
-          <ion-card-header>
+          <ion-card-header id="card-title">
             <ion-card-title>{{ anime.anime?.title }}</ion-card-title>
+            <ion-card-subtitle>{{anime.anime?.title_english}}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
             <div>
-                <p *ngIf="anime.anime?.synopsis" appExpandable>Synopsis: {{ anime.anime?.synopsis }}</p>
+                <ion-title id="synopsis">Synopsis</ion-title>
+                <p appExpandable>{{ anime.anime?.synopsis }}</p>
             </div>
-            <div>
-              <ion-text>Episodes: {{ (anime.anime$ | async)?.episodes }}</ion-text>
+            <div class="anime-info">
+              <ion-text>Episodes: {{ anime.anime?.episodes ?? 'N/A' }}</ion-text>
+              <ion-text>Year published: {{ anime.anime?.year ?? 'N/A' }}</ion-text>
+              <ion-text>Anime status: {{ anime.anime?.status }}</ion-text>
             </div>
-            <div>
-              <ion-text>Year published: {{ (anime.anime$ | async)?.year }}</ion-text>
-            </div>
-            <div>
-              <ion-text>Status of the anime: {{ (anime.anime$ | async)?.status }}</ion-text>
-            </div>
-            <div>
-              <ion-text>Score: {{ (anime.anime$ | async)?.user_score }}</ion-text>
-            </div>
-            <div>
-              <ion-text>User status: {{ (anime.anime$ | async)?.watch_status | titlecase}}</ion-text>
-            </div>
-            <div>
-              <ion-text>Episodes watched: {{ (anime.anime$ | async)?.episodes_watched }}</ion-text>
+            <ion-title id="userinfo">User Info</ion-title>
+            <div class="anime-info">
+              <ion-text>Score: {{anime.anime?.user_score === 0 ? 'Not scored' : anime.anime?.user_score}}</ion-text>
+              <ion-text>User status: {{ anime.anime?.watch_status | titlecase}}</ion-text>
+              <ion-text>Episodes watched: {{ anime.anime?.watch_status === 'watching' ? anime.anime?.episodes_watched : 'Not watching' }} </ion-text>
             </div>
           </ion-card-content>
-          <ion-button (click)="editAnime()">EDITAR</ion-button>
-          <ion-button (click)="deleteAnime()">BORRAR</ion-button>
+          <ion-button (click)="editAnime()">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+          <ion-button (click)="deleteAnime()">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
         </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+        </div>
+      </div>
+  <ion-title id="reviewTitle">Reviews</ion-title>
   <ion-button (click)="onReview()">CREAR RESEÑA</ion-button>
   <app-reviews *ngFor="let review of reviewService.reviews$ | async | userReview" 
   [review]="review"></app-reviews>
+</div>
 </ion-content>

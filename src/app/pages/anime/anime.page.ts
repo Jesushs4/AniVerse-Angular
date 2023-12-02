@@ -16,6 +16,7 @@ import { ReviewFormComponent } from 'src/app/shared/components/review-form/revie
 export class AnimePage implements OnInit {
 
   public reviewCreated:boolean | undefined
+  public animeLoaded = false;
 
   constructor(
     private router: Router,
@@ -25,17 +26,19 @@ export class AnimePage implements OnInit {
     public reviewService:ReviewService,
     private toast: ToastController
   ) { 
-    this.route.params.subscribe(params => { // Con esto obtenemos el id del anime en base a la URL
-      let idNumber = +params['id']; // Parseamos a un number
-      this.anime.getAnimeById(idNumber).subscribe(animeData => {
-            this.anime.setAnime(animeData);
-            this.reviewService.getReviews().subscribe()
-    });
-  });
+   
   }
 
   ngOnInit() {
-
+    this.route.params.subscribe(params => { // Con esto obtenemos el id del anime en base a la URL
+      let idNumber = +params['id']; // Parseamos a un number
+      this.anime.getAnimeById(idNumber).subscribe(animeData => {
+            this.anime.setAnime(animeData).subscribe(response => {
+              this.animeLoaded = true;
+            });
+            this.reviewService.getReviews().subscribe();
+    });
+  });
   }
 
   

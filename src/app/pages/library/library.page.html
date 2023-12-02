@@ -1,7 +1,7 @@
 
 <ion-content [fullscreen]="true">
   <app-genre-search (genreSelectedEvent)="onGenreSelected($event)"></app-genre-search>
-  <div class="anime-card">
+  <div class="anime-card" >
     <app-anime-card *ngFor="let anime of (libraryService.library$ | async | filterGenre:selectedGenre)" 
     [anime]="anime"
     (click)="onCardClicked(anime)">

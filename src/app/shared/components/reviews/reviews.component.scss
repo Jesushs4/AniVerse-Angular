@@ -1,0 +1,29 @@
+ion-card {
+  margin: 1rem 2rem; /* Aumenta el margen alrededor de las tarjetas para más espacio con la página */
+  padding: 1rem; /* Añade padding dentro de la tarjeta para separar el contenido de los bordes */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra opcional para profundidad */
+  border-radius: 10px; /* Bordes redondeados para un aspecto más suave */
+}
+
+ion-card-header {
+  padding: 0.5rem;
+}
+
+.header-top, .header-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 0.5rem; /* Espacio entre los botones */
+}
+
+button {
+  padding: 0.5rem 1rem;
+}
+
+ion-card-content {
+  padding: 1rem; /* Espacio adicional dentro del contenido de la tarjeta */
+}

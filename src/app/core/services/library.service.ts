@@ -36,11 +36,12 @@ export class LibraryService {
     })
   }
 
+
   public addAnime(anime: Anime, form: any): Observable<Anime> { // Añadir el anime a la libreria
     return new Observable<Anime>(observer => {
-      this.animeService.addAnimeUser(anime, form).pipe(
-        switchMap(() => this.getLibrary())
-      ).subscribe();
+      this.animeService.addAnimeUser(anime, form).subscribe(response => {
+        this.getLibrary().subscribe();
+      })
       observer.next(anime);
     })
   }
@@ -74,7 +75,6 @@ export class LibraryService {
           this._anime.next(newAnime);
           observer.next(newAnime);
           this.anime = newAnime;
-          this.getLibrary().subscribe();
         }
       })
     })

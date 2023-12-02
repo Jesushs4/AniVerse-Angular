@@ -17,7 +17,6 @@ export interface Anime {
     episodes_watched: number,
     watch_status: string,
     user_score: number
-
 }
 
 

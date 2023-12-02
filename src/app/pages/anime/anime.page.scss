@@ -1,10 +1,54 @@
-ion-card {
-    --background: #fff; /* Cambia el color de fondo si es necesario */
-    height: 100%; /* O establece una altura fija si es necesario */
-  }
+.content-container {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding: 1rem;
+}
+
+.image-container {
+  flex: 0 0 25%; /* Ocupa exactamente un 25% del espacio disponible */
+}
+
+.info-container {
+  flex: 1; /* Ocupa el resto del espacio, aproximadamente un 75% */
+}
+
+img {
+  width: 100%; /* Asegura que la imagen se ajuste al ancho del contenedor */
+  height: auto;
+  object-fit: cover;
+  border-radius: 10%;
+  border: 0.5rem solid var(--ion-card-background);
+}
+
+#synopsis {
+  text-align: center;
+}
+
+#card-title {
+  text-align: center;
+}
+
+ion-card-title {
+  font-size: 3rem;
+}
+
+.anime-info {
+  padding-top: 1rem;
+  display: flex;
+  justify-content:center; /* Alinea los elementos al inicio del contenedor */
+  align-items: center; /* Alinea los elementos verticalmente en el centro */
+  gap: 1rem; /* Espacio entre cada elemento ion-text */
+}
+
+#userinfo {
+  text-align: center;
+  padding-top: 4rem;
+}
+
+#reviewTitle {
+  text-align: center;
+  font-size: 2rem;
+  color:black;
   
-  img {
-    width: 100%; /* Asume que quieres que la imagen ocupe todo el ancho del ion-card */
-    height: 100%; /* Asume que quieres que la imagen ocupe toda la altura disponible */
-    object-fit: cover; /* Esto hará que la imagen cubra todo el espacio disponible, puedes cambiarlo a 'contain' para que se ajuste dentro del espacio disponible */
-  }
+}
