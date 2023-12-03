@@ -23,7 +23,6 @@ export class ReviewService {
   ) { }
 
   createReview(form: any): Observable<CreateReview> { // Crear reseñas
-    console.log(form)
     return new Observable<CreateReview>(obs => {
       this.libraryService.getAnimeIdFromLibrary(this.libraryService.anime!).subscribe({
         next: async (libraryId: number) => {

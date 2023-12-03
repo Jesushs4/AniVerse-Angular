@@ -93,7 +93,6 @@ export class LibraryService {
             let genres = genreResponse.data.map((genreItem: { attributes: { genre: { data: any[]; }; }; }) => { // El genero se encuentra en data.attributes.genre.data.attributes.name
               return genreItem.attributes.genre.data.map(g => g.attributes.name);  // Mapeamos de forma que solo obtengamos el nombre de esta consulta
             }).flat(); // Con flat, en vez de enviar el array con la estructura de data[0].name, aplanamos el array de forma que el array queda con los géneros directamente
-            console.log(genres)
             animes.push({
               id: anime.id,
               title: anime.attributes.anime.data[0].attributes.title,
@@ -122,9 +121,6 @@ export class LibraryService {
 
     })
   }
-
-
-
 
   getAnimeIdFromLibrary(anime: Anime): Observable<number> { // Obtener id del anime de la libreria
     return new Observable<number>(obs => {
@@ -179,7 +175,6 @@ export class LibraryService {
           anime.user_score = newAnime.data.attributes.user_score;
           this._anime.next(anime); // De esta forma mostramos los nuevos datos sin necesidad de recargar
           obs.next(anime);
-          this.getLibrary().subscribe();
         }
       })
     })
