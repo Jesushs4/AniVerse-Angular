@@ -34,8 +34,8 @@ export class AnimeService {
           if (!(existingAnime.data.length > 0)) {
             let newAnime = await lastValueFrom(this.apiService.post("/animes", animeToCreate));
             this.createGenre(anime).subscribe(() => {
-                obs.next(newAnime);
-                obs.complete();
+              obs.next(newAnime);
+              obs.complete();
             });
           } else {
             obs.next(anime);

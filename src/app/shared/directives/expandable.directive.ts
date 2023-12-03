@@ -4,13 +4,13 @@ import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
   selector: '[appExpandable]'
 })
 export class ExpandableDirective {
-  
+
   private maxLength: number = 250;
   private synopsis: string = '';
   private isExpanded: boolean = false;
   private toggleButton: HTMLButtonElement | undefined;
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef) { }
 
   ngAfterViewInit() {
     this.synopsis = this.el.nativeElement.textContent;
@@ -22,7 +22,7 @@ export class ExpandableDirective {
 
   addToggleButton() { // Se crea el botón y se añade al ElementRef
     this.toggleButton = document.createElement('button');
-      this.toggleButton.textContent = "+";
+    this.toggleButton.textContent = "+";
     this.toggleButton.addEventListener('click', () => this.toggleText()); // Al hacer click expandirá o reducirá el texto
     this.el.nativeElement.appendChild(this.toggleButton);
   }

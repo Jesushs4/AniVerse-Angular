@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class UserReviewPipe implements PipeTransform {
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   transform(reviews: Review[] | null): Review[] | null {
     if (!reviews || reviews.length === 0) { // Si no hay reviews no hace nada
@@ -16,16 +16,16 @@ export class UserReviewPipe implements PipeTransform {
 
     this.authService.me().subscribe({
       next: user => {
-            let userReviewIndex = reviews.findIndex(r => r.user_id === user.id);
+        let userReviewIndex = reviews.findIndex(r => r.user_id === user.id);
 
-    if (userReviewIndex > -1) { // Si se encuentra la review del usuario, se pone la primera
-      let [userReview] = reviews.splice(userReviewIndex, 1);
-      reviews.unshift(userReview);
-    }
+        if (userReviewIndex > -1) { // Si se encuentra la review del usuario, se pone la primera
+          let [userReview] = reviews.splice(userReviewIndex, 1);
+          reviews.unshift(userReview);
+        }
 
-    return reviews;
-  }
+        return reviews;
       }
+    }
     )
     return reviews;
   }

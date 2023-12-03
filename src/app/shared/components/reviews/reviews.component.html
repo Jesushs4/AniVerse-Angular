@@ -1,9 +1,8 @@
-<ion-card>  
+<ion-card>
   <ion-card-header>
     <div class="header-top">
-      <ion-card-title>{{review?.summary}}</ion-card-title>
-      <div class="header-buttons" *ngIf="review?.own_review==true">
-
+      <ion-card-title>{{ review?.summary }}</ion-card-title>
+      <div class="header-buttons" *ngIf="review?.own_review == true">
         <ion-button (click)="onReview()">
           <ion-icon slot="icon-only" name="create-outline"></ion-icon>
         </ion-button>
@@ -11,16 +10,20 @@
         <ion-button (click)="deleteReview(review!)">
           <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-button>
-        
       </div>
     </div>
     <div class="header-bottom">
-      <ion-card-subtitle>User: {{review?.nickname}} - Score: {{review?.user_score === 0 ? 'Not scored' : review?.user_score}}</ion-card-subtitle>
-      <div class="review-date">{{review?.date_added}}</div>
+      <ion-card-subtitle
+        >User: {{ review?.nickname }} - Score:
+        {{
+          review?.user_score === 0 ? "Not scored" : review?.user_score
+        }}</ion-card-subtitle
+      >
+      <div class="review-date">{{ review?.date_added }}</div>
     </div>
   </ion-card-header>
 
   <ion-card-content>
-    {{review?.review}}
+    {{ review?.review }}
   </ion-card-content>
 </ion-card>

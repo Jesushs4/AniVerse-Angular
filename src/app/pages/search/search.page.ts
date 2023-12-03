@@ -12,7 +12,7 @@ export class SearchPage {
 
 
   constructor(
-    public search:SearchService,
+    public search: SearchService,
     private apiService: JikanApiService
   ) {
     apiService.searchAnime("").subscribe(search => { // Al inicializar la página, que busque vació "" para que salga algo
@@ -20,11 +20,11 @@ export class SearchPage {
     })
   }
 
-  searchResult(event:any) { // Obtiene la información enviada por el evento y actualiza el BehaviourSubject con ella
+  searchResult(event: any) { // Obtiene la información enviada por el evento y actualiza el BehaviourSubject con ella
     this.search.searchResult(event);
   }
 
-  
+
 
 
 

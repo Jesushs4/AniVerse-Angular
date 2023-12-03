@@ -8,35 +8,35 @@ import { PasswordValidation } from 'src/app/core/validators/password';
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.scss'],
 })
-export class RegisterFormComponent  implements OnInit {
+export class RegisterFormComponent implements OnInit {
 
 
-  form:FormGroup;
+  form: FormGroup;
 
   constructor(
-    private _modal:ModalController,
-    private formBuilder:FormBuilder
-  ) { 
+    private _modal: ModalController,
+    private formBuilder: FormBuilder
+  ) {
     this.form = this.formBuilder.group({
-      id:[null],
-      username:['', [Validators.required]],
-      nickname:['', [Validators.required]],
-      email:['', [Validators.required]],
-      password:['', [Validators.required, PasswordValidation.passwordProto()]],
-      confirm:['', [Validators.required, PasswordValidation.passwordProto()]]
-    }, {validators: PasswordValidation.passwordMatch('password', 'confirm')}
+      id: [null],
+      username: ['', [Validators.required]],
+      nickname: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required, PasswordValidation.passwordProto()]],
+      confirm: ['', [Validators.required, PasswordValidation.passwordProto()]]
+    }, { validators: PasswordValidation.passwordMatch('password', 'confirm') }
     )
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  onCancel(){
+  onCancel() {
     this._modal.dismiss(null, 'cancel');
   }
 
-  onSubmit(){
+  onSubmit() {
     this._modal.dismiss(this.form.value, 'ok');
-  } 
+  }
 
   hasError(control: string, error: string): boolean {
     let errors = this.form.controls[control].errors;

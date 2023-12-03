@@ -7,18 +7,18 @@ import { ModalController } from '@ionic/angular';
   templateUrl: './nickname-form.component.html',
   styleUrls: ['./nickname-form.component.scss'],
 })
-export class NicknameFormComponent  implements OnInit {
+export class NicknameFormComponent implements OnInit {
 
-  form:FormGroup;
-  
+  form: FormGroup;
+
   constructor(
-    private newModal:ModalController,
-    private formBuilder:FormBuilder
+    private newModal: ModalController,
+    private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-      nickname:['', Validators.required],
+      nickname: ['', Validators.required],
     })
-   }
+  }
 
   ngOnInit() {
   }

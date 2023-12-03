@@ -11,9 +11,9 @@ export interface Review {
 
 export interface CreateReview {
     data: {
-    summary: string,
-    review: string,
-    library: number,
+        summary: string,
+        review: string,
+        library: number,
     }
 
 }

@@ -10,10 +10,20 @@
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="form " (ngSubmit)="onSubmit()">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <ion-item>
-      <ion-input label="New Nickname" labelPlacement="floating" formControlName="nickname"></ion-input>
+      <ion-input
+        label="New Nickname"
+        labelPlacement="floating"
+        formControlName="nickname"
+      ></ion-input>
     </ion-item>
-    <ion-button type="submit" [disabled]="!form.valid || !form.dirty" (click)="onSubmit()" expand="full">Change</ion-button>
+    <ion-button
+      type="submit"
+      [disabled]="!form.valid || !form.dirty"
+      (click)="onSubmit()"
+      expand="full"
+      >Change</ion-button
+    >
   </form>
 </ion-content>

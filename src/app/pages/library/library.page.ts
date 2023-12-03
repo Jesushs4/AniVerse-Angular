@@ -14,16 +14,16 @@ export class LibraryPage implements OnInit {
 
   constructor(
     public libraryService: LibraryService,
-    private router:Router,
-  ) { 
+    private router: Router,
+  ) {
     this.libraryService.getLibrary().subscribe();
   }
 
   ngOnInit() {
-    
+
   }
 
-  onCardClicked(anime:Anime) { // Al clickar, te envía al anime/id
+  onCardClicked(anime: Anime) { // Al clickar, te envía al anime/id
     this.router.navigate(['/anime', anime.mal_id]);
   }
 

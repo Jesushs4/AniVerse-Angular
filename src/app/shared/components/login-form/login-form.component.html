@@ -1,11 +1,32 @@
-<form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
+<form
+  *ngIf="form"
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  (keyup.enter)="onSubmit()"
+>
   <ion-item>
-    <ion-input labelPlacement="stacked" label="Username" formControlName="username" type="text"></ion-input>
+    <ion-input
+      labelPlacement="stacked"
+      label="Username"
+      formControlName="username"
+      type="text"
+    ></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input labelPlacement="stacked" label="Password" formControlName="password" type="password"></ion-input>
+    <ion-input
+      labelPlacement="stacked"
+      label="Password"
+      formControlName="password"
+      type="password"
+    ></ion-input>
   </ion-item>
   <div class="ion-padding-top">
-    <ion-button expand="full" style="text-transform: none;" [disabled]="!form.valid" (click)="onSubmit()">Acceder</ion-button>
+    <ion-button
+      expand="full"
+      style="text-transform: none"
+      [disabled]="!form.valid"
+      (click)="onSubmit()"
+      >Acceder</ion-button
+    >
   </div>
 </form>

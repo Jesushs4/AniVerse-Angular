@@ -27,8 +27,8 @@ export class LibraryService {
 
   }
 
-  setAnime(anime:Anime):Observable<Anime> {
-      this.anime = anime;
+  setAnime(anime: Anime): Observable<Anime> {
+    this.anime = anime;
     return new Observable(observer => {
       this._anime.next(anime);
       observer.next(anime);
@@ -94,7 +94,7 @@ export class LibraryService {
               return genreItem.attributes.genre.data.map(g => g.attributes.name);  // Mapeamos de forma que solo obtengamos el nombre de esta consulta
             }).flat(); // Con flat, en vez de enviar el array con la estructura de data[0].name, aplanamos el array de forma que el array queda con los géneros directamente
             console.log(genres)
-            animes.push( {  
+            animes.push({
               id: anime.id,
               title: anime.attributes.anime.data[0].attributes.title,
               title_english: anime.attributes.anime.data[0].attributes.title_english,
@@ -114,15 +114,17 @@ export class LibraryService {
               watch_status: anime.attributes.watch_status,
               user_score: anime.attributes.user_score
             });
-          this._library.next(animes);
-          obs.next(animes)
-        }}
-          })
+            this._library.next(animes);
+            obs.next(animes)
+          }
+        }
+      })
 
-        })}
-      
-    
-  
+    })
+  }
+
+
+
 
   getAnimeIdFromLibrary(anime: Anime): Observable<number> { // Obtener id del anime de la libreria
     return new Observable<number>(obs => {
@@ -137,9 +139,9 @@ export class LibraryService {
 
   getAnimeFromLibrary(anime: Anime): Observable<Anime> { // Obtener anime de la libreria
     return new Observable<Anime>(obs => {
-          obs.next(anime)
-        })
-      }
+      obs.next(anime)
+    })
+  }
 
   deleteAnime(anime: Anime): Observable<Anime> { // Borrar anime de la libreria
     return new Observable<Anime>(obs => {
@@ -147,7 +149,7 @@ export class LibraryService {
         next: async (user: User) => {
           let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&filters[anime][mal_id][$eq]=${anime.mal_id}`));
           let reviewResponse = await lastValueFrom(this.apiService.get(`/reviews?filters[library][id]=${response.data[0].id}`))
-          if (reviewResponse.data.length>0) {
+          if (reviewResponse.data.length > 0) {
             await lastValueFrom(this.apiService.delete(`/reviews/${reviewResponse.data[0].id}`));
           }
           await lastValueFrom(this.apiService.delete(`/libraries/${response.data[0].id}`));

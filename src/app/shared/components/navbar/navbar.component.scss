@@ -1,7 +1,7 @@
 #menu-buttons {
   display: flex;
-  flex-direction: column; /* Acomoda los elementos en una columna */
-  align-items: center; /* Centra los botones horizontalmente */
+  flex-direction: column;
+  align-items: center;
   color: black;
   padding-top: 1rem;
 }
@@ -17,18 +17,16 @@
 }
 
 #user-subtitle {
-  padding-top:100%;
+  padding-top: 100%;
   text-align: center;
   font-size: 1.5rem;
 }
 
-
-
 #user-buttons {
   padding-top: 1rem;
   display: flex;
-  flex-direction: column; /* Acomoda los elementos en una columna */
-  align-items: center; /* Centra los botones horizontalmente */
+  flex-direction: column;
+  align-items: center;
   color: black;
 }
 

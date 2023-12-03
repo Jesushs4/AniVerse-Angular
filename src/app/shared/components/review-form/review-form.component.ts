@@ -10,12 +10,12 @@ import { ReviewService } from 'src/app/core/services/review.service';
   templateUrl: './review-form.component.html',
   styleUrls: ['./review-form.component.scss'],
 })
-export class ReviewFormComponent  implements OnInit {
-  form:FormGroup;
+export class ReviewFormComponent implements OnInit {
+  form: FormGroup;
 
-  
-  mode:'New'|'Edit' = 'New';
-  @Input() set review(_review:Review|null) {
+
+  mode: 'New' | 'Edit' = 'New';
+  @Input() set review(_review: Review | null) {
     if (_review) {
       this.mode = 'Edit'
       console.log(_review);
@@ -25,16 +25,16 @@ export class ReviewFormComponent  implements OnInit {
   }
 
   constructor(
-    private formBuilder:FormBuilder,
-    private newModal:ModalController,
+    private formBuilder: FormBuilder,
+    private newModal: ModalController,
     private libraryService: LibraryService,
     public reviewService: ReviewService
   ) {
     this.form = this.formBuilder.group({
-      summary:['', ],
-      review:['', ],
+      summary: ['',],
+      review: ['',],
     })
-   }
+  }
   ngOnInit() {
   }
 

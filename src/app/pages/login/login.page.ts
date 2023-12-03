@@ -20,11 +20,11 @@ export class LoginPage implements OnInit {
     'assets/images/backgrounds/Imagen4.png',
     'assets/images/backgrounds/Imagen5.png'
   ]
-  backgroundImage : string | undefined;
+  backgroundImage: string | undefined;
 
   constructor(
-    private auth:AuthService,
-    private router:Router,
+    private auth: AuthService,
+    private router: Router,
     private modal: ModalController,
     private toast: ToastController
   ) { }
@@ -35,60 +35,60 @@ export class LoginPage implements OnInit {
     console.log(this.backgroundImage)
   }
 
-  onLogin(credentials:UserCredentials){
+  onLogin(credentials: UserCredentials) {
     console.log(credentials);
     this.auth.login(credentials).subscribe({
-      next:data=>{
+      next: data => {
         this.router.navigate(['search'])
       },
-      error:err=>{
+      error: err => {
         console.log(err);
       }
     });
   }
 
-  async presentRegister(data:UserRegisterInfo|null, onDismiss:(result:any)=>void){
-    
+  async presentRegister(data: UserRegisterInfo | null, onDismiss: (result: any) => void) {
+
     const modal = await this.modal.create({
-      component:RegisterFormComponent,
-      componentProps:{
-        user:data
+      component: RegisterFormComponent,
+      componentProps: {
+        user: data
       },
     });
     modal.present();
-    modal.onDidDismiss().then(result=>{
-      if(result && result.data){
+    modal.onDidDismiss().then(result => {
+      if (result && result.data) {
         onDismiss(result);
       }
     });
   }
 
-  onRegister(){
-    var onDismiss = (info:any)=>{
+  onRegister() {
+    var onDismiss = (info: any) => {
       console.log(info);
-      switch(info.role){
-        case 'ok':{
-          this.auth.register(info.data).subscribe(async user=>{
-              const options:ToastOptions = {
-              message:"User created",
-              duration:1000,
-              position:'bottom',
-              color:'tertiary',
-              cssClass:'card-ion-toast'
+      switch (info.role) {
+        case 'ok': {
+          this.auth.register(info.data).subscribe(async user => {
+            const options: ToastOptions = {
+              message: "User created",
+              duration: 1000,
+              position: 'bottom',
+              color: 'tertiary',
+              cssClass: 'card-ion-toast'
             };
             const toast = await this.toast.create(options);
             toast.present();
           })
         }
-        break;
-        default:{
+          break;
+        default: {
           console.error("No debería entrar");
         }
       }
     }
     this.presentRegister(null, onDismiss);
   }
-  
+
 
 }
 

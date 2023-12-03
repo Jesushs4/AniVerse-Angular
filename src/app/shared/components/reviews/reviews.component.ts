@@ -10,71 +10,71 @@ import { ModalController, ToastController, ToastOptions } from '@ionic/angular';
   templateUrl: './reviews.component.html',
   styleUrls: ['./reviews.component.scss'],
 })
-export class ReviewsComponent  implements OnInit {
+export class ReviewsComponent implements OnInit {
 
-@Input() review:Review | undefined
+  @Input() review: Review | undefined
 
   constructor(
     private auth: AuthService,
     private reviewService: ReviewService,
     private modal: ModalController,
     private toast: ToastController
-  ) { 
+  ) {
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  public deleteReview(review:Review) {
+  public deleteReview(review: Review) {
     this.reviewService.deleteReview(review)
     this.reviewService.getReviews().subscribe(async review => {
-      const options:ToastOptions = {
-        message:"Review deleted",
-        duration:1000,
-        position:'bottom',
-        color:'tertiary',
+      const options: ToastOptions = {
+        message: "Review deleted",
+        duration: 1000,
+        position: 'bottom',
+        color: 'tertiary',
       };
       const toast = await this.toast.create(options);
       toast.present()
     });
   }
 
-  async presentReview(data:Review|null, onDismiss:(result:any)=>void){
-    
+  async presentReview(data: Review | null, onDismiss: (result: any) => void) {
+
     const modal = await this.modal.create({
-      component:ReviewFormComponent,
-      componentProps:{
-        review:data
+      component: ReviewFormComponent,
+      componentProps: {
+        review: data
       },
     });
     modal.present();
-    modal.onDidDismiss().then(result=>{
-      if(result && result.data){
+    modal.onDidDismiss().then(result => {
+      if (result && result.data) {
         onDismiss(result);
       }
     });
   }
 
-  onReview(){
-    var onDismiss = async (info:any)=>{
+  onReview() {
+    var onDismiss = async (info: any) => {
       if (this.review) {
-            await this.reviewService.editReview(this.review, info.data)
-            this.reviewService.getReviews().subscribe(async review => {
-              const options:ToastOptions = {
-                message:"Review edited",
-                duration:1000,
-                position:'bottom',
-                color:'tertiary',
-              };
-              const toast = await this.toast.create(options);
-              toast.present();
-            });
-          }
-        }
+        await this.reviewService.editReview(this.review, info.data)
+        this.reviewService.getReviews().subscribe(async review => {
+          const options: ToastOptions = {
+            message: "Review edited",
+            duration: 1000,
+            position: 'bottom',
+            color: 'tertiary',
+          };
+          const toast = await this.toast.create(options);
+          toast.present();
+        });
+      }
+    }
     if (this.review) {
       this.presentReview(this.review, onDismiss);
     }
-    
-  }
 
   }
+
+}
 

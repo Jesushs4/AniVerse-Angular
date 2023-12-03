@@ -6,47 +6,76 @@
       </ion-button>
     </ion-buttons>
     <ion-title>
-      {{(mode=='New'?'Add anime':'Edit anime')}}
+      {{ mode == "New" ? "Add anime" : "Edit anime" }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <div class="content-container">
     <div class="image-container">
-      <img src="{{animeInfo?.images?.jpg?.image_url}}" alt="{{ animeInfo?.title }}">
+      <img
+        src="{{ animeInfo?.images?.jpg?.image_url }}"
+        alt="{{ animeInfo?.title }}"
+      />
     </div>
     <div class="form-container">
       <h2>{{ animeInfo?.title }}</h2>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <ion-item>
-      <ion-select label="Score:" placeholder="Select score" interface="popover" labelPlacement="stacked" formControlName="user_score">
-        <ion-select-option [value]="0">Not scored</ion-select-option>
-        <ion-select-option [value]="1">1</ion-select-option>
-        <ion-select-option [value]="2">2</ion-select-option>
-        <ion-select-option [value]="3">3</ion-select-option>
-        <ion-select-option [value]="4">4</ion-select-option>
-        <ion-select-option [value]="5">5</ion-select-option>
-        <ion-select-option [value]="6">6</ion-select-option>
-        <ion-select-option [value]="7">7</ion-select-option>
-        <ion-select-option [value]="8">8</ion-select-option>
-        <ion-select-option [value]="9">9</ion-select-option>
-        <ion-select-option [value]="10">10</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-select label="Status:" placeholder="Select status" interface="popover" labelPlacement="stacked" formControlName="watch_status">
-        <ion-select-option value="watching">Watching</ion-select-option>
-        <ion-select-option value="plan to watch">Plan to watch</ion-select-option>
-        <ion-select-option value="completed">Completed</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item *ngIf="form.get('watch_status')?.value=='watching'">
-      <ion-input label="Episode (1-{{animeInfo?.episodes ?? 'N/A'}}):"  labelPlacement="floating" formControlName="episodes_watched" type="number" [min]="1" [max]="animeInfo?.episodes ?? 1000"></ion-input>
-    </ion-item>
-  </form>
-</div>
-</div>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <ion-item>
+          <ion-select
+            label="Score:"
+            placeholder="Select score"
+            interface="popover"
+            labelPlacement="stacked"
+            formControlName="user_score"
+          >
+            <ion-select-option [value]="0">Not scored</ion-select-option>
+            <ion-select-option [value]="1">1</ion-select-option>
+            <ion-select-option [value]="2">2</ion-select-option>
+            <ion-select-option [value]="3">3</ion-select-option>
+            <ion-select-option [value]="4">4</ion-select-option>
+            <ion-select-option [value]="5">5</ion-select-option>
+            <ion-select-option [value]="6">6</ion-select-option>
+            <ion-select-option [value]="7">7</ion-select-option>
+            <ion-select-option [value]="8">8</ion-select-option>
+            <ion-select-option [value]="9">9</ion-select-option>
+            <ion-select-option [value]="10">10</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-select
+            label="Status:"
+            placeholder="Select status"
+            interface="popover"
+            labelPlacement="stacked"
+            formControlName="watch_status"
+          >
+            <ion-select-option value="watching">Watching</ion-select-option>
+            <ion-select-option value="plan to watch"
+              >Plan to watch</ion-select-option
+            >
+            <ion-select-option value="completed">Completed</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="form.get('watch_status')?.value == 'watching'">
+          <ion-input
+            label="Episode (1-{{ animeInfo?.episodes ?? 'N/A' }}):"
+            labelPlacement="floating"
+            formControlName="episodes_watched"
+            type="number"
+            [min]="1"
+            [max]="animeInfo?.episodes ?? 1000"
+          ></ion-input>
+        </ion-item>
+      </form>
+    </div>
+  </div>
 </ion-content>
 <ion-footer>
-  <ion-button type="submit" [disabled]="!form.valid || !form.dirty" (click)="onSubmit()">{{(mode=='New'?'Add to library':'Edit')}}</ion-button>
+  <ion-button
+    type="submit"
+    [disabled]="!form.valid || !form.dirty"
+    (click)="onSubmit()"
+    >{{ mode == "New" ? "Add to library" : "Edit" }}</ion-button
+  >
 </ion-footer>

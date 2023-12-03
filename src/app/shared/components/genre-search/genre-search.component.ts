@@ -15,9 +15,9 @@ export const GENRESEARCH_SELECTABLE_VALUE_ACCESSOR: any = {
   selector: 'app-genre-search',
   templateUrl: './genre-search.component.html',
   styleUrls: ['./genre-search.component.scss'],
-  providers:[GENRESEARCH_SELECTABLE_VALUE_ACCESSOR]
+  providers: [GENRESEARCH_SELECTABLE_VALUE_ACCESSOR]
 })
-export class GenreSearchComponent  implements OnInit, ControlValueAccessor {
+export class GenreSearchComponent implements OnInit, ControlValueAccessor {
 
   genres: Genre[] = [];
   genreSelected: string | undefined;
@@ -25,14 +25,14 @@ export class GenreSearchComponent  implements OnInit, ControlValueAccessor {
 
   @Output() genreSelectedEvent = new EventEmitter<string>();
 
-  propagateChange = (obj: any) => {};
+  propagateChange = (obj: any) => { };
 
   constructor(public apiService: ApiService) { }
 
   async ngOnInit() {
     let response = (await lastValueFrom(this.apiService.get(`/genres/`))).data;
     this.genres = response.map((genre: { attributes: { name: any; }; }) => ({ name: genre.attributes.name }));
-    
+
   }
 
   writeValue(obj: any): void {
@@ -63,7 +63,7 @@ export class GenreSearchComponent  implements OnInit, ControlValueAccessor {
       let response = (await lastValueFrom(this.apiService.get(`/genres?filters[name][$startsWithi]=${query}`))).data;
       this.genres = response.map((genre: { attributes: { name: any; }; }) => ({ name: genre.attributes.name }));
     } else {
-      let response =  (await lastValueFrom(this.apiService.get(`/genres/`))).data;
+      let response = (await lastValueFrom(this.apiService.get(`/genres/`))).data;
       this.genres = response.map((genre: { attributes: { name: any; }; }) => ({ name: genre.attributes.name }));
     }
   }

@@ -22,27 +22,27 @@ export interface Anime {
 
 export interface Library {
     id: number,
-        attributes: {
-            anime: {
-                data: [{
-                    attributes: {
-                        title: string,
-                        title_english: string,
-                        episodes: number,
-                        status: string,
-                        synopsis: string,
-                        year: number,
-                        image_url: string,
-                        genres: any[],
-                        favorites: number,
-                        mal_id: number,
-                    }
+    attributes: {
+        anime: {
+            data: [{
+                attributes: {
+                    title: string,
+                    title_english: string,
+                    episodes: number,
+                    status: string,
+                    synopsis: string,
+                    year: number,
+                    image_url: string,
+                    genres: any[],
+                    favorites: number,
+                    mal_id: number,
+                }
 
-                }]
+            }]
 
-            }
-            episodes_watched: number,
-            watch_status: string,
-            user_score: number
         }
+        episodes_watched: number,
+        watch_status: string,
+        user_score: number
+    }
 }
