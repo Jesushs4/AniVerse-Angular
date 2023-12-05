@@ -13,6 +13,8 @@ import { ApiService } from 'src/app/core/services/strapi/api.service';
 })
 export class NavbarComponent implements OnInit {
 
+  public username:string = "";
+
   constructor(
     private router: Router,
     private auth: AuthService,
@@ -22,8 +24,15 @@ export class NavbarComponent implements OnInit {
     private apiService: ApiService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.setUsername();
+  }
 
+  private setUsername() {
+    this.auth.me().subscribe(user => {
+      this.username = user.nickname
+    })
+  }
 
   goSearch() {
     this.menu.close();
@@ -85,6 +94,7 @@ export class NavbarComponent implements OnInit {
   changeNickname() {
     var onDismiss = (info: any) => {
       this.setNickname(info.data).subscribe(async nickname => {
+        this.setUsername();
         const options: ToastOptions = {
           message: "Nickname changed",
           duration: 1000,

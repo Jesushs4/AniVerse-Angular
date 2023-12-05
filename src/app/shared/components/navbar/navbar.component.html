@@ -14,7 +14,6 @@
     <ion-title id="user-subtitle">User</ion-title>
     <ion-buttons id="user-buttons">
       <ion-button (click)="changeNickname()">Change nickname</ion-button>
-      <ion-button>Change password</ion-button>
       <ion-button (click)="logout()">Logout</ion-button>
     </ion-buttons>
   </ion-content>
@@ -25,7 +24,7 @@
       <ion-buttons slot="end">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <ion-title>Menu</ion-title>
+      <ion-title>Welcome, {{username}}</ion-title>
     </ion-toolbar>
   </ion-header>
 </div>

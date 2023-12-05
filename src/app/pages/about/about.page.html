@@ -1,13 +1,16 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>about</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">about</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="content-container">
+  <h2 class="page-title">About me</h2>
+  <p class="page-description">Esta página fue creada basandose en myAnimeList y usando la API de Jikan.</p>
+  <ion-card class="card-style">
+    <img src="https://avatars.githubusercontent.com/u/115071141?v=4" alt="Foto de GitHub" class="card-image"/>
+    <ion-card-header class="card-header">
+      <ion-card-title class="card-title">Jesús Herrera Sánchez</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="card-content">
+      Para más información sobre mí y mis trabajos, podéis clickar en el siguiente enlace
+      <p>
+        <a href="https://github.com/Jesushs4" target="_blank">Visita mi GitHub</a>
+      </p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

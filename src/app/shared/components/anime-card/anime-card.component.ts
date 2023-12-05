@@ -4,7 +4,7 @@ import { AnimeFormComponent } from '../anime-form/anime-form.component';
 import { ModalController, ToastController, ToastOptions } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { LibraryService } from 'src/app/core/services/library.service';
-import { finalize, switchMap } from 'rxjs';
+import { Observable, finalize, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-anime-card',
@@ -22,6 +22,7 @@ export class AnimeCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
   }
 
 
