@@ -26,7 +26,11 @@
     <p>{{'anime.status' | translate}}: {{ anime?.status ?? "N/A" }}</p>
     <p>{{'anime.year' | translate}}: {{ anime?.year ?? "N/A" }}</p>
   </ion-card-content>
-  <ion-button class="libButton" (click)="addToLibrary()"
-    >{{'anime.addLibrary' | translate}}</ion-button
+  <div>
+  <ion-button *ngIf="added" disabled class="libButton" (click)="addToLibrary()"
+    >{{'anime.alreadyAdded' | translate}}</ion-button
   >
+  <ion-button *ngIf="!added" class="libButton" (click)="addToLibrary()"
+  >{{'anime.addLibrary' | translate}}</ion-button>
+  </div>
 </ion-card>

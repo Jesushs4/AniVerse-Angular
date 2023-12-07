@@ -120,5 +120,19 @@ export class AnimeService {
     );
   }
 
+  isAnimeAdded(malId: number): Observable<boolean> {
+    return new Observable(obs => {
+           this.auth.me().subscribe(async user => {
+      let check = await lastValueFrom(this.apiService.get(`/libraries?filters[anime][mal_id][$eq]=${malId}&filters[user][id][$eq]=${user.id}`))
+      if (check.data.length > 0) {
+        obs.next(true);
+      } else {
+        obs.next(false);
+      }
+    })
+    })
+
+  }
+
 
 }
