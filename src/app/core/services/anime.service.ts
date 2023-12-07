@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Anime } from '../interfaces/anime';
-import { Observable, finalize, from, lastValueFrom, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import { Observable, catchError, finalize, from, lastValueFrom, map, mergeMap, of, switchMap, tap, throwError } from 'rxjs';
 import { ApiService } from './strapi/api.service';
 import { AuthService } from './auth.service';
 
@@ -27,40 +27,44 @@ export class AnimeService {
         mal_id: anime.mal_id
       }
     };
-    return this.apiService.get(`/animes?filters[mal_id][$eq]=${animeToCreate.data.mal_id}`).pipe(
-      switchMap(async existingAnime => {
-        if (!(existingAnime.data.length > 0)) {
-          let newAnime = await lastValueFrom(this.apiService.post("/animes", animeToCreate));
-          this.createGenre(anime).subscribe(() => {
-
-          });
+    return this.apiService.post("/animes", animeToCreate).pipe(
+      catchError(error => {
+        if (error.status === 409 || error.status === 400) { 
+          return of(null); 
+        }
+        return throwError(() => error);
+      }),
+      switchMap(createdAnime => {
+        if (createdAnime) {
+          return this.createGenre(anime);
         } else {
+          return of(null);
         }
       })
-
-    )
-
+    );
   }
 
   private createGenre(anime: Anime): Observable<any> { // Crea genero
     let genres: number[] = [];
-    return from(anime.genres).pipe(
-      mergeMap(genre => {
-        return this.apiService.get(`/genres?filters[name][$eq]=${genre.name}`).pipe(
-          mergeMap(existingGenre => {
-            let newGenre = {
-              data: {
-                name: genre.name
-              }
-            }
-            if (existingGenre.data.length === 0) {
-              return this.apiService.post(`/genres`, newGenre).pipe(tap(response => genres.push(response.data.id)));
-            } else {
-              genres.push(existingGenre.data[0].id);
-              return of(null);
-            }
-          })
-        )
+    return this.apiService.get('/genres').pipe(
+      switchMap(existingGenresResponse => {
+        let existingGenres = existingGenresResponse.data.map((genre: { id: number; attributes: { name: string; }; }) => {
+          return {
+            id: genre.id,
+            name: genre.attributes.name
+          };
+        });
+        anime.genres.forEach(genre => {
+          let foundGenre = existingGenres.find((g: { name: any; }) => g.name === genre.name);
+          if (!foundGenre) {
+            let newGenre = { data: { name: genre.name } };
+            this.apiService.post('/genres', newGenre).subscribe(response => 
+              genres.push(response.data.id));
+          } else {
+            genres.push(foundGenre.id);
+          }
+        });
+        return of(null)
       }),
       finalize(() => {
         this.tryingGenre(anime, genres).subscribe();
@@ -69,7 +73,6 @@ export class AnimeService {
   }
 
   private tryingGenre(anime:Anime, genres: number[]):Observable<any> {
-    console.log(genres)
     return new Observable(obs => {
       this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`).subscribe(async anime => {
         let post = {
@@ -81,7 +84,6 @@ export class AnimeService {
         await lastValueFrom(this.apiService.post(`/animegenres`, post))
         })
     })
-
   }
 
 
