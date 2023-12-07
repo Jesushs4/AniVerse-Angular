@@ -86,14 +86,15 @@ export class LibraryService {
         next: async (user: User) => {
           let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&populate=anime`));
           let genresresponse = await lastValueFrom(this.apiService.get(`/animegenres?populate=anime,genre`));
-
-          var animesWithGenres = genresresponse.data.map((item: { attributes: { anime: { data: { attributes: { mal_id: any; }; }; }; genre: { data: any[]; }; }; }) => {
-            let animeMalId = item.attributes.anime.data.attributes.mal_id;
-            let genreNames = item.attributes.genre.data.map(genre => genre.attributes.name);
-            return {
-              anime: animeMalId,
-              genre: genreNames
-            };
+          var animesWithGenres = genresresponse.data.flatMap((item: { attributes: { anime: { data: any[]; }; genre: { data: any[]; }; }; }) => {
+            return item.attributes.anime.data.map(animeData => {
+              let animeMalId = animeData.attributes.mal_id;
+              let genreNames = item.attributes.genre.data.map(genre => genre.attributes.name);
+              return {
+                anime: animeMalId,
+                genre: genreNames
+              };
+            });
           });
 
 

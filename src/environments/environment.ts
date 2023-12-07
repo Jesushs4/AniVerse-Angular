@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   jikanURL: 'https://api.jikan.moe/v4',
-  apiURL: 'http://localhost:1337/api'
+  apiURL: 'https://aniverse-service.onrender.com/api'
 };
 
 /*

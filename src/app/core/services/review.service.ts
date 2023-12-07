@@ -83,11 +83,9 @@ export class ReviewService {
               })
             })
           }
-
           this._reviews.next(reviews);
           obs.next(reviews);
           obs.complete();
-
         }
       })
     })
