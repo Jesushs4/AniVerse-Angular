@@ -20,6 +20,7 @@ export const GENRESEARCH_SELECTABLE_VALUE_ACCESSOR: any = {
 export class GenreSearchComponent implements OnInit, ControlValueAccessor {
 
   genres: Genre[] = [];
+  allGenres: Genre[] = []
   genreSelected: string | undefined;
   disabled: boolean = false;
 
@@ -31,7 +32,8 @@ export class GenreSearchComponent implements OnInit, ControlValueAccessor {
 
   async ngOnInit() {
     let response = (await lastValueFrom(this.apiService.get(`/genres/`))).data;
-    this.genres = response.map((genre: { attributes: { name: any; }; }) => ({ name: genre.attributes.name }));
+    this.allGenres = response.map((genre: { attributes: { name: any; }; }) => ({ name: genre.attributes.name }));
+    this.genres = this.allGenres
 
   }
 
@@ -60,11 +62,11 @@ export class GenreSearchComponent implements OnInit, ControlValueAccessor {
   private async filter(value: string) {
     const query = value
     if (query) {
-      let response = (await lastValueFrom(this.apiService.get(`/genres?filters[name][$startsWithi]=${query}`))).data;
-      this.genres = response.map((genre: { attributes: { name: any; }; }) => ({ name: genre.attributes.name }));
+      this.genres = this.allGenres.filter(genre =>
+        genre.name.toLowerCase().startsWith(query)
+      );
     } else {
-      let response = (await lastValueFrom(this.apiService.get(`/genres/`))).data;
-      this.genres = response.map((genre: { attributes: { name: any; }; }) => ({ name: genre.attributes.name }));
+      this.genres = [...this.allGenres];
     }
   }
 

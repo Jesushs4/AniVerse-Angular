@@ -28,4 +28,8 @@ export class CardTextDirective {
   @HostListener('mouseleave') onMouseLeave() {
     this.renderer.setStyle(this.tooltipElement, 'display', 'none');
   }
+
+  ngOnDestroy() {
+    this.renderer.removeChild(document.body, this.tooltipElement);
+  }
 }

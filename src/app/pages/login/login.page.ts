@@ -15,11 +15,11 @@ import { RegisterFormComponent } from 'src/app/shared/components/register-form/r
 export class LoginPage implements OnInit {
 
   backgroundImages = [
-    'assets/images/backgrounds/Imagen1.png',
-    'assets/images/backgrounds/Imagen2.png',
-    'assets/images/backgrounds/Imagen3.png',
-    'assets/images/backgrounds/Imagen4.png',
-    'assets/images/backgrounds/Imagen5.png'
+    'assets/images/backgrounds/Imagen1.jpg',
+    'assets/images/backgrounds/Imagen2.jpg',
+    'assets/images/backgrounds/Imagen3.jpg',
+    'assets/images/backgrounds/Imagen4.jpg',
+    'assets/images/backgrounds/Imagen5.jpg'
   ]
   backgroundImage: string | undefined;
   lang:string = "es";
