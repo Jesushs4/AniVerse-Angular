@@ -85,14 +85,32 @@ export class LibraryService {
       this.auth.me().subscribe({
         next: async (user: User) => {
           let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&populate=anime`));
+          let genresresponse = await lastValueFrom(this.apiService.get(`/animegenres?populate=anime,genre`));
+          console.log(genresresponse);
+          console.log(response)
+
+          var animesWithGenres = genresresponse.data.map((item: { attributes: { anime: { data: { attributes: { mal_id: any; }; }; }; genre: { data: any[]; }; }; }) => {
+            let animeMalId = item.attributes.anime.data.attributes.mal_id;
+            let genreNames = item.attributes.genre.data.map(genre => genre.attributes.name);
+        
+            return {
+              anime: animeMalId,
+              genre: genreNames
+            };
+          });
+          
+          console.log(animesWithGenres);
+
           let animes: Anime[] = []
 
           for (const anime of response.data) {
             let animeId = anime.attributes.anime.data[0].attributes.mal_id;
-            let genreResponse = await lastValueFrom(this.apiService.get(`/animegenres?filters[anime][mal_id][$eq]=${animeId}&populate=genre`));
-            let genres = genreResponse.data.map((genreItem: { attributes: { genre: { data: any[]; }; }; }) => { // El genero se encuentra en data.attributes.genre.data.attributes.name
-              return genreItem.attributes.genre.data.map(g => g.attributes.name);  // Mapeamos de forma que solo obtengamos el nombre de esta consulta
-            }).flat(); // Con flat, en vez de enviar el array con la estructura de data[0].name, aplanamos el array de forma que el array queda con los géneros directamente
+            let genreObject = animesWithGenres.find((obj: { anime: any; }) => obj.anime === animeId);
+            console.log(genreObject);
+            //let genreResponse = await lastValueFrom(this.apiService.get(`/animegenres?filters[anime][mal_id][$eq]=${animeId}&populate=genre`));
+            //let genres = genreResponse.data.map((genreItem: { attributes: { genre: { data: any[]; }; }; }) => { // El genero se encuentra en data.attributes.genre.data.attributes.name
+              //return genreItem.attributes.genre.data.map(g => g.attributes.name);  // Mapeamos de forma que solo obtengamos el nombre de esta consulta
+            //}).flat(); // Con flat, en vez de enviar el array con la estructura de data[0].name, aplanamos el array de forma que el array queda con los géneros directamente
             animes.push({
               id: anime.id,
               title: anime.attributes.anime.data[0].attributes.title,
@@ -106,7 +124,7 @@ export class LibraryService {
                   image_url: anime.attributes.anime.data[0].attributes.image_url,
                 }
               },
-              genres: genres,
+              genres: genreObject.genre,
               favorites: anime.attributes.anime.data[0].attributes.favorites,
               mal_id: anime.attributes.anime.data[0].attributes.mal_id,
               episodes_watched: anime.attributes.episodes_watched,

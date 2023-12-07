@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Anime } from '../interfaces/anime';
-import { Observable, from, lastValueFrom, map, mergeMap, of, switchMap } from 'rxjs';
+import { Observable, finalize, from, lastValueFrom, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { ApiService } from './strapi/api.service';
 import { AuthService } from './auth.service';
-import { LibraryService } from './library.service';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +43,7 @@ export class AnimeService {
   }
 
   private createGenre(anime: Anime): Observable<any> { // Crea genero
-    console.log("ENTRAAAA")
+    let genres: number[] = [];
     return from(anime.genres).pipe(
       mergeMap(genre => {
         return this.apiService.get(`/genres?filters[name][$eq]=${genre.name}`).pipe(
@@ -55,44 +54,41 @@ export class AnimeService {
               }
             }
             if (existingGenre.data.length === 0) {
-              return this.apiService.post(`/genres`, newGenre);
+              return this.apiService.post(`/genres`, newGenre).pipe(tap(response => genres.push(response.data.id)));
             } else {
+              genres.push(existingGenre.data[0].id);
               return of(null);
             }
           })
         )
-      }
-      ))
-  }
-
-  private animeGenreRelation(anime: Anime): Observable<any> { // Crea relacion entre anime y genero
-    return this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`).pipe(
-      switchMap(async animeRelation => {
-        let genres = anime.genres;
-        for (let genre of genres) {
-          let genreRelation = await lastValueFrom(this.apiService.get(`/genres?filters[name]=${genre.name}`));
-          let relation = {
-            data: {
-              anime: animeRelation.data[0].id,
-              genre: genreRelation.data[0].id
-            }
-          }
-          let existingRelationResponse = await lastValueFrom(this.apiService.get(`/animegenres?filters[anime][mal_id][$eq]=${animeRelation.data[0].attributes.mal_id}&filters[genre][id][$eq]=${relation.data.genre}`));
-          if (!(existingRelationResponse.data.length > 0)) {
-            await lastValueFrom(this.apiService.post("/animegenres", relation));
-
-          } else {
-          }
-        }
+      }),
+      finalize(() => {
+        this.tryingGenre(anime, genres).subscribe();
       })
-    )
+      )
   }
+
+  private tryingGenre(anime:Anime, genres: number[]):Observable<any> {
+    console.log(genres)
+    return new Observable(obs => {
+      this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`).subscribe(async anime => {
+        let post = {
+          data: {
+            anime: anime.data[0].id,
+            genre: genres.map(id => ({ id: id }))
+          }
+        };
+        await lastValueFrom(this.apiService.post(`/animegenres`, post))
+        })
+    })
+
+  }
+
 
   public addAnimeUser(anime: Anime, form: any): Observable<any> { // Ejecuta las demas funciones y crea la relacion entre anime y user (biblioteca)
     return this.createAnime(anime).pipe(
       switchMap(() => this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`)), // Nos aseguramos de que primero se crea el anime y concatenamos con switchMap
       switchMap(animeResponse => {
-        this.animeGenreRelation(anime).subscribe();
         let animeId = animeResponse.data[0].id;
         return this.auth.me().pipe(
           switchMap(user => { // Obtenemos el user para crear la relacion entre anime y user
@@ -118,20 +114,6 @@ export class AnimeService {
         );
       })
     );
-  }
-
-  isAnimeAdded(malId: number): Observable<boolean> {
-    return new Observable(obs => {
-           this.auth.me().subscribe(async user => {
-      let check = await lastValueFrom(this.apiService.get(`/libraries?filters[anime][mal_id][$eq]=${malId}&filters[user][id][$eq]=${user.id}`))
-      if (check.data.length > 0) {
-        obs.next(true);
-      } else {
-        obs.next(false);
-      }
-    })
-    })
-
   }
 
 

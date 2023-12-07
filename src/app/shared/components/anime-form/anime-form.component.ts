@@ -17,14 +17,11 @@ export class AnimeFormComponent implements OnInit {
   @Input() set anime(_anime: Anime | null) {
     this.animeInfo = _anime;
     if (_anime?.watch_status) {
-      console.log(_anime.user_score)
       this.mode = 'Edit'
       this.form.controls['user_score'].setValue(_anime.user_score);
       this.form.controls['watch_status'].setValue(_anime.watch_status);
       this.form.controls['episodes_watched'].setValue(_anime.episodes_watched);
-      console.log(this.form)
     }
-    console.log(this.mode)
   }
 
   constructor(
