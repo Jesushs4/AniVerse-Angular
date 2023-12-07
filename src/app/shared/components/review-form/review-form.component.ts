@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { Review } from 'src/app/core/interfaces/review';
 import { LibraryService } from 'src/app/core/services/library.service';
@@ -31,8 +31,8 @@ export class ReviewFormComponent implements OnInit {
     public reviewService: ReviewService
   ) {
     this.form = this.formBuilder.group({
-      summary: ['',],
-      review: ['',],
+      summary: ['', Validators.required],
+      review: ['', Validators.required],
     })
   }
   ngOnInit() {
