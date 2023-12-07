@@ -7,7 +7,7 @@
   <ion-item>
     <ion-input
       labelPlacement="stacked"
-      label="Username"
+      label="{{ 'login.username' | translate }}"
       formControlName="username"
       type="text"
     ></ion-input>
@@ -15,7 +15,7 @@
   <ion-item>
     <ion-input
       labelPlacement="stacked"
-      label="Password"
+      label="{{ 'login.password' | translate }}"
       formControlName="password"
       type="password"
     ></ion-input>
@@ -26,7 +26,7 @@
       style="text-transform: none"
       [disabled]="!form.valid"
       (click)="onSubmit()"
-      >Acceder</ion-button
+      >{{'login.login' | translate}}</ion-button
     >
   </div>
 </form>

@@ -7,12 +7,18 @@
       <ion-thumbnail>
         <img src="assets/images/logo.png" alt="Aniverse" />
       </ion-thumbnail>
+        <ion-button *ngIf="lang === 'es'" (click)="onLang('en')">
+          <ion-icon slot="icon-only" name="language-outline"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="lang === 'en'" (click)="onLang('es')">
+          <ion-icon slot="icon-only" name="language-outline"></ion-icon>
+        </ion-button>
       <ion-button
         fill="clear"
         style="text-transform: none"
         (click)="onRegister()"
       >
-        Need an account?
+        {{'login.noAccount' | translate}}
       </ion-button>
       <app-login-form (onsubmit)="onLogin($event)"></app-login-form>
     </ion-card>

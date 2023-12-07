@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController, ToastController, ToastOptions } from '@ionic/angular';
 import { Anime } from 'src/app/core/interfaces/anime';
 import { Review } from 'src/app/core/interfaces/review';
+import { CustomTranslateService } from 'src/app/core/services/custom-translate.service';
 import { LibraryService } from 'src/app/core/services/library.service';
 import { ReviewService } from 'src/app/core/services/review.service';
 import { AnimeFormComponent } from 'src/app/shared/components/anime-form/anime-form.component';
@@ -24,7 +25,8 @@ export class AnimePage implements OnInit {
     public anime: LibraryService,
     private modal: ModalController,
     public reviewService: ReviewService,
-    private toast: ToastController
+    private toast: ToastController,
+    private translate: CustomTranslateService
   ) {
 
   }
@@ -50,14 +52,17 @@ export class AnimePage implements OnInit {
   public deleteAnime() {
     if (this.anime.anime) {
       this.anime.deleteAnime(this.anime.anime).subscribe(async anime => {
+        this.translate.get('toast.deleteAnime').subscribe(async (translatedMessage: string) => {
+
         const options: ToastOptions = {
-          message: "Anime deleted",
+          message: translatedMessage,
           duration: 1000,
           position: 'bottom',
           color: 'tertiary',
         };
         const toast = await this.toast.create(options);
         toast.present();
+        })
       });
       this.router.navigate(['/library']);
     }
@@ -86,8 +91,9 @@ export class AnimePage implements OnInit {
         case 'submit': {
           if (this.anime.anime) {
             this.anime.editAnime(this.anime.anime, info.data).subscribe(async anime => {
+              this.translate.get('toast.editAnime').subscribe(async (translatedMessage: string) => {
               const options: ToastOptions = {
-                message: "Anime edited",
+                message: translatedMessage,
                 duration: 1000,
                 position: 'bottom',
                 color: 'tertiary',
@@ -95,7 +101,7 @@ export class AnimePage implements OnInit {
               const toast = await this.toast.create(options);
               toast.present();
             });
-          }
+          } ) }
         }
           break;
         default: {
@@ -125,15 +131,17 @@ export class AnimePage implements OnInit {
   onReview() {
     var onDismiss = async (info: any) => {
       await this.reviewService.createReview(info.data).subscribe(async review => {
+        this.translate.get('toast.addReview').subscribe(async (translatedMessage: string) => {
+
         const options: ToastOptions = {
-          message: "Review created",
+          message: translatedMessage,
           duration: 1000,
           position: 'bottom',
           color: 'tertiary',
         };
         const toast = await this.toast.create(options);
         toast.present();
-      })
+      }) })
       this.reviewService.getReviews().subscribe();
     }
 

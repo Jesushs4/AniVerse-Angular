@@ -4,6 +4,7 @@ import { ModalController, ToastController, ToastOptions } from '@ionic/angular';
 import { UserCredentials } from 'src/app/core/interfaces/user-credentials';
 import { UserRegisterInfo } from 'src/app/core/interfaces/user-register-info';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { CustomTranslateService } from 'src/app/core/services/custom-translate.service';
 import { RegisterFormComponent } from 'src/app/shared/components/register-form/register-form.component';
 
 @Component({
@@ -21,18 +22,32 @@ export class LoginPage implements OnInit {
     'assets/images/backgrounds/Imagen5.png'
   ]
   backgroundImage: string | undefined;
+  lang:string = "es";
+
 
   constructor(
     private auth: AuthService,
     private router: Router,
     private modal: ModalController,
-    private toast: ToastController
+    private toast: ToastController,
+    private translate: CustomTranslateService
   ) { }
 
   ngOnInit() {
     let index = Math.floor(Math.random() * this.backgroundImages.length)
     this.backgroundImage = `url('${this.backgroundImages[index]}')`;
-    console.log(this.backgroundImage)
+    let browserLang = this.translate.getBrowserLang();
+    if (browserLang=='en' || browserLang=='es') {
+      this.lang = browserLang
+
+    }
+    this.translate.use(this.lang);
+  }
+
+  onLang(lang:string){
+    this.lang = lang;
+    this.translate.use(this.lang);
+    return false;    
   }
 
   onLogin(credentials: UserCredentials) {

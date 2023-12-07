@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Volver</ion-title>
+    <ion-title>{{'anime.goBack' | translate}}</ion-title>
   </ion-toolbar>
   <div *ngIf="animeLoaded">
     <div class="content-container">
@@ -25,30 +25,30 @@
           </ion-card-header>
           <ion-card-content>
             <div>
-              <ion-title id="synopsis">Synopsis</ion-title>
+              <ion-title id="synopsis">{{'anime.synopsis' | translate}}</ion-title>
               <p appExpandable>{{ anime.anime?.synopsis }}</p>
             </div>
             <div class="anime-info">
               <ion-text
-                >Episodes: {{ anime.anime?.episodes ?? 'N/A' }}</ion-text
+                >{{'anime.episodes' | translate}}: {{ anime.anime?.episodes ?? 'N/A' }}</ion-text
               >
               <ion-text
-                >Year published: {{ anime.anime?.year ?? 'N/A' }}</ion-text
+                >{{'anime.year' | translate}}: {{ anime.anime?.year ?? 'N/A' }}</ion-text
               >
-              <ion-text>Anime status: {{ anime.anime?.status }}</ion-text>
+              <ion-text>{{'anime.status' | translate}}: {{ anime.anime?.status }}</ion-text>
             </div>
-            <ion-title id="userinfo">User Info</ion-title>
+            <ion-title id="userinfo">{{'anime.userInfo' | translate}}</ion-title>
             <div class="anime-info">
               <ion-text
-                >Score: {{anime.anime?.user_score === 0 ? 'Not scored' :
+                >{{'anime.score' | translate}}: {{anime.anime?.user_score === 0 ? ('anime.noScore' | translate) :
                 anime.anime?.user_score}}</ion-text
               >
               <ion-text
-                >User status: {{ anime.anime?.watch_status |
+                >{{'anime.status' | translate}}: {{ anime.anime?.watch_status |
                 titlecase}}</ion-text
               >
               <ion-text
-                >Episodes watched: {{ anime.anime?.watch_status === 'watching' ?
+                >{{'anime.episodesWatched' | translate}}: {{ anime.anime?.watch_status === 'watching' ?
                 anime.anime?.episodes_watched : 'Not watching' }}
               </ion-text>
             </div>
@@ -62,11 +62,14 @@
         </ion-card>
       </div>
     </div>
-    <ion-title id="reviewTitle">Reviews</ion-title>
-    <ion-button (click)="onReview()">CREAR RESEÑA</ion-button>
-    <app-reviews
-      *ngFor="let review of reviewService.reviews$ | async | userReview"
-      [review]="review"
-    ></app-reviews>
-  </div>
-</ion-content>
+    <div>
+      <ion-title id="reviewTitle" class="reviews-title">{{'review.reviews' | translate}}</ion-title>
+      <ion-button class="create-review-btn" (click)="onReview()">{{'review.createReview' | translate}}</ion-button>
+      <div class="reviews-container">
+        <app-reviews
+          *ngFor="let review of reviewService.reviews$ | async | userReview"
+          [review]="review"
+          class="review-card"
+        ></app-reviews>
+      </div>
+    </div>

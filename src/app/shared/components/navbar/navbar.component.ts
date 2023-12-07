@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { NicknameFormComponent } from '../nickname-form/nickname-form.component';
 import { Observable, lastValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/core/services/strapi/api.service';
+import { CustomTranslateService } from 'src/app/core/services/custom-translate.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,8 @@ import { ApiService } from 'src/app/core/services/strapi/api.service';
 export class NavbarComponent implements OnInit {
 
   public username:string = "";
+  lang:string = "es";
+
 
   constructor(
     private router: Router,
@@ -21,11 +24,25 @@ export class NavbarComponent implements OnInit {
     private menu: MenuController,
     private modal: ModalController,
     private toast: ToastController,
-    private apiService: ApiService
-  ) { }
+    private apiService: ApiService,
+    private translate: CustomTranslateService
+  ) { 
+    let browserLang = translate.getBrowserLang();
+    if (browserLang=='en' || browserLang=='es') {
+      this.lang = browserLang
+
+    }
+    this.translate.use(this.lang);
+  }
 
   ngOnInit() { 
     this.setUsername();
+  }
+
+  onLang(lang:string){
+    this.lang = lang;
+    this.translate.use(this.lang);
+    return false;    
   }
 
   private setUsername() {

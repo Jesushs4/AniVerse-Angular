@@ -6,29 +6,33 @@
       </ion-button>
     </ion-buttons>
     <ion-title>
-      {{ mode == "New" ? "Create review" : "Edit review" }}
+      {{ mode == "New" ? ('review.createReview' | translate) : ('review.editReview' | translate) }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <ion-item>
+  <ion-item class="summary">
     <ion-input
-      label="Summary:"
+      label="{{'review.summary' | translate}}:"
       labelPlacement="floating"
       formControlName="summary"
       type="string"
     ></ion-input>
   </ion-item>
-  <ion-item>
-    <ion-input
-      label="Review:"
+  <ion-item class="review">
+    <ion-textarea
+      label="{{'review.review' | translate}}:"
       labelPlacement="floating"
       formControlName="review"
+      class="review-textarea"
       type="string"
-    ></ion-input>
+    ></ion-textarea>
   </ion-item>
 </form>
-<ion-button type="submit" (click)="onSubmit()"
-  >{{ mode == "New" ? "Create" : "Edit" }}
+<div class="submit">
+  <ion-button type="submit"  (click)="onSubmit()"
+  >{{ mode == "New" ? ('review.post' | translate) : ('review.editReview' | translate) }}
 </ion-button>
+</div>
+

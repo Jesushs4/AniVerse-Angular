@@ -1,10 +1,10 @@
 <div id="popover-button">
   <ion-item [button]="!disabled" [detail]="!disabled">
-    <ion-text slot="start" position="fixed">Género:</ion-text>
+    <ion-text slot="start" position="fixed">{{'genre.genre' | translate}}:</ion-text>
     <ion-text *ngIf="!genreSelected && !disabled"
-      >Seleccione un género</ion-text
+      >{{'genre.selectGenre' | translate}}</ion-text
     >
-    <ion-text *ngIf="!genreSelected && disabled">Ninguno</ion-text>
+    <ion-text *ngIf="!genreSelected && disabled">{{'genre.noGenre' | translate}}</ion-text>
     <ion-text *ngIf="genreSelected">{{ genreSelected }}</ion-text>
   </ion-item>
 </div>
@@ -30,7 +30,7 @@
           </ion-button>
         </ion-item>
         <ion-item button (click)="deselect(popover)">
-          <ion-text>Ninguno</ion-text>
+          <ion-text>{{'genre.noGenre' | translate}}</ion-text>
         </ion-item>
         <ion-item
           button

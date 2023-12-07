@@ -6,6 +6,7 @@ import { LibraryService } from './library.service';
 import { ApiService } from './strapi/api.service';
 import { Anime } from '../interfaces/anime';
 import { ToastController, ToastOptions } from '@ionic/angular';
+import { CustomTranslateService } from './custom-translate.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,8 @@ export class ReviewService {
     private auth: AuthService,
     private libraryService: LibraryService,
     private apiService: ApiService,
-    private toast: ToastController
+    private toast: ToastController,
+    private translate: CustomTranslateService
   ) { }
 
   createReview(form: any): Observable<CreateReview> { // Crear reseñas
@@ -39,17 +41,18 @@ export class ReviewService {
             this.getReviews().subscribe();
             obs.next(review);
           } else {
-
+            this.translate.get('toast.alreadyReview').subscribe(async (translatedMessage: string) => {
             const options: ToastOptions = {
-              message: "Error: You already have one review",
+              message: translatedMessage,
               duration: 1000,
               position: 'bottom',
               color: 'tertiary',
             };
             const toast = await this.toast.create(options);
             toast.present();
-          }
-
+            
+          })
+        }
         }
       })
     })
@@ -92,6 +95,7 @@ export class ReviewService {
 
   async deleteReview(review: Review) { // Borrar reseña
     await lastValueFrom(this.apiService.delete(`/reviews/${review.id}`))
+    this.getReviews().subscribe();
   }
 
   async editReview(review: Review, form: any) {
@@ -102,6 +106,7 @@ export class ReviewService {
       }
     }
     await lastValueFrom(this.apiService.put(`/reviews/${review.id}`, info));
+    this.getReviews().subscribe();
   }
 
 

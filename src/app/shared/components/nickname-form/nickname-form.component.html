@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Change Nickname</ion-title>
+    <ion-title>{{'navbar.changenick' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +13,7 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <ion-item>
       <ion-input
-        label="New Nickname"
+        label="{{'navbar.newnick' | translate}}"
         labelPlacement="floating"
         formControlName="nickname"
       ></ion-input>
@@ -23,7 +23,7 @@
       [disabled]="!form.valid || !form.dirty"
       (click)="onSubmit()"
       expand="full"
-      >Change</ion-button
+      >{{'navbar.change' | translate}}</ion-button
     >
   </form>
 </ion-content>

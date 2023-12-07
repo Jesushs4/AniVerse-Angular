@@ -6,7 +6,7 @@
       </ion-button>
     </ion-buttons>
     <ion-title>
-      {{ mode == "New" ? "Add anime" : "Edit anime" }}
+      {{ mode == "New" ? ('anime.addAnime' | translate) : ('anime.editAnime' | translate) }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -23,13 +23,13 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <ion-item>
           <ion-select
-            label="Score:"
-            placeholder="Select score"
+            label="{{'anime.score' | translate}}"
+            placeholder="{{'anime.selectScore' | translate}}"
             interface="popover"
             labelPlacement="stacked"
             formControlName="user_score"
           >
-            <ion-select-option [value]="0">Not scored</ion-select-option>
+            <ion-select-option [value]="0">{{'anime.noScore' | translate}}</ion-select-option>
             <ion-select-option [value]="1">1</ion-select-option>
             <ion-select-option [value]="2">2</ion-select-option>
             <ion-select-option [value]="3">3</ion-select-option>
@@ -44,22 +44,22 @@
         </ion-item>
         <ion-item>
           <ion-select
-            label="Status:"
-            placeholder="Select status"
+            label="{{'anime.status' | translate}}"
+            placeholder="{{'anime.selectStatus' | translate}}"
             interface="popover"
             labelPlacement="stacked"
             formControlName="watch_status"
           >
-            <ion-select-option value="watching">Watching</ion-select-option>
+            <ion-select-option value="watching">{{'anime.watching' | translate}}</ion-select-option>
             <ion-select-option value="plan to watch"
-              >Plan to watch</ion-select-option
+              >{{'anime.planned' | translate}}</ion-select-option
             >
-            <ion-select-option value="completed">Completed</ion-select-option>
+            <ion-select-option value="completed">{{'anime.completed' | translate}}</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item *ngIf="form.get('watch_status')?.value == 'watching'">
           <ion-input
-            label="Episode (1-{{ animeInfo?.episodes ?? 'N/A' }}):"
+            label="{{'anime.episode' | translate}} (1-{{ animeInfo?.episodes ?? 'N/A' }}):"
             labelPlacement="floating"
             formControlName="episodes_watched"
             type="number"
@@ -76,6 +76,6 @@
     type="submit"
     [disabled]="!form.valid || !form.dirty"
     (click)="onSubmit()"
-    >{{ mode == "New" ? "Add to library" : "Edit" }}</ion-button
+    >{{ mode == "New" ? ('anime.add' | translate) : ('anime.edit' | translate) }}</ion-button
   >
 </ion-footer>

@@ -7,13 +7,17 @@ ion-card {
 
 ion-card-header {
   padding: 0.5rem;
+
 }
+
+
 
 .header-top,
 .header-bottom {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
 }
 
 .header-buttons {
@@ -27,4 +31,5 @@ button {
 
 ion-card-content {
   padding: 1rem;
+  font-size: 0.75rem;
 }

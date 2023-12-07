@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { ReviewService } from 'src/app/core/services/review.service';
 import { ReviewFormComponent } from '../review-form/review-form.component';
 import { ModalController, ToastController, ToastOptions } from '@ionic/angular';
+import { CustomTranslateService } from 'src/app/core/services/custom-translate.service';
 
 @Component({
   selector: 'app-reviews',
@@ -18,7 +19,8 @@ export class ReviewsComponent implements OnInit {
     private auth: AuthService,
     private reviewService: ReviewService,
     private modal: ModalController,
-    private toast: ToastController
+    private toast: ToastController,
+    private translate: CustomTranslateService
   ) {
   }
 
@@ -26,16 +28,17 @@ export class ReviewsComponent implements OnInit {
 
   public deleteReview(review: Review) {
     this.reviewService.deleteReview(review)
-    this.reviewService.getReviews().subscribe(async review => {
+      this.translate.get('toast.deleteReview').subscribe(async (translatedMessage: string) => {
+
       const options: ToastOptions = {
-        message: "Review deleted",
+        message: translatedMessage,
         duration: 1000,
         position: 'bottom',
         color: 'tertiary',
       };
       const toast = await this.toast.create(options);
       toast.present()
-    });
+    }) ;
   }
 
   async presentReview(data: Review | null, onDismiss: (result: any) => void) {
@@ -58,16 +61,17 @@ export class ReviewsComponent implements OnInit {
     var onDismiss = async (info: any) => {
       if (this.review) {
         await this.reviewService.editReview(this.review, info.data)
-        this.reviewService.getReviews().subscribe(async review => {
+          this.translate.get('toast.editReview').subscribe(async (translatedMessage: string) => {
+
           const options: ToastOptions = {
-            message: "Review edited",
+            message: translatedMessage,
             duration: 1000,
             position: 'bottom',
             color: 'tertiary',
           };
           const toast = await this.toast.create(options);
           toast.present();
-        });
+        })  ;
       }
     }
     if (this.review) {

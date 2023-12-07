@@ -14,35 +14,44 @@ import { AuthStrapiService } from './core/services/strapi/auth-strapi.service';
 import { HttpClientProvider } from './core/services/http/http-client.provider';
 import { AuthService } from './core/services/auth.service';
 import { ExpandableDirective } from './shared/directives/expandable.directive';
+import { SharedModule } from './shared/shared.module';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { createTranslateLoader } from './core/services/custom-translate.service';
 
 export function httpProviderFactory(
-  http:HttpClient) {
+  http: HttpClient) {
   return new HttpClientWebProvider(http);
 }
 
 export function AuthServiceProvider(
-  jwt:JwtService,
-  api:ApiService
+  jwt: JwtService,
+  api: ApiService
 ) {
   return new AuthStrapiService(jwt, api);
 }
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, TranslateModule.forRoot({
+    loader: {
+      provide: TranslateLoader,
+      useFactory: (createTranslateLoader),
+      deps: [HttpClient]
+    }
+  }),SharedModule, ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HttpClientProvider,
       deps: [HttpClient, Platform],
-      useFactory: httpProviderFactory,  
+      useFactory: httpProviderFactory,
     },
     {
       provide: AuthService,
       deps: [JwtService, ApiService],
-      useFactory: AuthServiceProvider,  
+      useFactory: AuthServiceProvider,
     }
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

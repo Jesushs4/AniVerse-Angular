@@ -5,7 +5,7 @@
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="title-style">New user</ion-title>
+    <ion-title class="title-style">{{ 'login.newUser' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +14,7 @@
     <ion-item class="form-item">
       <ion-input
         class="form-input"
-        label="Username:"
+        label="{{ 'login.username' | translate }}"
         labelPlacement="floating"
         formControlName="username"
         type="text"
@@ -23,7 +23,7 @@
     <ion-item class="form-item">
       <ion-input
         class="form-input"
-        label="Nickname:"
+        label="{{ 'login.nickname' | translate }}"
         labelPlacement="floating"
         formControlName="nickname"
         type="text"
@@ -42,7 +42,7 @@
       <ion-item class="form-item">
         <ion-input
           class="form-input"
-          label="Password:"
+          label="{{ 'login.password' | translate }}"
           labelPlacement="floating"
           formControlName="password"
           type="password"
@@ -51,7 +51,7 @@
       <ion-item class="form-item">
         <ion-input
           class="form-input"
-          label="Confirm:"
+          label="{{ 'login.confirmPassword' | translate }}"
           labelPlacement="floating"
           formControlName="confirm"
           type="password"
@@ -59,10 +59,10 @@
       </ion-item>
     </div>
     <div class="error-message" *ngIf="hasError('password', 'passwordProto')">
-      La contraseña debe tener 1 mayúscula, 1 número y 8 caracteres.
+      {{ 'login.passwordError' | translate }}
     </div>
     <div class="error-message" *ngIf="hasError('confirm', 'passwordMatch')">
-      Las contraseñas no coinciden.
+      {{ 'login.confirmError' | translate }}
     </div>
   </form>
 </ion-content>
@@ -76,6 +76,6 @@
     class="ion-padding"
     expand="full"
     (click)="onSubmit()"
-    >Register</ion-button
+    >{{ 'login.register' | translate }}</ion-button
   >
 </ion-footer>

@@ -15,6 +15,10 @@ import { GenreSearchComponent } from './components/genre-search/genre-search.com
 import { FilterGenrePipe } from './pipes/filter-genre.pipe';
 import { ExpandableDirective } from './directives/expandable.directive';
 import { NicknameFormComponent } from './components/nickname-form/nickname-form.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { createTranslateLoader } from '../core/services/custom-translate.service';
+import { CardTextDirective } from './directives/card-text.directive';
 
 
 
@@ -32,14 +36,21 @@ import { NicknameFormComponent } from './components/nickname-form/nickname-form.
     GenreSearchComponent,
     FilterGenrePipe,
     ExpandableDirective,
-    NicknameFormComponent
+    NicknameFormComponent,
+    CardTextDirective
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    IonicModule
-
+    IonicModule,
+    TranslateModule.forChild({
+      loader: {
+      provide: TranslateLoader,
+      useFactory: (createTranslateLoader),
+      deps: [HttpClient]
+      }
+      }),
   ],
   exports: [
     SearchBarComponent,
@@ -54,7 +65,9 @@ import { NicknameFormComponent } from './components/nickname-form/nickname-form.
     GenreSearchComponent,
     FilterGenrePipe,
     ExpandableDirective,
-    NicknameFormComponent
+    NicknameFormComponent,
+    TranslateModule,
+    CardTextDirective
   ]
 })
 export class SharedModule { }
