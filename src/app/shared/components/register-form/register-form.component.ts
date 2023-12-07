@@ -38,8 +38,12 @@ export class RegisterFormComponent implements OnInit {
     this._modal.dismiss(this.form.value, 'ok');
   }
 
-  hasError(control: string, error: string): boolean {
-    let errors = this.form.controls[control].errors;
-    return errors != null && error in errors;
+  hasError(control: string, error: string, isFormError: boolean = false): boolean {
+    if (isFormError) {
+      return this.form.hasError(error);
+    } else {
+      let controlErrors = this.form.controls[control].errors;
+      return controlErrors != null && error in controlErrors;
+    }
   }
 }

@@ -61,7 +61,7 @@
     <div class="error-message" *ngIf="hasError('password', 'passwordProto')">
       {{ 'login.passwordError' | translate }}
     </div>
-    <div class="error-message" *ngIf="hasError('confirm', 'passwordMatch')">
+    <div class="error-message" *ngIf="hasError('confirm', 'passwordMatch', true)">
       {{ 'login.confirmError' | translate }}
     </div>
   </form>
