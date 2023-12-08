@@ -36,3 +36,10 @@ ion-searchbar {
         }
     }
 }
+
+.custom-modal {
+    --height:25%;
+    --max-width:350px;  
+    margin: auto; 
+    padding: 20px; 
+  }

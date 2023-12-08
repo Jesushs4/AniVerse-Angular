@@ -13,7 +13,7 @@ export class JikanApiService {
   ) { }
 
   searchAnime(search: string): Observable<any> { // Consulta la API
-    const url = `${environment.jikanURL}/anime?q=${search}`;
+    const url = `${environment.jikanURL}/anime?order_by=score&sort=desc&sfw&min_score=5&q=${search}`;
     return this.http.get(url);
   }
 }

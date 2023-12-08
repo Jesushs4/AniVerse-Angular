@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Anime } from 'src/app/core/interfaces/anime';
 import { JikanApiService } from 'src/app/core/services/jikan-api.service';
-import { SearchService } from 'src/app/core/services/search.service';
-import { ApiService } from 'src/app/core/services/strapi/api.service';
 @Component({
   selector: 'app-search',
   templateUrl: './search.page.html',
@@ -10,18 +10,23 @@ import { ApiService } from 'src/app/core/services/strapi/api.service';
 
 export class SearchPage {
 
-
+  _searchResults: BehaviorSubject<Anime[]> = new BehaviorSubject<Anime[]>([]);
+  searchResults$: Observable<Anime[]> = this._searchResults.asObservable();
+  
   constructor(
-    public search: SearchService,
     private apiService: JikanApiService
   ) {
-    apiService.searchAnime("").subscribe(search => { // Al inicializar la página, que busque vació "" para que salga algo
-      this.search.searchResult(search.data)
-    })
+    this.apiService.searchAnime("").subscribe(search => { // Al inicializar la página, que busque vació "" para que salga algo
+      this.searchResult(search.data)
+    });
+    
+  }
+  searchResults(event: Anime[]) {
+    this._searchResults.next(event);
   }
 
   searchResult(event: any) { // Obtiene la información enviada por el evento y actualiza el BehaviourSubject con ella
-    this.search.searchResult(event);
+    this.searchResults(event);
   }
 
 

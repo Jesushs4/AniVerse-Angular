@@ -12,7 +12,7 @@ import { ApiService } from './core/services//strapi/api.service';
 import { JwtService } from './core/services/http/jwt.service';
 import { AuthStrapiService } from './core/services/strapi/auth-strapi.service';
 import { HttpClientProvider } from './core/services/http/http-client.provider';
-import { AuthService } from './core/services/auth.service';
+import { AuthService } from './core/services/strapi/auth.service';
 import { ExpandableDirective } from './shared/directives/expandable.directive';
 import { SharedModule } from './shared/shared.module';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';

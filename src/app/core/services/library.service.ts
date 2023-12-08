@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, lastValueFrom, switchMap, tap } from 'rxjs';
 import { Anime, Library } from '../interfaces/anime';
 import { ApiService } from './strapi/api.service';
-import { AuthService } from './auth.service';
+import { AuthService } from './strapi/auth.service';
 import { User } from '../interfaces/user';
 import { AnimeService } from './anime.service';
 
@@ -86,7 +86,12 @@ export class LibraryService {
         next: async (user: User) => {
           let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&populate=anime`));
           let genresresponse = await lastValueFrom(this.apiService.get(`/animegenres?populate=anime,genre`));
-          var animesWithGenres = genresresponse.data.flatMap((item: { attributes: { anime: { data: any[]; }; genre: { data: any[]; }; }; }) => {
+          var animesWithGenres = genresresponse.data.flatMap((item: 
+            { attributes: 
+              { anime: 
+                { data: any[]; }; 
+                genre: 
+                { data: any[]; }; }; }) => {
             return item.attributes.anime.data.map(animeData => {
               let animeMalId = animeData.attributes.mal_id;
               let genreNames = item.attributes.genre.data.map(genre => genre.attributes.name);

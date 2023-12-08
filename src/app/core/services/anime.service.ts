@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Anime } from '../interfaces/anime';
 import { Observable, catchError, finalize, from, lastValueFrom, map, mergeMap, of, switchMap, tap, throwError } from 'rxjs';
 import { ApiService } from './strapi/api.service';
-import { AuthService } from './auth.service';
+import { AuthService } from './strapi/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +48,9 @@ export class AnimeService {
     let genres: number[] = [];
     return this.apiService.get('/genres').pipe(
       switchMap(existingGenresResponse => {
-        let existingGenres = existingGenresResponse.data.map((genre: { id: number; attributes: { name: string; }; }) => {
+        let existingGenres = existingGenresResponse.data.map((genre: 
+          { id: number; attributes: 
+            { name: string; }; }) => {
           return {
             id: genre.id,
             name: genre.attributes.name
@@ -67,12 +69,12 @@ export class AnimeService {
         return of(null)
       }),
       finalize(() => {
-        this.tryingGenre(anime, genres).subscribe();
+        this.relationGenre(anime, genres).subscribe();
       })
       )
   }
 
-  private tryingGenre(anime:Anime, genres: number[]):Observable<any> {
+  private relationGenre(anime:Anime, genres: number[]):Observable<any> {
     return new Observable(obs => {
       this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`).subscribe(async anime => {
         let post = {
