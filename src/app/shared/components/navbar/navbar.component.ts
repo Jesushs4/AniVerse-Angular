@@ -74,7 +74,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.menu.close();
     this.auth.logout();
-    this.username = null;
+    this.username = "";
     this.router.navigate(['/login']);
   }
 
@@ -117,7 +117,7 @@ export class NavbarComponent implements OnInit {
   changeNickname() {
     var onDismiss = (info: any) => {
       this.setNickname(info.data).subscribe(async nickname => {
-        this.setUsername();
+        this.setUsername().subscribe();
         const options: ToastOptions = {
           message: "Nickname changed",
           duration: 1000,

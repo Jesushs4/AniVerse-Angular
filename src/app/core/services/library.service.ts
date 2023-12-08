@@ -166,9 +166,14 @@ export class LibraryService {
           await lastValueFrom(this.apiService.delete(`/libraries/${response.data[0].id}`));
           this._anime.next(anime);
           obs.next(anime);
-          this.getLibrary().subscribe();
+          
+          let libraryResponse = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}`));
+          if (libraryResponse.data.length === 0) {
+            this._library.next([]);
+          } else {
+            this.getLibrary().subscribe();
         }
-      })
+      }})
     })
   }
 

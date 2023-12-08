@@ -7,7 +7,6 @@ import { Anime } from 'src/app/core/interfaces/anime';
 export class FilterGenrePipe implements PipeTransform {
 
   transform(animes: Anime[] | null, selectedGenre: string): Anime[] | null {
-    console.log(selectedGenre)
     if (!selectedGenre || selectedGenre == "") {
       return animes
     } else {

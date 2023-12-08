@@ -51,7 +51,6 @@ export class LoginPage implements OnInit {
   }
 
   onLogin(credentials: UserCredentials) {
-    console.log(credentials);
     this.auth.login(credentials).subscribe({
       next: data => {
         this.router.navigate(['search'])
@@ -80,7 +79,6 @@ export class LoginPage implements OnInit {
 
   onRegister() {
     var onDismiss = (info: any) => {
-      console.log(info);
       switch (info.role) {
         case 'ok': {
           this.auth.register(info.data).subscribe(async user => {

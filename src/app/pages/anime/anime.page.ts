@@ -63,8 +63,8 @@ export class AnimePage implements OnInit {
         const toast = await this.toast.create(options);
         toast.present();
         })
+        this.router.navigate(['/library']);
       });
-      this.router.navigate(['/library']);
     }
   }
 

@@ -18,7 +18,6 @@ export class ReviewFormComponent implements OnInit {
   @Input() set review(_review: Review | null) {
     if (_review) {
       this.mode = 'Edit'
-      console.log(_review);
       this.form.controls['summary'].setValue(_review.summary);
       this.form.controls['review'].setValue(_review.review);
     }
