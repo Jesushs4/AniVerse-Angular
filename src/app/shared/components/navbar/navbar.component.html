@@ -33,7 +33,7 @@
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       
-      <ion-title>
+      <ion-title *ngIf="username!=null ">
 
         {{'navbar.welcome' | translate}} {{username}}</ion-title>
     </ion-toolbar>

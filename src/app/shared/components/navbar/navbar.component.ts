@@ -14,7 +14,7 @@ import { CustomTranslateService } from 'src/app/core/services/custom-translate.s
 })
 export class NavbarComponent implements OnInit {
 
-  public username:string = "";
+  public username:string|null = null;
   lang:string = "es";
 
 
@@ -36,8 +36,9 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() { 
-    this.setUsername();
+    this.setUsername().subscribe();
   }
+
 
   onLang(lang:string){
     this.lang = lang;
@@ -45,9 +46,12 @@ export class NavbarComponent implements OnInit {
     return false;    
   }
 
-  private setUsername() {
-    this.auth.me().subscribe(user => {
-      this.username = user.nickname
+  private setUsername():Observable<void> {
+    return new Observable(obs => {
+          this.auth.me().subscribe(user => {
+      this.username = user.nickname;
+      obs.complete();
+    })
     })
   }
 
@@ -70,6 +74,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.menu.close();
     this.auth.logout();
+    this.username = null;
     this.router.navigate(['/login']);
   }
 
