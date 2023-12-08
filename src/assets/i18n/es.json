@@ -74,7 +74,8 @@
         "editAnime": "Se ha editado el anime",
         "addAnime": "Se ha añadido a la biblioteca",
         "deleteAnime": "Se ha borrado el anime",
-        "deleteReview": "Se ha borrado la reseña"
+        "deleteReview": "Se ha borrado la reseña",
+        "userCreated": "Se ha creado el usuario"
     },
     "about": {
         "aboutTitle": "Esta página fue creada basandose en myAnimeList y usando la API de Jikan.",

@@ -84,8 +84,9 @@ export class LoginPage implements OnInit {
       switch (info.role) {
         case 'ok': {
           this.auth.register(info.data).subscribe(async user => {
+            this.translate.get('toast.userCreated').subscribe(async (translatedMessage: string) => {
             const options: ToastOptions = {
-              message: "User created",
+              message: translatedMessage,
               duration: 1000,
               position: 'bottom',
               color: 'tertiary',
@@ -93,7 +94,7 @@ export class LoginPage implements OnInit {
             };
             const toast = await this.toast.create(options);
             toast.present();
-          })
+          })})
         }
           break;
         default: {
