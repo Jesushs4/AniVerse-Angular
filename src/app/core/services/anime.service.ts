@@ -29,8 +29,8 @@ export class AnimeService {
     };
     return this.apiService.post("/animes", animeToCreate).pipe(
       catchError(error => {
-        if (error.status === 409 || error.status === 400) { 
-          return of(null); 
+        if (error.status === 409 || error.status === 400) {
+          return of(null);
         }
         return throwError(() => error);
       }),
@@ -48,19 +48,21 @@ export class AnimeService {
     let genres: number[] = [];
     return this.apiService.get('/genres').pipe(
       switchMap(existingGenresResponse => {
-        let existingGenres = existingGenresResponse.data.map((genre: 
-          { id: number; attributes: 
-            { name: string; }; }) => {
+        let existingGenres = existingGenresResponse.data.map((genre:
+          {
+            id: number; attributes:
+            { name: string; };
+          }) => {
           return {
             id: genre.id,
             name: genre.attributes.name
           };
         });
-        anime.genres.forEach(genre => {
+        anime.genres.forEach(genre => { // Tras obtener los generos que ya tengo, solo hago post si hay alguno que no tengo
           let foundGenre = existingGenres.find((g: { name: any; }) => g.name === genre.name);
           if (!foundGenre) {
             let newGenre = { data: { name: genre.name } };
-            this.apiService.post('/genres', newGenre).subscribe(response => 
+            this.apiService.post('/genres', newGenre).subscribe(response =>
               genres.push(response.data.id));
           } else {
             genres.push(foundGenre.id);
@@ -69,12 +71,12 @@ export class AnimeService {
         return of(null)
       }),
       finalize(() => {
-        this.relationGenre(anime, genres).subscribe();
+        this.relationGenre(anime, genres).subscribe(); // Cuando finalice, ejecuto la relacion de géneros de forma que le paso el anime y los géneros que he ido guardando
       })
-      )
+    )
   }
 
-  private relationGenre(anime:Anime, genres: number[]):Observable<any> {
+  private relationGenre(anime: Anime, genres: number[]): Observable<any> {
     return new Observable(obs => {
       this.apiService.get(`/animes?filters[mal_id]=${anime.mal_id}`).subscribe(async anime => {
         let post = {
@@ -84,7 +86,7 @@ export class AnimeService {
           }
         };
         await lastValueFrom(this.apiService.post(`/animegenres`, post))
-        })
+      })
     })
   }
 

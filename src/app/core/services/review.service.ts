@@ -42,17 +42,17 @@ export class ReviewService {
             obs.next(review);
           } else {
             this.translate.get('toast.alreadyReview').subscribe(async (translatedMessage: string) => {
-            const options: ToastOptions = {
-              message: translatedMessage,
-              duration: 1000,
-              position: 'bottom',
-              color: 'tertiary',
-            };
-            const toast = await this.toast.create(options);
-            toast.present();
-            
-          })
-        }
+              const options: ToastOptions = {
+                message: translatedMessage,
+                duration: 1000,
+                position: 'bottom',
+                color: 'tertiary',
+              };
+              const toast = await this.toast.create(options);
+              toast.present();
+
+            })
+          }
         }
       })
     })

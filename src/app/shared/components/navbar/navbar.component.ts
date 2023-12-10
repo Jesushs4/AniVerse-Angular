@@ -14,8 +14,8 @@ import { CustomTranslateService } from 'src/app/core/services/custom-translate.s
 })
 export class NavbarComponent implements OnInit {
 
-  public username:string|null = null;
-  lang:string = "es";
+  public username: string | null = null;
+  lang: string = "es";
 
 
   constructor(
@@ -26,32 +26,32 @@ export class NavbarComponent implements OnInit {
     private toast: ToastController,
     private apiService: ApiService,
     private translate: CustomTranslateService
-  ) { 
+  ) {
     let browserLang = translate.getBrowserLang();
-    if (browserLang=='en' || browserLang=='es') {
+    if (browserLang == 'en' || browserLang == 'es') {
       this.lang = browserLang
 
     }
     this.translate.use(this.lang);
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.setUsername().subscribe();
   }
 
 
-  onLang(lang:string){
+  onLang(lang: string) {
     this.lang = lang;
     this.translate.use(this.lang);
-    return false;    
+    return false;
   }
 
-  private setUsername():Observable<void> {
+  private setUsername(): Observable<void> {
     return new Observable(obs => {
-          this.auth.me().subscribe(user => {
-      this.username = user.nickname;
-      obs.complete();
-    })
+      this.auth.me().subscribe(user => {
+        this.username = user.nickname;
+        obs.complete();
+      })
     })
   }
 

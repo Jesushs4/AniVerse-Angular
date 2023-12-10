@@ -86,13 +86,17 @@ export class LibraryService {
         next: async (user: User) => {
           let response = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}&populate=anime`));
           let genresresponse = await lastValueFrom(this.apiService.get(`/animegenres?populate=anime,genre`));
-          var animesWithGenres = genresresponse.data.flatMap((item: 
-            { attributes: 
-              { anime: 
-                { data: any[]; }; 
-                genre: 
-                { data: any[]; }; }; }) => {
-            return item.attributes.anime.data.map(animeData => {
+          var animesWithGenres = genresresponse.data.flatMap((item: // Flatmap para evitar arrays dentro de arrays innecesarios
+            {
+              attributes:
+              {
+                anime:
+                { data: any[]; };
+                genre:
+                { data: any[]; };
+              };
+            }) => {
+            return item.attributes.anime.data.map(animeData => { // Mapeamos para tener por cada anime sus respectivos generos en un array
               let animeMalId = animeData.attributes.mal_id;
               let genreNames = item.attributes.genre.data.map(genre => genre.attributes.name);
               return {
@@ -106,8 +110,8 @@ export class LibraryService {
           let animes: Anime[] = []
 
           for (const anime of response.data) {
-            let animeId = anime.attributes.anime.data[0].attributes.mal_id;
-            let genreObject = animesWithGenres.find((obj: { anime: any; }) => obj.anime === animeId);
+            let animeId = anime.attributes.anime.data[0].attributes.mal_id; // Encontramos que géneros tiene el anime que se está iterando
+            let animeGenres = animesWithGenres.find((obj: { anime: any; }) => obj.anime === animeId);
             animes.push({
               id: anime.id,
               title: anime.attributes.anime.data[0].attributes.title,
@@ -121,7 +125,7 @@ export class LibraryService {
                   image_url: anime.attributes.anime.data[0].attributes.image_url,
                 }
               },
-              genres: genreObject.genre,
+              genres: animeGenres.genre,
               favorites: anime.attributes.anime.data[0].attributes.favorites,
               mal_id: anime.attributes.anime.data[0].attributes.mal_id,
               episodes_watched: anime.attributes.episodes_watched,
@@ -166,14 +170,15 @@ export class LibraryService {
           await lastValueFrom(this.apiService.delete(`/libraries/${response.data[0].id}`));
           this._anime.next(anime);
           obs.next(anime);
-          
+
           let libraryResponse = await lastValueFrom(this.apiService.get(`/libraries?filters[user][id][$eq]=${user.id}`));
           if (libraryResponse.data.length === 0) {
             this._library.next([]);
           } else {
             this.getLibrary().subscribe();
+          }
         }
-      }})
+      })
     })
   }
 

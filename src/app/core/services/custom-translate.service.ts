@@ -13,34 +13,34 @@ export function createTranslateLoader(http: HttpClient) {
 })
 export class CustomTranslateService {
 
-  private _language:BehaviorSubject<string> = new BehaviorSubject<string>('es');
+  private _language: BehaviorSubject<string> = new BehaviorSubject<string>('es');
   public language$ = this._language.asObservable();
 
   constructor(
-    private translate:TranslateService
-  ) { 
+    private translate: TranslateService
+  ) {
     this.init();
   }
 
-  private async init(){
-    this.translate.addLangs(['es','en']);
+  private async init() {
+    this.translate.addLangs(['es', 'en']);
     this.translate.setDefaultLang(this._language.value);
   }
 
-  use(language:string){
-    lastValueFrom(this.translate.use(language)).then(_=>{
+  use(language: string) {
+    lastValueFrom(this.translate.use(language)).then(_ => {
       this._language.next(language);
-    }).catch(err=>{
+    }).catch(err => {
       console.error(err);
-    });  
+    });
   }
 
-  getBrowserLang():string|undefined {
+  getBrowserLang(): string | undefined {
     return this.translate.getBrowserLang();
   }
 
 
-  get(key:string):Observable<string>{
+  get(key: string): Observable<string> {
     return this.translate.get(key);
   }
 }

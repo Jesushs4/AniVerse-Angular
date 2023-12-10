@@ -22,7 +22,7 @@ export class LoginPage implements OnInit {
     'assets/images/backgrounds/Imagen5.jpg'
   ]
   backgroundImage: string | undefined;
-  lang:string = "es";
+  lang: string = "es";
 
 
   constructor(
@@ -37,17 +37,17 @@ export class LoginPage implements OnInit {
     let index = Math.floor(Math.random() * this.backgroundImages.length)
     this.backgroundImage = `url('${this.backgroundImages[index]}')`;
     let browserLang = this.translate.getBrowserLang();
-    if (browserLang=='en' || browserLang=='es') {
+    if (browserLang == 'en' || browserLang == 'es') {
       this.lang = browserLang
 
     }
     this.translate.use(this.lang);
   }
 
-  onLang(lang:string){
+  onLang(lang: string) {
     this.lang = lang;
     this.translate.use(this.lang);
-    return false;    
+    return false;
   }
 
   onLogin(credentials: UserCredentials) {
@@ -83,16 +83,17 @@ export class LoginPage implements OnInit {
         case 'ok': {
           this.auth.register(info.data).subscribe(async user => {
             this.translate.get('toast.userCreated').subscribe(async (translatedMessage: string) => {
-            const options: ToastOptions = {
-              message: translatedMessage,
-              duration: 1000,
-              position: 'bottom',
-              color: 'tertiary',
-              cssClass: 'card-ion-toast'
-            };
-            const toast = await this.toast.create(options);
-            toast.present();
-          })})
+              const options: ToastOptions = {
+                message: translatedMessage,
+                duration: 1000,
+                position: 'bottom',
+                color: 'tertiary',
+                cssClass: 'card-ion-toast'
+              };
+              const toast = await this.toast.create(options);
+              toast.present();
+            })
+          })
         }
           break;
         default: {

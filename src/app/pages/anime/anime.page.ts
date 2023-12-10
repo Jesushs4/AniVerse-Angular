@@ -61,14 +61,14 @@ export class AnimePage implements OnInit {
       this.anime.deleteAnime(this.anime.anime).subscribe(async anime => {
         this.translate.get('toast.deleteAnime').subscribe(async (translatedMessage: string) => {
 
-        const options: ToastOptions = {
-          message: translatedMessage,
-          duration: 1000,
-          position: 'bottom',
-          color: 'tertiary',
-        };
-        const toast = await this.toast.create(options);
-        toast.present();
+          const options: ToastOptions = {
+            message: translatedMessage,
+            duration: 1000,
+            position: 'bottom',
+            color: 'tertiary',
+          };
+          const toast = await this.toast.create(options);
+          toast.present();
         })
         this.router.navigate(['/library']);
       });
@@ -99,16 +99,17 @@ export class AnimePage implements OnInit {
           if (this.anime.anime) {
             this.anime.editAnime(this.anime.anime, info.data).subscribe(async anime => {
               this.translate.get('toast.editAnime').subscribe(async (translatedMessage: string) => {
-              const options: ToastOptions = {
-                message: translatedMessage,
-                duration: 1000,
-                position: 'bottom',
-                color: 'tertiary',
-              };
-              const toast = await this.toast.create(options);
-              toast.present();
-            });
-          } ) }
+                const options: ToastOptions = {
+                  message: translatedMessage,
+                  duration: 1000,
+                  position: 'bottom',
+                  color: 'tertiary',
+                };
+                const toast = await this.toast.create(options);
+                toast.present();
+              });
+            })
+          }
         }
           break;
         default: {
@@ -140,15 +141,16 @@ export class AnimePage implements OnInit {
       await this.reviewService.createReview(info.data).subscribe(async review => {
         this.translate.get('toast.addReview').subscribe(async (translatedMessage: string) => {
 
-        const options: ToastOptions = {
-          message: translatedMessage,
-          duration: 1000,
-          position: 'bottom',
-          color: 'tertiary',
-        };
-        const toast = await this.toast.create(options);
-        toast.present();
-      }) })
+          const options: ToastOptions = {
+            message: translatedMessage,
+            duration: 1000,
+            position: 'bottom',
+            color: 'tertiary',
+          };
+          const toast = await this.toast.create(options);
+          toast.present();
+        })
+      })
       this.reviewService.getReviews().subscribe();
     }
 

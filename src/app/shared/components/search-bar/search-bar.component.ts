@@ -24,10 +24,8 @@ export class SearchBarComponent implements OnInit {
         distinctUntilChanged(),
         switchMap(term =>
           this.apiService.searchAnime(term)) // Realizamos la busqueda en la API
-      )
-      .subscribe({
+      ).subscribe({
         next: (results) => {
-
           this.searchUpdate.emit(results.data); // Enviamos la respuesta de la API como un evento
         }
       });

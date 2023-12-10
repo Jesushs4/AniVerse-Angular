@@ -12,14 +12,14 @@ export class SearchPage {
 
   _searchResults: BehaviorSubject<Anime[]> = new BehaviorSubject<Anime[]>([]);
   searchResults$: Observable<Anime[]> = this._searchResults.asObservable();
-  
+
   constructor(
     private apiService: JikanApiService
   ) {
     this.apiService.searchAnime("").subscribe(search => { // Al inicializar la página, que busque vació "" para que salga algo
       this.searchResult(search.data)
     });
-    
+
   }
   searchResults(event: Anime[]) {
     this._searchResults.next(event);

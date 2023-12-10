@@ -28,7 +28,7 @@ export class ReviewsComponent implements OnInit {
 
   public deleteReview(review: Review) {
     this.reviewService.deleteReview(review)
-      this.translate.get('toast.deleteReview').subscribe(async (translatedMessage: string) => {
+    this.translate.get('toast.deleteReview').subscribe(async (translatedMessage: string) => {
 
       const options: ToastOptions = {
         message: translatedMessage,
@@ -38,7 +38,7 @@ export class ReviewsComponent implements OnInit {
       };
       const toast = await this.toast.create(options);
       toast.present()
-    }) ;
+    });
   }
 
   async presentReview(data: Review | null, onDismiss: (result: any) => void) {
@@ -61,7 +61,7 @@ export class ReviewsComponent implements OnInit {
     var onDismiss = async (info: any) => {
       if (this.review) {
         await this.reviewService.editReview(this.review, info.data)
-          this.translate.get('toast.editReview').subscribe(async (translatedMessage: string) => {
+        this.translate.get('toast.editReview').subscribe(async (translatedMessage: string) => {
 
           const options: ToastOptions = {
             message: translatedMessage,
@@ -71,7 +71,7 @@ export class ReviewsComponent implements OnInit {
           };
           const toast = await this.toast.create(options);
           toast.present();
-        })  ;
+        });
       }
     }
     if (this.review) {
