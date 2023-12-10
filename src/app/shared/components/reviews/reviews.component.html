@@ -18,12 +18,16 @@
     {{ review?.review }}
   </ion-card-content>
   <div class="header-buttons" *ngIf="review?.own_review == true">
-    <ion-button (click)="onReview()">
-      <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-    </ion-button>
-
-    <ion-button (click)="deleteReview(review!)">
-      <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-    </ion-button>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button color="primary" (click)="onReview()">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" (click)="deleteReview(review!)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+    
   </div>
 </ion-card>

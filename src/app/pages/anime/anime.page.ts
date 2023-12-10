@@ -43,6 +43,13 @@ export class AnimePage implements OnInit {
     });
   }
 
+  scrollToReviews() {
+    let reviewsElement = document.getElementById('reviewTitle');
+    if (reviewsElement) {
+      reviewsElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
 
 
   public backToLibrary() {
