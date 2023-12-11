@@ -65,7 +65,7 @@ export class AnimePage implements OnInit {
             message: translatedMessage,
             duration: 1000,
             position: 'bottom',
-            color: 'tertiary',
+            color: 'danger',
           };
           const toast = await this.toast.create(options);
           toast.present();
