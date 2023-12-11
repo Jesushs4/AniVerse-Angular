@@ -118,8 +118,10 @@ export class NavbarComponent implements OnInit {
     var onDismiss = (info: any) => {
       this.setNickname(info.data).subscribe(async nickname => {
         this.setUsername().subscribe();
+        this.translate.get('toast.nicknameChanged').subscribe(async (translatedMessage: string) => {
         const options: ToastOptions = {
-          message: "Nickname changed",
+          
+          message: translatedMessage,
           duration: 1000,
           position: 'bottom',
           color: 'tertiary',
@@ -127,7 +129,7 @@ export class NavbarComponent implements OnInit {
         const toast = await this.toast.create(options);
         toast.present();
       })
-
+    })
     }
     this.presentNickname(null, onDismiss);
 
