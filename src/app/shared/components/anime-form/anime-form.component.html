@@ -28,6 +28,7 @@
             interface="popover"
             labelPlacement="stacked"
             formControlName="user_score"
+            color="secondary"
           >
             <ion-select-option [value]="0">{{'anime.noScore' | translate}}</ion-select-option>
             <ion-select-option [value]="1">1</ion-select-option>
@@ -49,6 +50,7 @@
             interface="popover"
             labelPlacement="stacked"
             formControlName="watch_status"
+            color="secondary"
           >
             <ion-select-option value="watching">{{'anime.watching' | translate}}</ion-select-option>
             <ion-select-option value="plan to watch"
@@ -62,6 +64,7 @@
             label="{{'anime.episode' | translate}} (1-{{ animeInfo?.episodes ?? 'N/A' }}):"
             labelPlacement="floating"
             formControlName="episodes_watched"
+            color="secondary"
             type="number"
             [min]="1"
             [max]="animeInfo?.episodes ?? 1000"

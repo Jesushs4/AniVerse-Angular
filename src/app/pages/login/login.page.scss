@@ -8,6 +8,11 @@
   background-position: center;
 }
 
+.page-title {
+  font-weight: bold;
+  color: var(--ion-color-secondary);
+}
+
 ion-card {
   background: rgba(42, 42, 42, 0.95);
   height: auto;

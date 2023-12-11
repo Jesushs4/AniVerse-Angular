@@ -5,19 +5,21 @@
   (keyup.enter)="onSubmit()"
 >
   <ion-item>
-    <ion-input
+    <ion-input class="custom-label-color"
       labelPlacement="stacked"
       label="{{ 'login.username' | translate }}"
       formControlName="username"
       type="text"
+      color="secondary"
     ></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input
+    <ion-input class="custom-label-color"
       labelPlacement="stacked"
       label="{{ 'login.password' | translate }}"
       formControlName="password"
       type="password"
+      color="secondary"
     ></ion-input>
   </ion-item>
   <div class="ion-padding-top">
